@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom'
-import Section from '../components/Section'
+import OnBoarding from '../components/OnBoarding'
 
 const Routess = () => {
   return (
     <Routes>
-      <Route path="/" element={<Section />} />
+      <Route path="/" element={<OnBoarding />} />
     </Routes >
   )
 }

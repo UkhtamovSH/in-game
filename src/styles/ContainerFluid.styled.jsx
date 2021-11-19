@@ -13,4 +13,5 @@ export const ContainerFluid = styled.div`
   flex-direction: column;
   background: ${({ theme }) => theme.appColors.black};  
   color: ${({ theme }) => theme.appColors.white}; 
+  
 `

@@ -3,13 +3,13 @@ import { ContainerFluid } from "../styles/ContainerFluid.styled"
 const Main = (props) => {
   return (
     <ContainerFluid>
-      <div className="">
+      {/* <div className="">
         header
-      </div>
+      </div> */}
       {props.children}
-      <div className="">
+      {/* <div className="">
         footer
-      </div>
+      </div> */}
     </ContainerFluid>
   )
 }
