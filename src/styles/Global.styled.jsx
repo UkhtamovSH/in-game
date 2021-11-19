@@ -1,8 +1,12 @@
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   body{
     background: ${({ theme }) => theme.appColors.gray};    
+  }
+  *{
+    padding: 0;
+    margin: 0;
   }
   @font-face {
   font-family: "Manrope-Bold";
@@ -32,6 +36,7 @@ const GlobalStyle = createGlobalStyle`
 
 .appBtnGreen,
 .appBtnGray,
+.appBtnTransparent,
 .appBtnWhite{
   font-family: "Manrope-Bold",sans-serif;
   font-weight: bold;
@@ -41,6 +46,8 @@ const GlobalStyle = createGlobalStyle`
   border-radius: 12px;
   text-decoration: none!important;
   padding: 18px 5px;
+  display: block;
+  margin: 16px; 
 }
 .appBtnGreen{
   background: ${({ theme }) => theme.appColors.green};
@@ -54,13 +61,19 @@ const GlobalStyle = createGlobalStyle`
   background: ${({ theme }) => theme.appColors.white};
   color: ${({ theme }) => theme.appColors.gray};
 }
+.appBtnTransparent{
+  background: transparent;
+  color: ${({ theme }) => theme.appColors.white};
+}
 .appBtnGreen,
 .appBtnGray,
+.appBtnTransparent,
 .appBtnWhite:focus{
-  
   outline: none;
 }
-
+.appHeaderr{
+  padding: 10px 20px;
+  display: inline-block!important;
+}
 `
 
-export default GlobalStyle;

@@ -2,7 +2,7 @@ import React from "react"
 import { BrowserRouter as Router } from "react-router-dom"
 import Routess from "./router/Routess"
 import { ThemeProvider } from "styled-components";
-import GlobalStyle from "./styles/Global.styled";
+import { GlobalStyle } from "./styles/Global.styled";
 import Main from './layout/Main'
 
 const theme = {
