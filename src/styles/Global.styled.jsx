@@ -1,40 +1,31 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   body{
     background: ${({ theme }) => theme.appColors.gray};    
   }
+  html, body {
+  margin:0px;
+  height:100%;
+  }
   *{
     padding: 0;
     margin: 0;
   }
-  @font-face {
-  font-family: "Manrope-Bold";
-  src: url("../assets/fonts/Manrope-Bold.ttf") format("truetype");
-  font-style: normal;
-}
-  @font-face {
-  font-family: "Manrope-ExtraBold";
-  src: url("../assets/fonts/Manrope-ExtraBold.ttf") format("truetype");
-  font-style: normal;
-}
-  @font-face {
-  font-family: "Manrope-Medium";
-  src: url("../assets/fonts/Manrope-Medium.ttf") format("truetype");
-  font-style: normal;
-}
-  @font-face {
-  font-family: "Manrope-Regular";
-  src: url("../assets/fonts/Manrope-Regular.ttf") format("truetype");
-  font-style: normal;
-}
-  @font-face {
-  font-family: "Manrope-SemiBold";
-  src: url("../assets/fonts/Manrope-SemiBold.ttf") format("truetype");
-  font-style: normal;
-}
+  
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #000; 
+  }
+
+  
+
 
 .appBtnGreen,
+.appBtnGreen2,
 .appBtnGray,
 .appBtnTransparent,
 .appBtnWhite{
@@ -47,11 +38,17 @@ export const GlobalStyle = createGlobalStyle`
   text-decoration: none!important;
   padding: 18px 5px;
   display: block;
-  margin: 16px; 
+  border: none;
+  width: -webkit-fill-available;
+  cursor: pointer;
 }
+.appBtnGreen2,
 .appBtnGreen{
   background: ${({ theme }) => theme.appColors.green};
   color: ${({ theme }) => theme.appColors.white};
+}
+.appBtnGreen2{
+  margin: 16px;
 }
 .appBtnGray{
   background: ${({ theme }) => theme.appColors.gray};
@@ -62,9 +59,11 @@ export const GlobalStyle = createGlobalStyle`
   color: ${({ theme }) => theme.appColors.gray};
 }
 .appBtnTransparent{
+  margin: 16px;
   background: transparent;
   color: ${({ theme }) => theme.appColors.white};
 }
+.appBtnGreen2,
 .appBtnGreen,
 .appBtnGray,
 .appBtnTransparent,
@@ -75,5 +74,62 @@ export const GlobalStyle = createGlobalStyle`
   padding: 10px 20px;
   display: inline-block!important;
 }
+`
+
+export const InputFormFlex = styled.div`
+  display: flex;
+  background: ${({ theme }) => theme.appColors.blackGray};
+  border-radius: 16px;
+  margin: 16px;
+  height: 45px;
+  & input{
+    width: 100%;
+    height: auto;
+    border: none!important;
+    background: ${({ theme }) => theme.appColors.blackGray};
+    font-family: "Manrope-Regular",sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    color: ${({ theme }) => theme.appColors.gray};
+    
+    &:focus{
+      outline: none;
+      box-shadow: none; 
+    }
+  }
+  & span{
+    width: 70px;
+    height: auto;
+    & span{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  & .span1{
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+  }
+  & .span2{
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+  }
+  & .special-label {
+    display: none;
+  }
+  & .react-tel-input {
+    width: 100%;
+    & .form-control{
+      height: 100%;
+      border: none!important;
+    }
+  }
+`
+export const FormUpperDiv = styled.div`
+  margin-top: 60px;
 `
 

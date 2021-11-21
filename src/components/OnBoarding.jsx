@@ -1,10 +1,8 @@
-import {OnBoardingStyle}  from "../styles/OnBoarding.styled";
-
- const OnBoarding = () => {
+const OnBoarding = () => {
     return (
-        <OnBoardingStyle>
-
-        </OnBoardingStyle>
+        <>
+            OnBoarding
+        </>
     )
 }
 
