@@ -11,6 +11,15 @@ export const getNotAuthInstance = () => {
     },
   });
 };
+export const getAuthInstance = () => {
+  return axios.create({
+    baseURL: API_URL,
+    headers: {
+      lang: getLanguage(),
+      Authorization: 'Berear '+getToken()
+    },
+  });
+};
 
 
 

@@ -2,7 +2,7 @@ import React from "react"
 import { BrowserRouter as Router } from "react-router-dom"
 import Routess from "./router/Routess"
 import { ThemeProvider } from "styled-components";
-import GlobalStyle from "./styles/Global.styled";
+import { GlobalStyle } from "./styles/Global.styled";
 import Main from './layout/Main'
 
 const theme = {
@@ -15,6 +15,9 @@ const theme = {
     green: '#0EB800',
     red: '#EB5757',
     yellow: '#F6CE42',
+    whiteGray:'#252525',
+    grayWhite:'#333333',
+    
   }
 }
 
