@@ -12,32 +12,6 @@ export const getNotAuthInstance = () => {
   });
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const getInstance = () => {
   const token = getToken();
   return axios.create({

@@ -183,7 +183,13 @@ export const AppFooter2 = styled.div`
 export const AppMAIN = styled.div`
   margin-top: 53px;
   margin-bottom: 82px;
+  padding-bottom: 20px;
 `
+export const AppMAIN2 = styled.div`
+  margin-bottom: 82px;
+  padding-bottom: 20px;
+`
+
 export const AppHeaderFlex = styled.div`
   display: flex;
   justify-content: space-between;

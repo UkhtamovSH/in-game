@@ -11,6 +11,15 @@ export const LoginSection = styled.div`
     min-height: 100%;
     width: 100%;
   }
+  .inputError{
+    font-family: "Manrope-SemiBold",sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 150%;
+    text-align: right;
+    color: ${({ theme }) => theme.appColors.red};
+    margin: 0 16px;
+  }
 `
 export const LoginSectionSub = styled.div`
   position: relative;
@@ -27,8 +36,18 @@ export const LogRegFooterLinkFlex = styled.div`
   font-family: "Manrope-Regular",sans-serif;
   font-weight: 500;
   font-size: 16px;
+  color: #828282;
+  & a{
+    color: ${({ theme }) => theme.appColors.green};
+    text-decoration: none;
+  }
+`
+export const LogRegFooterLinkFlex2 = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
+  height: 100%;
   color: #828282;
   & a{
     color: ${({ theme }) => theme.appColors.green};
