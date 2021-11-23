@@ -10,8 +10,9 @@ import Lock from '../assets/svg/Lock.svg'
 import ArrowRight from '../assets/svg/Arrow - Right.svg'
 import BgS from "../assets/Img/Bg's.png"
 import { AppFooter, AppHeader, AppHeaderFlex, AppMAIN } from "../styles/ContainerFluid.styled"
-import { getInstance } from "../helpers/httpClient"
+import { getInstance, getNotAuthInstance } from "../helpers/httpClient"
 import { setToken } from "../helpers/tokenStorage"
+import axios from "axios"
 const Login = () => {
   const [lists, setLists] = useState([])
   const [phone, setPhone] = useState("")
@@ -37,7 +38,7 @@ const Login = () => {
       password: password
     }
     if (phone.length === 12 && password.length >= 8) {
-      getInstance().post('/api/v1/login/', loginData)
+      getNotAuthInstance().post('/api/v1/login/', loginData)
         .then((result) => {
           setToken(result.data.access_token, remember)
           setLists([...lists, result.loginData])
@@ -45,7 +46,7 @@ const Login = () => {
           setPassword("")
           setLoading(false);
           history.push('/')
-        }).catch((err) => { });
+        }).catch((err) => { setLoading(false); });
     } else if (phone.length !== 12 && password.length < 8) {
       setErrors({
         ...errors,
