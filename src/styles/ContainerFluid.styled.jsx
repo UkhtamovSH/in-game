@@ -15,31 +15,8 @@ export const ContainerFluid = styled.div`
     grid-area: menu;
     min-height: 100vh;
   }
-  @media (max-width: 6150px) and (min-width: 1900px) {
-    max-width: 1450px;
-  }
 
-  @media (max-width: 4650px) and (min-width: 1900px) {
-    max-width: 1100px;
-  }
-
-  @media (max-width: 3100px) and (min-width: 1900px) {
-    max-width: 690px;
-  }
-
-  @media (max-width: 2400px) and (min-width: 1900px) {
-    max-width: 490px;
-  }
-
-  @media (max-width: 2200px) and (min-width: 1900px) {
-    max-width: 440px;
-  }
-
-  @media (max-width: 1900px) and (min-width: 1600px) {
-    max-width: 400px;
-  }
-
-  @media (max-width: 1600px) and (min-width: 576px) {
+  @media (max-width: 8000px) and (min-width: 576px) {
     max-width: 475px;
   }
 
@@ -58,31 +35,7 @@ export const AppHeader = styled.div`
   background-color: ${({ theme }) => theme.appColors.black};
   z-index: 4;
 
-  @media (max-width: 6150px) and (min-width: 1900px) {
-    max-width: 1450px;
-  }
-
-  @media (max-width: 4650px) and (min-width: 1900px) {
-    max-width: 1100px;
-  }
-
-  @media (max-width: 3100px) and (min-width: 1900px) {
-    max-width: 690px;
-  }
-
-  @media (max-width: 2400px) and (min-width: 1900px) {
-    max-width: 490px;
-  }
-
-  @media (max-width: 2200px) and (min-width: 1900px) {
-    max-width: 440px;
-  }
-
-  @media (max-width: 1900px) and (min-width: 1600px) {
-    max-width: 400px;
-  }
-
-  @media (max-width: 1600px) and (min-width: 576px) {
+  @media (max-width: 8000px) and (min-width: 576px) {
     max-width: 450px;
   }
 
@@ -101,31 +54,7 @@ export const AppFooter = styled.div`
   background-color: ${({ theme }) => theme.appColors.black};
   z-index: 4;
 
-  @media (max-width: 6150px) and (min-width: 1900px) {
-    max-width: 1450px;
-  }
-
-  @media (max-width: 4650px) and (min-width: 1900px) {
-    max-width: 1100px;
-  }
-
-  @media (max-width: 3100px) and (min-width: 1900px) {
-    max-width: 690px;
-  }
-
-  @media (max-width: 2400px) and (min-width: 1900px) {
-    max-width: 490px;
-  }
-
-  @media (max-width: 2200px) and (min-width: 1900px) {
-    max-width: 440px;
-  }
-
-  @media (max-width: 1900px) and (min-width: 1600px) {
-    max-width: 400px;
-  }
-
-  @media (max-width: 1600px) and (min-width: 576px) {
+  @media (max-width: 8000px) and (min-width: 576px) {
     max-width: 450px;
   }
 
@@ -144,31 +73,7 @@ export const AppFooter2 = styled.div`
   background-color: ${({ theme }) => theme.appColors.black2};
   z-index: 4;
 
-  @media (max-width: 6150px) and (min-width: 1900px) {
-    max-width: 1450px;
-  }
-
-  @media (max-width: 4650px) and (min-width: 1900px) {
-    max-width: 1100px;
-  }
-
-  @media (max-width: 3100px) and (min-width: 1900px) {
-    max-width: 690px;
-  }
-
-  @media (max-width: 2400px) and (min-width: 1900px) {
-    max-width: 490px;
-  }
-
-  @media (max-width: 2200px) and (min-width: 1900px) {
-    max-width: 440px;
-  }
-
-  @media (max-width: 1900px) and (min-width: 1600px) {
-    max-width: 400px;
-  }
-
-  @media (max-width: 1600px) and (min-width: 576px) {
+  @media (max-width: 8000px) and (min-width: 576px) {
     max-width: 450px;
   }
 
