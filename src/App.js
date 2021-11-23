@@ -7,7 +7,9 @@ import Main from './layout/Main'
 
 const theme = {
   appColors: {
+    blackGray: '#333333',
     black: '#121212',
+    black2: '#252525',
     gray: '#BDBDBD',
     white: '#fff',
     blue: '#039BE5',

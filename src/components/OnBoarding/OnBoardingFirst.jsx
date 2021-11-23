@@ -15,7 +15,7 @@ const OnBoardingFirstStyle = () => {
         <OnBoardingFirst>
           <div className="boardingFirstWrap">
             <div className="dots">
-            <div className="firstDot"></div>
+              <div className="firstDot"></div>
               <div className="secondDot"></div>
               <div className="thirdDot"></div>
             </div>
@@ -23,8 +23,8 @@ const OnBoardingFirstStyle = () => {
             <p>
               Выберите игроков поблизости, расставьте их по оптимальным позициям
             </p>
-            <button onClick={() => handleCount()}>
-              <span>Продолжить </span>
+            <button className="appBtnGreen" onClick={() => handleCount()}>
+              Продолжить
             </button>
           </div>
         </OnBoardingFirst>

@@ -13,9 +13,11 @@ const transit = keyframes`
 export const OnBoardingFirst = styled.div`
   background-image: url(${AppImg2}) !important;
   background-repeat: no-repeat;
-  background-position: center;
-  height: 100vh;
+  background-size: cover;
+  height: 100%;
   width: 100%;
+  position: relative;
+
   animation: ${transit} 1s linear forwards;
   transition: ease-in-out 0.35s;
   & .dots {
