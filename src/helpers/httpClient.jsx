@@ -7,7 +7,7 @@ export const getNotAuthInstance = () => {
   return axios.create({
     baseURL: API_URL,
     headers: {
-      lang: getLanguage(),
+      lang: getLanguage()
     },
   });
 };
@@ -18,7 +18,8 @@ export const getInstance = () => {
     baseURL: API_URL,
     headers: {
       Authorization: token ? `Bearer  ${token} ` : undefined,
-      lang: getLanguage(),
+      lang: getLanguage()
+
     },
   });
 };
