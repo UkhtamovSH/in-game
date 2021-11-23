@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
   body{
     background: ${({ theme }) => theme.appColors.gray};    
+    font-family: "Manrope",sans-serif;
   }
   html, body {
   margin:0px;

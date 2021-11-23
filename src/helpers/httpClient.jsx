@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { API_URL } from './api';
-import { getToken } from './tokenStorage';
-import { getLanguage } from './language';
+import axios from "axios";
+import { API_URL } from "./api";
+import { getToken } from "./tokenStorage";
+import { getLanguage } from "./language";
 
 export const getNotAuthInstance = () => {
   return axios.create({
