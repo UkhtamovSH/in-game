@@ -10,10 +10,12 @@ export const HomeStyle = styled.div`
     padding: 15px 20px;
     box-sizing: border-box;
     align-items: flex-end;
+    cursor: pointer;
+   
+    position: sticky;
   }
 `;
 export const HomeContainer = styled.div`
-  z-index: 99;
   position: relative;
   bottom: 60px;
   left: 0;
@@ -93,6 +95,9 @@ export const HomeContainer = styled.div`
     justify-content: center;
     align-items: center;
     gap: 10px;
+    img {
+      z-index: 1;
+    }
     & .ageAvatar {
       display: flex;
       align-items: center;
@@ -105,7 +110,7 @@ export const HomeContainer = styled.div`
         background-color: ${({ theme }) => theme.appColors.white};
       }
       p {
-        font-family: "Manrope", sans-serif;
+        font-family: "Manrope-Medium", sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 16px;
@@ -114,7 +119,7 @@ export const HomeContainer = styled.div`
       }
     }
     & h2 {
-      font-family: "Manrope", sans-serif;
+      font-family: "Manrope-Bold", sans-serif;
       font-style: normal;
       font-weight: bold;
       font-size: 24px;
@@ -167,8 +172,7 @@ export const HomeTimeStyle = styled.div`
         font-weight: normal;
         font-size: 12px;
         line-height: 140%;
-        color: #BDBDBD;
-
+        color: #bdbdbd;
       }
     }
     & .watch {

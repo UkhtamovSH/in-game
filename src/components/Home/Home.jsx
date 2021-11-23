@@ -10,6 +10,7 @@ import InGameLogo from "../../assets/Img/Ball.png";
 import WatchImg from "../../assets/Img/Endurance.png";
 import WatchImg2 from "../../assets/Img/Vector.png";
 import More from "../../assets/Img/More.png";
+import Anima from "./Anima";
 
 const Home = () => {
   return (
@@ -86,9 +87,11 @@ const Home = () => {
               </div>
             </div>
               <div className="firstTime">
+
                 <div className="watch">
                   <img src={More} alt="" />
                 </div>
+
                 <div className="watchTitle">
                   <h1>Средний</h1>
                   <span>дивизион</span>
@@ -104,6 +107,7 @@ const Home = () => {
               </div>
             </div>
           </HomeTimeStyle>
+          <Anima/>
         </div>
       </HomeContainer>
     </HomeStyle>

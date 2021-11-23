@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { API_URL } from './api';
-import { getToken } from './tokenStorage';
-import { getLanguage } from './language';
+import axios from "axios";
+import { API_URL } from "./api";
+import { getToken } from "./tokenStorage";
+import { getLanguage } from "./language";
 
 export const getNotAuthInstance = () => {
   return axios.create({
@@ -16,36 +16,10 @@ export const getAuthInstance = () => {
     baseURL: API_URL,
     headers: {
       lang: getLanguage(),
-      Authorization: 'Berear '+getToken()
+      Authorization: "Berear " + getToken(),
     },
   });
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export const getInstance = () => {
   const token = getToken();
