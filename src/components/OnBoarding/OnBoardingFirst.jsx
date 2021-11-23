@@ -1,13 +1,22 @@
 import { OnBoardingFirst } from "../../styles/OnBoarding.Style/OnBoardingFirst.styled";
 import { OnBoardingSecondStyle } from "../../styles/OnBoarding.Style/OnBoardingSecond.styled";
 import { OnBoardingThirdStyle } from "../../styles/OnBoarding.Style/OnBoardingThird.styled";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { issetToken } from "../../helpers/tokenStorage";
 
 const OnBoardingFirstStyle = () => {
   const [count, setCount] = useState(1);
 
   const handleCount = () => setCount(count + 1);
+
+  const history = useNavigate();
+
+  useEffect(() => {
+    if (issetToken()) {
+      history("/home");
+    }
+  }, []);
 
   return (
     <>

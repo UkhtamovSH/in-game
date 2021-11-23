@@ -1,43 +1,58 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import { AppFooter, AppHeader, AppHeaderFlex, AppMAIN } from "../styles/ContainerFluid.styled"
-import { LoginSection, LoginSectionSub, LogRegFooterLinkFlex } from "../styles/LogIn.styled"
-import { FormUpperDiv, InputFormFlex } from "../styles/Global.styled"
-import PhoneInput from "react-phone-input-2"
-import TitleSubTitle from "./sections/TitleSubTitle"
-import Profile from '../assets/svg/Profile.svg'
-import Call from '../assets/svg/Call.svg'
-import Hide from '../assets/svg/Hide.svg'
-import Lock from '../assets/svg/Lock.svg'
-import BgS from "../assets/Img/Bg's.png"
-import ArrowRight from '../assets/svg/Arrow - Right.svg'
-import { getInstance } from "../helpers/httpClient"
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  AppFooter,
+  AppHeader,
+  AppHeaderFlex,
+  AppMAIN,
+} from "../styles/ContainerFluid.styled";
+import {
+  LoginSection,
+  LoginSectionSub,
+  LogRegFooterLinkFlex,
+} from "../styles/LogIn.styled";
+import { FormUpperDiv, InputFormFlex } from "../styles/Global.styled";
+import PhoneInput from "react-phone-input-2";
+import TitleSubTitle from "./sections/TitleSubTitle";
+import Profile from "../assets/svg/Profile.svg";
+import Call from "../assets/svg/Call.svg";
+import Hide from "../assets/svg/Hide.svg";
+import Lock from "../assets/svg/Lock.svg";
+import BgS from "../assets/Img/Bg's.png";
+import ArrowRight from "../assets/svg/Arrow - Right.svg";
+import { GetNotAuthInstance } from "../helpers/httpClient";
 
 const Register = () => {
-  const [lists, setLists] = useState([])
-  const [fullName, setFullName] = useState("")
-  const [login, setLogin] = useState("")
-  const [phone, setPhone] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [pswShowHide, setPswShowHide] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [lists, setLists] = useState([]);
+  const [fullName, setFullName] = useState("");
+  const [login, setLogin] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [pswShowHide, setPswShowHide] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
     fullName_error: false,
     login_error: false,
     phone_error: false,
     password_error: false,
     confirmPsw_error: false,
-  })
+  });
 
-  const { fullName_error, login_error, phone_error, password_error, confirmPsw_error } = errors
+  const {
+    fullName_error,
+    login_error,
+    phone_error,
+    password_error,
+    confirmPsw_error,
+  } = errors;
 
-  const handlePswShowHide = () => setPswShowHide(!pswShowHide)
-  const onFocus = (name) => setErrors({ ...errors, [name]: false })
+  const handlePswShowHide = () => setPswShowHide(!pswShowHide);
+  const onFocus = (name) => setErrors({ ...errors, [name]: false });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
 
     const regData = {
       full_name: fullName,
@@ -45,60 +60,73 @@ const Register = () => {
       phone: phone,
       password: password,
       confirm_password: confirmPassword,
-    }
+    };
 
-    if (fullName.length >= 6 && login.length >= 8 && phone.length === 12 && password.length >= 8 && confirmPassword.length >= 8) {
-      getInstance()
-        .post('/api/v1/register/', regData)
+    if (
+      fullName.length >= 6 &&
+      login.length >= 8 &&
+      phone.length === 12 &&
+      password.length >= 8 &&
+      confirmPassword.length >= 8
+    ) {
+      GetNotAuthInstance()
+        .post("/api/v1/register/", regData)
         .then((result) => {
-          setLists([...lists, result.regData])
-          setFullName("")
-          setLogin("")
-          setPhone("")
-          setPassword("")
-          setConfirmPassword("")
-          setLoading(false)
-        }).catch((err) => { });
-    } else if (fullName.length < 6 && login.length < 8 && phone.length !== 12 && password.length < 8 && confirmPassword < 8) {
+          setLists([...lists, result.regData]);
+          setFullName("");
+          setLogin("");
+          setPhone("");
+          setPassword("");
+          setConfirmPassword("");
+          setLoading(false);
+        })
+        .catch((err) => {});
+    } else if (
+      fullName.length < 6 &&
+      login.length < 8 &&
+      phone.length !== 12 &&
+      password.length < 8 &&
+      confirmPassword < 8
+    ) {
       setErrors({
         ...errors,
         fullName_error: true,
         login_error: true,
         phone_error: true,
         password_error: true,
-      })
-      setLoading(false)
+      });
+      setLoading(false);
     } else if (fullName.length < 6) {
       setErrors({
         ...errors,
         fullName_error: true,
-      })
-      setLoading(false)
+      });
+      setLoading(false);
     } else if (login.length < 8) {
       setErrors({
         ...errors,
         login_error: true,
-      })
+      });
     } else if (phone.length !== 12) {
       setErrors({
         ...errors,
         phone_error: true,
-      })
-      setLoading(false)
+      });
+      setLoading(false);
     } else if (password.length < 8) {
       setErrors({
         ...errors,
         password_error: true,
-      })
-      setLoading(false)
+      });
+      setLoading(false);
     } else if (confirmPassword < 8) {
       setErrors({
         ...errors,
         password_error: true,
-      })
-      setLoading(false)
+      });
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <>
@@ -115,11 +143,9 @@ const Register = () => {
         <LoginSection>
           <img src={BgS} className="bgImgLogin" alt="" />
           <LoginSectionSub>
-            <TitleSubTitle
-              title={'Регистрация'}
-            />
+            <TitleSubTitle title={"Регистрация"} />
             <FormUpperDiv>
-              <form onSubmit={e => handleSubmit(e)}>
+              <form onSubmit={(e) => handleSubmit(e)}>
                 <InputFormFlex>
                   <span className="span1">
                     <span>
@@ -127,7 +153,7 @@ const Register = () => {
                     </span>
                   </span>
                   <input
-                    onChange={e => setFullName(e.target.value)}
+                    onChange={(e) => setFullName(e.target.value)}
                     onFocus={() => onFocus("fullName_error")}
                     value={fullName}
                     type="text"
@@ -148,7 +174,7 @@ const Register = () => {
                     </span>
                   </span>
                   <input
-                    onChange={e => setLogin(e.target.value)}
+                    onChange={(e) => setLogin(e.target.value)}
                     onFocus={() => onFocus("login_error")}
                     value={login}
                     type="text"
@@ -197,10 +223,10 @@ const Register = () => {
                     </span>
                   </span>
                   <input
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     onFocus={() => onFocus("password_error")}
                     value={password}
-                    type={!pswShowHide ? 'password' : 'text'}
+                    type={!pswShowHide ? "password" : "text"}
                     name="password"
                     placeholder="Пароль"
                   />
@@ -222,12 +248,13 @@ const Register = () => {
                     </span>
                   </span>
                   <input
-                    onChange={e => setConfirmPassword(e.target.value)}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     onFocus={() => onFocus("password_error")}
                     value={confirmPassword}
-                    type={!pswShowHide ? 'password' : 'text'}
+                    type={!pswShowHide ? "password" : "text"}
                     name="confirm_password"
-                    placeholder="Повторите пароль" />
+                    placeholder="Повторите пароль"
+                  />
                   <span className="span2" onClick={() => handlePswShowHide()}>
                     <span>
                       <img src={Hide} alt="" />
@@ -240,14 +267,15 @@ const Register = () => {
                   </span>
                 ) : null}
 
-                {loading
-                  ?
+                {loading ? (
                   <p>Loading...</p>
-                  :
-                  <div className="" style={{ width: '100%' }}>
-                    <button type="submit" className="appBtnGreen2">Зарегистрироваться</button>
+                ) : (
+                  <div className="" style={{ width: "100%" }}>
+                    <button type="submit" className="appBtnGreen2">
+                      Зарегистрироваться
+                    </button>
                   </div>
-                }
+                )}
               </form>
             </FormUpperDiv>
           </LoginSectionSub>
@@ -264,8 +292,7 @@ const Register = () => {
         </LogRegFooterLinkFlex>
       </AppFooter>
     </>
-  )
-}
+  );
+};
 
-export default Register
-
+export default Register;

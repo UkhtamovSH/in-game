@@ -46,7 +46,8 @@ export const OnBoardingFirst = styled.div`
   }
   & .boardingFirstWrap {
     padding: 0 15px;
-    transform: translate(0px, 460px);
+    position: absolute;
+    bottom: 30px;
   }
   h1 {
     font-family: "Manrope", sans-serif;
