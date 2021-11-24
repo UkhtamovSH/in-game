@@ -1,18 +1,34 @@
 import styled from "styled-components";
 export const HomeStyle = styled.div`
+  .lastPlays {
+    display: flex;
+    justify-content: space-between;
+    img {
+      width: 8px;
+      height: 10px;
+    }
+  }
+  label {
+    padding: 15px 20px;
+    cursor: pointer;
+  }
   & .topSetting {
     background-color: ${({ theme }) => theme.appColors.whiteGray};
     width: 100%;
-    height: 131px;
     border-radius: 0px 0px 32px 32px;
     display: flex;
     justify-content: space-between;
     padding: 15px 20px;
     box-sizing: border-box;
     align-items: flex-end;
-    cursor: pointer;
-   
-    position: sticky;
+    position: relative;
+    z-index: 2;
+    padding-top: 68px;
+    & div {
+      img {
+        cursor: pointer;
+      }
+    }
   }
 `;
 export const HomeContainer = styled.div`
@@ -95,8 +111,9 @@ export const HomeContainer = styled.div`
     justify-content: center;
     align-items: center;
     gap: 10px;
+
     img {
-      z-index: 1;
+      z-index: 2;
     }
     & .ageAvatar {
       display: flex;

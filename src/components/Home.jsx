@@ -13,6 +13,8 @@ import InGameLogo from "../assets/Img/Ball.png";
 import WatchImg from "../assets/Img/Endurance.png";
 import WatchImg2 from "../assets/Img/Vector.png";
 import More from "../assets/Img/More.png";
+import HomeSwiper from "./sections/HomeSwiper";
+import CommentSwiper from "../styles/HomeSwiper/CommentSwiper";
 
 const Home = () => {
   return (
@@ -110,6 +112,8 @@ const Home = () => {
                   </div>
                 </div>
               </HomeTimeStyle>
+        <HomeSwiper/>
+        <CommentSwiper/>
             </div>
           </HomeContainer>
         </HomeStyle>
