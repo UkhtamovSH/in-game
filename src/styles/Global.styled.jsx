@@ -75,7 +75,7 @@ export const GlobalStyle = createGlobalStyle`
   padding: 10px 20px;
   display: inline-block!important;
 }
-`
+`;
 
 export const InputFormFlex = styled.div`
   display: flex;
@@ -83,27 +83,27 @@ export const InputFormFlex = styled.div`
   border-radius: 16px;
   margin: 16px;
   height: 45px;
-  & input{
+  & input {
     width: 100%;
     height: auto;
-    border: none!important;
+    border: none !important;
     background: ${({ theme }) => theme.appColors.blackGray};
-    font-family: "Manrope-Regular",sans-serif;
+    font-family: "Manrope-Regular", sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 150%;
     color: ${({ theme }) => theme.appColors.gray};
-    
-    &:focus{
+
+    &:focus {
       outline: none;
-      box-shadow: none; 
+      box-shadow: none;
     }
   }
-  & span{
+  & span {
     width: 70px;
     height: auto;
-    & span{
+    & span {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -111,11 +111,11 @@ export const InputFormFlex = styled.div`
       height: 100%;
     }
   }
-  & .span1{
+  & .span1 {
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
   }
-  & .span2{
+  & .span2 {
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
   }
@@ -124,13 +124,44 @@ export const InputFormFlex = styled.div`
   }
   & .react-tel-input {
     width: 100%;
-    & .form-control{
+    & .form-control {
       height: 100%;
-      border: none!important;
+      border: none !important;
     }
   }
-`
+`;
 export const FormUpperDiv = styled.div`
   margin-top: 60px;
-`
+`;
 
+export const FormUpperDivSub = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  .containerValidation {
+    height: 50px;
+    width: 300px;
+  }
+
+  .character {
+    line-height: 50px;
+    font-size: 36px;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    margin-left: 8px;
+  }
+
+  .character:first-child {
+    margin-left: 0;
+  }
+
+  .character--inactive {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .character--selected {
+    border: 1px solid white;
+  }
+`;
