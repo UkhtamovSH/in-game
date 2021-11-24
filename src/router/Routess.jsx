@@ -10,7 +10,6 @@ import Pitches from "../components/Pitches";
 import Players from "../components/Players";
 import RatingPlayers from "../components/RatingPlayers";
 import ResetPassword from "../components/ResetPassword";
-import Verification from "../components/Verification";
 
 const Routess = () => {
   return (
@@ -20,7 +19,6 @@ const Routess = () => {
       <Route path="/log-in" element={<LogRegEntrance />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/verification" element={<Verification />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/home" element={<Home />} />
       <Route path="/players" element={<Players />} />
