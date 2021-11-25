@@ -10,7 +10,12 @@ export const OnBoardingSecondStyle = styled.div`
   position: relative;
   & .boardingFirstWrap {
     padding: 0 15px;
-    transform: translate(0px, 460px);
+    padding: 0 15px;
+    position: absolute;
+    bottom: 30px;
+    button {
+    width: 100% !important;
+  }
     & .dots {
       display: flex;
       justify-content: center;

@@ -10,7 +10,13 @@ export const OnBoardingThirdStyle = styled.div`
   position: relative;
   & .boardingFirstWrap {
     padding: 0 15px;
-    transform: translate(0px, 460px);
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    /* transform: translate(0px, 460px); */
+    button {
+    width: 100% !important;
+  }
     & .dots {
       display: flex;
       justify-content: center;

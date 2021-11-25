@@ -181,7 +181,9 @@ const Register = () => {
     </Timer>
   );
 
-  const phoneNumber = sessionStorage.getItem("phone");
+  const phoneNumber = sessionStorage.getItem("phone")
+    ? sessionStorage.getItem("phone")
+    : "";
 
   var numX = phoneNumber.toString().substr(5, 5);
 

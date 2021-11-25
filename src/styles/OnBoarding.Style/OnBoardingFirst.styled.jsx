@@ -17,6 +17,9 @@ export const OnBoardingFirst = styled.div`
   height: 100%;
   width: 100%;
   position: relative;
+  button {
+    width: 100% !important;
+  }
 
   animation: ${transit} 1s linear forwards;
   transition: ease-in-out 0.35s;

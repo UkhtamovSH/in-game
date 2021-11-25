@@ -1,4 +1,3 @@
-import { Link, NavLink } from "react-router-dom";
 import { AppFooter2, AppMAIN2 } from "../styles/ContainerFluid.styled";
 import Navigation from "../components/sections/Navigation";
 import {
@@ -15,8 +14,26 @@ import WatchImg2 from "../assets/Img/Vector.png";
 import More from "../assets/Img/More.png";
 import HomeSwiper from "./sections/HomeSwiper";
 import CommentSwiper from "../styles/HomeSwiper/CommentSwiper";
+import { useEffect, useState } from "react";
+import { GetAuthInstance } from "../helpers/httpClient";
 
 const Home = () => {
+  const [data, setData] = useState([]);
+
+  const getData = () => {
+    GetAuthInstance()
+      .get("/api/v1/get-user/?lan=en")
+      .then((res) => {
+        setData(console.log(res));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <>
       <AppMAIN2>
@@ -112,8 +129,8 @@ const Home = () => {
                   </div>
                 </div>
               </HomeTimeStyle>
-        <HomeSwiper/>
-        <CommentSwiper/>
+              <HomeSwiper />
+              <CommentSwiper />
             </div>
           </HomeContainer>
         </HomeStyle>
