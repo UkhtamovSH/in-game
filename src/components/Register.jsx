@@ -25,9 +25,10 @@ import Lock from "../assets/svg/Lock.svg";
 import BgS from "../assets/Img/Bg's.png";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import { GetNotAuthInstance } from "../helpers/httpClient";
-import { issetToken } from "../helpers/tokenStorage";
+import { issetToken, setToken } from "../helpers/tokenStorage";
 import VerificationInput from "react-verification-input";
 import Timer from "react-compound-timer/build";
+import { get } from "lodash";
 
 const Register = () => {
   const [lists, setLists] = useState([]);
@@ -51,9 +52,10 @@ const Register = () => {
     fullName_error: false,
     login_error: false,
     phone_error: false,
+    code_error: false,
   });
 
-  const { fullName_error, login_error, phone_error } = errors;
+  const { fullName_error, login_error, phone_error, code_error } = errors;
 
   const handlePswShowHide = () => setPswShowHide(!pswShowHide);
   const onFocus = (name) => setErrors({ ...errors, [name]: false });
@@ -89,6 +91,7 @@ const Register = () => {
         .post("/api/v1/register/", formData)
         .then((result) => {
           sessionStorage.setItem("phone", phone);
+          sessionStorage.setItem("password", password);
           setLists([...lists, result.formData]);
           setFullName("");
           setLogin("");
@@ -145,13 +148,28 @@ const Register = () => {
 
   const handleVerification = (e) => {
     e.preventDefault();
-    var data = new FormData();
-    data.append("phone", phone);
-    data.append("smscode", code);
-    data.append("password", password);
-    GetNotAuthInstance.post("/api/v1/accept/", data)
+    var dataCode = new FormData();
+    dataCode.append("phone", sessionStorage.getItem("phone", phone));
+    dataCode.append("smscode", code);
+    dataCode.append("password", sessionStorage.getItem("password", password));
+
+    GetNotAuthInstance()
+      .post("/api/v1/accept/", dataCode)
       .then((result) => {
-        setListsSendCode([...listsSendCode, result.data]);
+        const status = get(result, "data.status");
+        if (status === 1) {
+          const token = get(result, "data.token");
+          setToken(token, true);
+          setListsSendCode([...listsSendCode, result.dataCode]);
+          setPhone("");
+          setCode("");
+          history("/home");
+        } else {
+          setErrors({
+            ...errors,
+            code_error: true,
+          });
+        }
       })
       .catch((err) => {});
   };
@@ -181,7 +199,9 @@ const Register = () => {
     </Timer>
   );
 
-  const phoneNumber = sessionStorage.getItem("phone");
+  const phoneNumber = sessionStorage.getItem("phone")
+    ? sessionStorage.getItem("phone")
+    : "";
 
   var numX = phoneNumber.toString().substr(5, 5);
 
@@ -217,27 +237,40 @@ const Register = () => {
             )}
             <FormUpperDiv>
               {count ? (
-                <FormUpperDivSub>
-                  <form onSubmit={(e) => handleVerification(e)}>
-                    <VerificationInput
-                      removeDefaultStyles
-                      length={4}
-                      classNames={{
-                        container: "containerValidation",
-                        character: "character",
-                        characterInactive: "character--inactive",
-                        characterSelected: "character--selected",
-                      }}
-                    />
-                    <button
-                      type="submit"
-                      className="appBtnGreen"
-                      style={{ marginTop: "40px" }}
-                    >
-                      Отправить
-                    </button>
-                  </form>
-                </FormUpperDivSub>
+                <>
+                  <FormUpperDivSub>
+                    <form onSubmit={(e) => handleVerification(e)}>
+                      <VerificationInput
+                        removeDefaultStyles
+                        length={4}
+                        onChange={(e) => setCode(e)}
+                        value={code}
+                        classNames={{
+                          container: "containerValidation",
+                          character: "character",
+                          characterInactive: "character--inactive",
+                          characterSelected: "character--selected",
+                        }}
+                      />
+                      {code.length === 4 ? (
+                        <button
+                          type="submit"
+                          className="appBtnGreen"
+                          style={{ marginTop: "40px" }}
+                        >
+                          Отправить
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                    </form>
+                  </FormUpperDivSub>
+                  {code_error ? (
+                    <div className="inputError" style={{ textAlign: "center" }}>
+                      Kod xato
+                    </div>
+                  ) : null}
+                </>
               ) : (
                 <form onSubmit={(e) => handleSubmit(e)}>
                   <InputFormFlex>
