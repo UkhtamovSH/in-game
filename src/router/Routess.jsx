@@ -10,6 +10,7 @@ import Pitches from "../components/Pitches";
 import Players from "../components/Players";
 import RatingPlayers from "../components/RatingPlayers";
 import ResetPassword from "../components/ResetPassword";
+import ProfileEdit from "../components/ProfileEdit";
 
 const Routess = () => {
   return (
@@ -25,6 +26,7 @@ const Routess = () => {
       <Route path="/newgame" element={<NewGame />} />
       <Route path="/pitches" element={<Pitches />} />
       <Route path="/rating-players" element={<RatingPlayers />} />
+      <Route path="/profile-edit" element={<ProfileEdit />} />
     </Routes>
   );
 };

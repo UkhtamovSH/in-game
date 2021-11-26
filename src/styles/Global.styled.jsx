@@ -83,7 +83,16 @@ export const InputFormFlex = styled.div`
   border-radius: 16px;
   margin: 16px;
   height: 45px;
-  & input {
+  .react-datepicker__input-container {
+    display: flex;
+    height: 100%;
+  }
+  .react-datepicker-popper {
+    z-index: 2 !important;
+  }
+
+  & input,
+  select {
     width: 100%;
     height: auto;
     border: none !important;
@@ -133,7 +142,6 @@ export const InputFormFlex = styled.div`
 export const FormUpperDiv = styled.div`
   margin-top: 60px;
 `;
-
 export const FormUpperDivSub = styled.div`
   display: flex;
   justify-content: center;
@@ -163,5 +171,55 @@ export const FormUpperDivSub = styled.div`
 
   .character--selected {
     border: 1px solid white;
+  }
+`;
+export const CustomRadio = styled.div`
+  [type="radio"]:checked,
+  [type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+  }
+  [type="radio"]:checked + label,
+  [type="radio"]:not(:checked) + label {
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+  }
+  [type="radio"]:checked + label:before,
+  [type="radio"]:not(:checked) + label:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: transparent;
+  }
+  [type="radio"]:checked + label:after,
+  [type="radio"]:not(:checked) + label:after {
+    content: "";
+    width: 12px;
+    height: 12px;
+    background: ${({ theme }) => theme.appColors.green};
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+  }
+  [type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  [type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
 `;
