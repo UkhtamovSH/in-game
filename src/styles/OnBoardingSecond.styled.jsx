@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import AppImg4 from "../../assets/Img/appImg4.png";
+import AppImg3 from "../assets/Img/appImg3.png";
 
-export const OnBoardingThirdStyle = styled.div`
-  background-image: url(${AppImg4}) !important;
+export const OnBoardingSecondStyle = styled.div`
+  background-image: url(${AppImg3}) !important;
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
@@ -10,13 +10,12 @@ export const OnBoardingThirdStyle = styled.div`
   position: relative;
   & .boardingFirstWrap {
     padding: 0 15px;
+    padding: 0 15px;
     position: absolute;
     bottom: 30px;
-    left: 0;
-    /* transform: translate(0px, 460px); */
     button {
-    width: 100% !important;
-  }
+      width: 100% !important;
+    }
     & .dots {
       display: flex;
       justify-content: center;
@@ -41,6 +40,7 @@ export const OnBoardingThirdStyle = styled.div`
         border-radius: 20px;
       }
     }
+
     h1 {
       font-family: "Manrope", sans-serif;
       font-style: normal;

@@ -15,7 +15,7 @@ const NewGame = () => {
         </AppHeaderFlex>
       </AppHeader>
       <AppMAIN>
-        NewGame
+        <p>NewGame</p>
       </AppMAIN>
       <AppFooter2>
         <Navigation />

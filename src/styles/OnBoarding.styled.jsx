@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import AppImg1 from "../../assets/Img/appImg1.png";
+import AppImg1 from "../assets/Img/appImg1.png";
 
 const transit = keyframes`
   0% {
@@ -18,7 +18,6 @@ export const OnBoardingStyle = styled.div`
   animation: ${transit} 1s linear forwards;
   transition: ease-in-out 0.35s;
 `;
-
 
 const anima = keyframes`
   0% {

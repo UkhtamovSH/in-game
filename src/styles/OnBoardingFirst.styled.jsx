@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import AppImg2 from "../../assets/Img/appImg2.png";
+import AppImg2 from "../assets/Img/appImg2.png";
 
 const transit = keyframes`
   0% {

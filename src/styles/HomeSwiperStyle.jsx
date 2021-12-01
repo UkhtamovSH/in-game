@@ -1,10 +1,33 @@
 import styled from "styled-components";
 
 export const HomeSwiperStyle = styled.div`
+.lastPlays {
+  label a {
+    text-decoration: none;
+    color: #fff;
+  }
+}
   .slick-slider {
-    width: 375px;
+    width: 425px;
+    @media (max-width: 8000px) and (min-width: 576px) {
+      width: 425px;
+    }
+
+    @media only screen and (max-width: 576px) and (min-width: 320px) {
+      .slick-list {
+        .slick-track {
+          .slick-slide {
+            div {
+              margin: 0 40px;
+            }
+          }
+        }
+      }
+      width: 390px;
+    }
     .slick-list {
       margin: 0 0 0 -45px;
+      overflow: visible;
       .slick-track {
         .slick-slide {
           div {
@@ -25,7 +48,7 @@ export const HomeSwiperStyle = styled.div`
     justify-content: space-between;
     margin: 0 0 !important;
     padding: 10px 10px;
-   
+
     img {
       width: 90px;
       height: 60px;
@@ -43,10 +66,13 @@ export const HomeSwiperStyle = styled.div`
     width: 277px;
     margin-top: 20px;
     padding: 10px 0;
-    p {
+     p {
       text-align: center;
-      padding: 15px 0;
-        cursor: pointer ;
+      padding: 15px 0px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #fff;
+
     }
     .swiperParagraph {
       text-align: left;
@@ -73,11 +99,12 @@ export const HomeSwiperStyle = styled.div`
     }
     h3 {
       font-weight: bold;
-      font-size: 32px;
+      font-size: 22px;
       line-height: 44px;
       text-align: center;
     }
     span {
+      width: 62px;
       font-weight: normal;
       font-size: 12px;
       line-height: 16px;
@@ -90,6 +117,7 @@ export const HomeSwiperStyle = styled.div`
     img {
       width: 42px;
       height: 42px;
+      border-radius:50%;
     }
     .commenterName {
       h5 {
@@ -113,7 +141,7 @@ export const HomeSwiperStyle = styled.div`
           border: 1px solid;
           display: flex;
           align-items: center;
-          margin-top: 20px;
+          margin: 20px 8px 0 8px;
         }
       }
     }

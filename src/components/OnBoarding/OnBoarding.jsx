@@ -1,7 +1,7 @@
 import {
   OnBoardingStyle,
   OnBoardingLogoStyle,
-} from "../../styles/OnBoarding.Style/OnBoarding.styled";
+} from "../../styles/OnBoarding.styled";
 import InGameLogo from "../../assets/svg/inGameLogo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";

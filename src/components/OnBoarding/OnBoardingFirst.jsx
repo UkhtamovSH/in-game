@@ -1,6 +1,6 @@
-import { OnBoardingFirst } from "../../styles/OnBoarding.Style/OnBoardingFirst.styled";
-import { OnBoardingSecondStyle } from "../../styles/OnBoarding.Style/OnBoardingSecond.styled";
-import { OnBoardingThirdStyle } from "../../styles/OnBoarding.Style/OnBoardingThird.styled";
+import { OnBoardingFirst } from "../../styles/OnBoardingFirst.styled";
+import { OnBoardingSecondStyle } from "../../styles/OnBoardingSecond.styled";
+import { OnBoardingThirdStyle } from "../../styles/OnBoardingThird.styled";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { issetToken } from "../../helpers/tokenStorage";

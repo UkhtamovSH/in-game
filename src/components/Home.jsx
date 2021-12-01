@@ -4,18 +4,18 @@ import {
   HomeContainer,
   HomeStyle,
   HomeTimeStyle,
-} from "../styles/HomeStyle/Home.styled";
+} from "../styles/Home.styled";
 import settingImg from "../assets/Img/Setting.png";
 import editImg from "../assets/Img/Edit.png";
-import homeAvatar from "../assets/Img/AvatarImg.png";
 import InGameLogo from "../assets/Img/Ball.png";
 import WatchImg from "../assets/Img/Endurance.png";
-import WatchImg2 from "../assets/Img/Vector.png";
+import WatchImg2 from "../assets/Img/Vector1.png";
 import More from "../assets/Img/More.png";
-import HomeSwiper from "./sections/HomeSwiper";
-import CommentSwiper from "../styles/HomeSwiper/CommentSwiper";
+import HomeSwiper from "../components/sections/HomeSwiper";
+import CommentSwiper from "../components/sections/CommentSwiper";
 import { useEffect, useState } from "react";
 import { GetAuthInstance } from "../helpers/httpClient";
+import {get} from "lodash";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -24,15 +24,15 @@ const Home = () => {
     GetAuthInstance()
       .get("/api/v1/get-user/?lan=en")
       .then((res) => {
-        setData(console.log(res));
+        setData(res.data.data);
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   useEffect(() => {
     getData();
   }, []);
+
 
   return (
     <>
@@ -48,20 +48,20 @@ const Home = () => {
           </div>
           <HomeContainer>
             <div className="avatarWrap">
-              <img src={homeAvatar} alt="" />
+              <img className="avatarImg" src={data.avatar} alt="" />
               <div className="beOnline">
                 <span></span>
                 <span>онлайн</span>
               </div>
-              <h2>Аслан Муйдинов</h2>
+              <h2>{data.full_name}</h2>
               <div className="ageAvatar">
-                <p>23 года</p>
+                <p>{data.age} года</p>
                 <span></span>
-                <p>Ташкент</p>
+                <p>{get(data, "city.name")}</p>
               </div>
               <div className="wins">
                 <div className="leftWin">
-                  <p>52% </p>
+                  <p>{data.victory}% </p>
                   <p>Побед</p>
                 </div>
                 <div className="rightWinWrapper">
@@ -69,15 +69,15 @@ const Home = () => {
                     <div className="topWinContain">
                       <img src={InGameLogo} alt="" />
                       <div className="topWin">
-                        <p>52% </p>
-                        <p>Вратарем</p>
+                        <p>{get(data, "positions.Goalkeeper")}% </p>
+                        <p>Goalkeeper</p>
                       </div>
                     </div>
                     <div className="topWinContain">
                       <img src={InGameLogo} alt="" />
                       <div className="topWin">
-                        <p>52% </p>
-                        <p>Вратарем</p>
+                        <p>{get(data,"positions.Forward")}% </p>
+                        <p>Forward</p>
                       </div>
                     </div>
                   </div>
@@ -85,15 +85,15 @@ const Home = () => {
                     <div className="topWinContain">
                       <img src={InGameLogo} alt="" />
                       <div className="topWin">
-                        <p>52% </p>
-                        <p>Вратарем</p>
+                        <p>{get(data,"positions.Midfielder")}% </p>
+                        <p>Midfielder</p>
                       </div>
                     </div>
                     <div className="topWinContain">
                       <img src={InGameLogo} alt="" />
                       <div className="topWin">
-                        <p>52% </p>
-                        <p>Вратарем</p>
+                        <p>{get(data,"positions.Defender")}% </p>
+                        <p>Defender</p>
                       </div>
                     </div>
                   </div>
@@ -105,7 +105,7 @@ const Home = () => {
                     <img src={WatchImg} alt="" />
                   </div>
                   <div className="watchTitle">
-                    <h1>32ч.20м.</h1>
+                    <h1>{data.game_time}</h1>
                     <span>время в игре</span>
                   </div>
                 </div>
@@ -115,7 +115,7 @@ const Home = () => {
                   </div>
 
                   <div className="watchTitle">
-                    <h1>Средний</h1>
+                    <h1>{data.division}</h1>
                     <span>дивизион</span>
                   </div>
                 </div>
@@ -124,13 +124,14 @@ const Home = () => {
                     <img src={WatchImg2} alt="" />
                   </div>
                   <div className="watchTitle">
-                    <h1>1250</h1>
+                    <h1>{data.ball}</h1>
                     <span>очков</span>
                   </div>
                 </div>
               </HomeTimeStyle>
               <HomeSwiper />
               <CommentSwiper />
+            
             </div>
           </HomeContainer>
         </HomeStyle>

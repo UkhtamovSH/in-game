@@ -35,29 +35,31 @@ export const HomeContainer = styled.div`
   position: relative;
   bottom: 60px;
   left: 0;
-  transform: translateY(0 200px);
+  /* transform: translateY(0 200px); */
   display: flex;
   justify-content: center;
   & .wins {
-    width: 343px;
-    justify-content: space-between;
+    padding: 0 15px;
     display: flex;
     align-items: center;
     background-color: ${({ theme }) => theme.appColors.whiteGray};
     border-radius: 64px 16px 16px 64px;
     padding: 13px;
     box-sizing: border-box;
+    gap: 50px;
     .rightWinWrapper {
-      padding-right: 25px;
-    }
-    .rightWin {
       display: flex;
-      gap: 10px;
+      padding-right: 10px;
+      gap: 50px;
+      .rightWin {
+        gap: 10px;
+      }
     }
+
     .topWinContain {
       display: flex;
-      justify-content: space-between;
-      gap: 10px;
+      gap: 5px;
+      padding-top: 10px;
       .topWin {
         & p:nth-child(1) {
           font-size: 16px;
@@ -109,11 +111,13 @@ export const HomeContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     gap: 10px;
 
-    img {
+    .avatarImg {
       z-index: 2;
+      border-radius: 50%;
+      margin: 0 auto;
     }
     & .ageAvatar {
       display: flex;
@@ -141,11 +145,13 @@ export const HomeContainer = styled.div`
       font-weight: bold;
       font-size: 24px;
       line-height: 33px;
+      text-align: center;
     }
     & .beOnline {
       display: flex;
       align-items: center;
       gap: 5px;
+      margin: 0 auto;
       & span:nth-child(1) {
         width: 5px;
         height: 5px;
@@ -166,7 +172,7 @@ export const HomeContainer = styled.div`
 export const HomeTimeStyle = styled.div`
   margin-top: 16px;
   display: flex;
-  gap: 15px;
+  gap: 56px;
   .firstTime {
     width: 104px;
     height: 158px;
