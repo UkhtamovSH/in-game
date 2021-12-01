@@ -15,6 +15,10 @@ export const ProfileHeaderFlex = styled.div`
   }
   & .profileHeaderFlexSub2 {
     margin-left: 20px;
+    .text12Flex {
+      display: flex;
+      justify-content: flex-start;
+    }
     p,
     span {
       font-family: "Manrope-Regular", sans-serif;
@@ -33,6 +37,7 @@ export const ProfileHeaderFlex = styled.div`
     .text2 {
       color: ${({ theme }) => theme.appColors.red};
       margin-left: 25px;
+      cursor: pointer;
     }
   }
 `;

@@ -21,14 +21,10 @@ export const TitleSubTitleStyle = styled.div`
   }
 `;
 
-const TitleSubTitle = (props) => {
-  const { title, subtitle } = props;
-  return (
-    <TitleSubTitleStyle>
-      <p>{title}</p>
-      <p>{subtitle}</p>
-    </TitleSubTitleStyle>
-  );
-};
-
+const TitleSubTitle = ({ title, subtitle }) => (
+  <TitleSubTitleStyle>
+    <p>{title}</p>
+    <p>{subtitle}</p>
+  </TitleSubTitleStyle>
+);
 export default TitleSubTitle;

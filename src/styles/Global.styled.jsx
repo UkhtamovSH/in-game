@@ -83,6 +83,17 @@ export const InputFormFlex = styled.div`
   border-radius: 16px;
   margin: 16px;
   height: 45px;
+  .spanInput {
+    width: 100%;
+    align-items: center;
+    display: flex;
+    font-family: "Manrope-Regular", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    color: ${({ theme }) => theme?.appColors.gray};
+    cursor: pointer;
+  }
   .react-datepicker__input-container {
     display: flex;
     height: 100%;
@@ -102,7 +113,7 @@ export const InputFormFlex = styled.div`
     font-weight: normal;
     font-size: 16px;
     line-height: 150%;
-    color: ${({ theme }) => theme.appColors.gray};
+    color: ${({ theme }) => theme?.appColors.gray};
 
     &:focus {
       outline: none;
@@ -222,4 +233,7 @@ export const CustomRadio = styled.div`
     -webkit-transform: scale(1);
     transform: scale(1);
   }
+`;
+export const SkeletonInput = styled.div`
+  margin: 16px;
 `;

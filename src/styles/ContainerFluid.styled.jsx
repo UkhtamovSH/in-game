@@ -52,7 +52,7 @@ export const AppFooter = styled.div`
   width: 100%;
   height: 58px;
   background-color: ${({ theme }) => theme.appColors.black};
-  z-index: 9999 !important;
+  z-index: 99 !important;
   border-top: 1px solid #565050;
 
   @media (max-width: 8000px) and (min-width: 576px) {
@@ -72,7 +72,7 @@ export const AppFooter2 = styled.div`
   width: 100%;
   height: 58px;
   background-color: ${({ theme }) => theme.appColors.black2};
-  z-index: 9999 !important;
+  z-index: 99 !important;
 
   @media (max-width: 8000px) and (min-width: 576px) {
     max-width: 450px;

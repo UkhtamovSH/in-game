@@ -5,7 +5,11 @@ import {
   AppHeaderFlex,
   AppMAIN,
 } from "../styles/ContainerFluid.styled";
-import { CustomRadio, InputFormFlex } from "../styles/Global.styled";
+import {
+  CustomRadio,
+  InputFormFlex,
+  SkeletonInput,
+} from "../styles/Global.styled";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import { ProfileHeaderFlex, ProfileRadioDiv } from "../styles/Profile.styled";
 import Profile2 from "../assets/svg/Profile2.svg";
@@ -15,10 +19,23 @@ import SoccerShoe from "../assets/svg/soccershoe.svg";
 import Location from "../assets/svg/Location.svg";
 import PhoneInput from "react-phone-input-2";
 import CallProfile from "../assets/svg/CallProfile.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { GetAuthInstance } from "../helpers/httpClient";
+import _ from "lodash";
+import DefaultImg from "../assets/Img/default.png";
+import DefaultClub from "../assets/Img/defaultClub.png";
+import SearchLine from "../assets/svg/SearchLine.svg";
+import Modal from "./sections/Modal";
+import {
+  ModalCountSection,
+  RadioInputFlex,
+  RadioInputFlexTop,
+} from "../styles/Modal.styled";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const ProfileEdit = () => {
   const [userProfile, setUserProfile] = useState({
@@ -26,9 +43,10 @@ const ProfileEdit = () => {
     birth_date: "",
     football_club: "",
     position: "",
-    city: "",
+    city: { id: "", name: "" },
     region: "",
     phone: "",
+    gender: "man",
   });
 
   const {
@@ -39,6 +57,7 @@ const ProfileEdit = () => {
     city,
     region,
     phone,
+    gender,
   } = userProfile;
 
   const changeUserInfo = (e) => {
@@ -48,24 +67,67 @@ const ProfileEdit = () => {
       [name]: value,
     });
   };
+  const [playerPosition, setPlayerPosition] = useState([]);
+  const [modal, setModal] = useState(false);
+  const [modalCount, setModalCount] = useState(null);
+  const [img, setImg] = useState(null);
+  const ref = useRef(null);
+  const [nextUrlClubs, setNextUrlClubs] = useState("");
+  const [clubs, setClubs] = useState([]);
+  const [searchClubs, setSearchClubs] = useState("");
+  const [nextUrlCities, setNextUrlCities] = useState("");
+  const [cities, setCities] = useState([]);
+  const [searchCities, setSearchCities] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [typingTimeOut, setTypingTimeOut] = useState(0);
 
-  const [gender, setGender] = useState("man");
-  // const [startDate, setStartDate] = useState(new Date());
+  const toggleModal = () => {
+    if (modal) {
+      setSearchClubs("");
+    }
+    setModal(!modal);
+  };
+  const modalCountToggle = (i) => setModalCount(i);
 
-  const [playerPosition, setPlayerPosition] = useState([
-    {
-      id: "",
-      name: "",
-    },
-  ]);
+  const handleUpdate = (e) => {
+    e.preventDefault();
+  };
 
-  const [clubs, setClubs] = useState([
-    {
-      id: "",
-      name: "",
-    },
-  ]);
-
+  const handleImgChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImg(URL.createObjectURL(e.target.files[0]));
+    }
+    var formData = new FormData();
+    formData.append("avatar", e.target.files[0]);
+    GetAuthInstance()
+      .post("/api/v1/edit-profil-image/", formData)
+      .then((result) => {
+        setImg(result.data.date.avatar);
+      })
+      .catch((err) => {});
+  };
+  const handleImgDelete = () => {
+    var formData = new FormData();
+    formData.append("avatar_delete", true);
+    GetAuthInstance()
+      .post("/api/v1/edit-profil-image/", formData)
+      .then((result) => {
+        setImg(DefaultImg);
+      })
+      .catch((err) => {});
+  };
+  const getUser = () => {
+    setLoading(true);
+    GetAuthInstance()
+      .get("/api/v1/get-user/")
+      .then((response) => {
+        if (response.status === 200) {
+          setUserProfile(response.data.data);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {});
+  };
   const getPosition = () => {
     GetAuthInstance()
       .get(`/api/v1/position/`)
@@ -76,245 +138,563 @@ const ProfileEdit = () => {
       })
       .catch((error) => {});
   };
-
-  const getClubs = () => {
+  const getClubs = (
+    page = 1,
+    next_url = `/api/v1/football-club/?page=${page}&per_page=20`,
+    search = ""
+  ) => {
+    let s = "";
+    if (search) {
+      s = "&search=" + search;
+    }
     GetAuthInstance()
-      .get(`/api/v1/football-club/`)
+      .get(next_url + s)
       .then((response) => {
         if (response.status === 200) {
-          setClubs(response.data.results);
+          const result =
+            page === 1
+              ? response.data.results
+              : [...clubs, ...response.data.results];
+          setClubs(result);
+          setNextUrlClubs(response.data.next);
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        setClubs([]);
+      });
   };
-  const handleUpdate = (e) => {
-    e.preventDefault();
+
+  const getCities = (
+    page = 1,
+    next_url = `/api/v1/region/parent/?page=${page}&per_page=20`,
+    search = ""
+  ) => {
+    let s = "";
+    if (search) {
+      s = "&search=" + search;
+    }
+    GetAuthInstance()
+      .get(next_url + s)
+      .then((response) => {
+        if (response.status === 200) {
+          const result =
+            page === 1
+              ? response.data.results
+              : [...cities, ...response.data.results];
+          setCities(result);
+          setNextUrlCities(response.data.next);
+        }
+      })
+      .catch((err) => {
+        setCities([]);
+      });
   };
 
   useEffect(() => {
     getPosition();
     getClubs();
+    getUser();
+    getCities();
   }, []);
 
-  // https://kasbiytalim.uz/api/v1/edit-profil/
+  const handleSearch = (e) => {
+    setSearchClubs(e.target.value);
+    let page = 1;
+    let next_url = `/api/v1/football-club/?page=${page}&per_page=20`;
+    setTypingTimeOut(
+      setTimeout(() => {
+        getClubs(page, next_url, e.target.value);
+      }, 1000)
+    );
+    if (typingTimeOut) {
+      clearTimeout(typingTimeOut);
+    }
+  };
+
+  const handleSearchCities = (e) => {
+    setSearchCities(e.target.value);
+    let page = 1;
+    let next_url = `/api/v1/region/parent/?page=${page}&per_page=20`;
+    setTypingTimeOut(
+      setTimeout(() => {
+        getCities(page, next_url, e.target.value);
+      }, 1000)
+    );
+
+    if (typingTimeOut) {
+      clearTimeout(typingTimeOut);
+    }
+  };
+
+  // const handleSearchRegions = (e) => {
+  //   setSearchRegions(e.target.value);
+  //   let page = 1;
+  //   let next_url = `/api/v1/region/?page=${page}&per_page=20&city=41`;
+  //   setTypingTimeOut(
+  //     setTimeout(() => {
+  //       getRegions(page, next_url, e.target.value);
+  //     }, 1000)
+  //   );
+
+  //   if (typingTimeOut) {
+  //     clearTimeout(typingTimeOut);
+  //   }
+  };
+
+  const modalClose = (
+    <span onClick={toggleModal} style={{ cursor: "pointer" }}>
+      <img src={ArrowRight} alt="" />
+    </span>
+  );
+
+  const titleClubsForm = "Список клубов";
+  const titlePositionForm = "Позиция в игре";
+  const titleRegionForm = "Выберите регион";
+  const titleCityForm = "Выберите город";
+
   return (
     <>
-      <AppHeader>
-        <AppHeaderFlex>
-          <div className="">
-            <Link to="/" className="">
-              <img src={ArrowRight} alt="" />
-            </Link>
-          </div>
-          <div className="">
-            <span>Изменение данных</span>
-          </div>
-          <div />
-        </AppHeaderFlex>
-      </AppHeader>
-      <AppMAIN>
-        <form onSubmit={(e) => handleUpdate(e)}>
-          <ProfileHeaderFlex>
-            <div className="profileHeaderFlexSub1">
-              <img
-                src="https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                alt=""
-              />
-            </div>
-            <div className="profileHeaderFlexSub2">
-              <p>Ваше изображение</p>
-              <span className="text1">Изменить</span>
-              <span className="text2">Удалить</span>
-            </div>
-          </ProfileHeaderFlex>
+      {!modal ? (
+        <>
+          <AppHeader>
+            <AppHeaderFlex>
+              <div className="">
+                <Link to="/" className="">
+                  <img src={ArrowRight} alt="" />
+                </Link>
+              </div>
+              <div className="">
+                <span>Изменение данных</span>
+              </div>
+              <div />
+            </AppHeaderFlex>
+          </AppHeader>
+          <AppMAIN>
+            <form onSubmit={(e) => handleUpdate(e)}>
+              <ProfileHeaderFlex>
+                <div className="profileHeaderFlexSub1">
+                  <img
+                    src={img ? img : DefaultImg}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = DefaultImg;
+                    }}
+                    alt=""
+                  />
+                </div>
+                <div
+                  className="profileHeaderFlexSub2"
+                  style={{ transform: "translate(0,10px)" }}
+                >
+                  <p>Ваше изображение</p>
+                  <div className="text12Flex">
+                    <span className="text1" style={{ width: "100px" }}>
+                      <label htmlFor="files">Изменить</label>
+                      <input
+                        id="files"
+                        style={{ visibility: "hidden" }}
+                        type="file"
+                        onChange={handleImgChange}
+                      />
+                    </span>
+                    <span className="text2" onClick={handleImgDelete}>
+                      Удалить
+                    </span>
+                  </div>
+                </div>
+              </ProfileHeaderFlex>
+              <InputFormFlex>
+                <span className="span1">
+                  <span>
+                    <img src={Profile2} alt="" />
+                  </span>
+                </span>
+                <input
+                  onChange={(e) => changeUserInfo(e)}
+                  // onFocus={() => onFocus("fullName_error")}
+                  value={full_name}
+                  type="text"
+                  name="full_name"
+                  placeholder="Полное имя"
+                />
+                <span className="span2"></span>
+              </InputFormFlex>
+              <CustomRadio>
+                <ProfileRadioDiv>
+                  <div>
+                    <input
+                      type="radio"
+                      id="test1"
+                      name="gender"
+                      value="man"
+                      onChange={() =>
+                        setUserProfile({ ...userProfile, gender: "man" })
+                      }
+                      checked={gender === "man" ? "checked" : ""}
+                    />
+                    <label htmlFor="test1">Мужчина</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="test2"
+                      name="gender"
+                      value="woman"
+                      onChange={() =>
+                        setUserProfile({ ...userProfile, gender: "woman" })
+                      }
+                      checked={gender === "woman" ? "checked" : ""}
+                    />
+                    <label htmlFor="test2">Женщина</label>
+                  </div>
+                </ProfileRadioDiv>
+              </CustomRadio>
+              <InputFormFlex>
+                <span className="span1">
+                  <span>
+                    <img src={Calendar} alt="" />
+                  </span>
+                </span>
+                <input
+                  type="date"
+                  name="birth_date"
+                  value={birth_date}
+                  onChange={(e) => changeUserInfo(e)}
+                />
+                <span className="span2"></span>
+              </InputFormFlex>
+              <InputFormFlex>
+                <span className="span1">
+                  <span>
+                    <img src={CallProfile} alt="" />
+                  </span>
+                </span>
+                <input type="text" value={phone} disabled />
+                <span className="span2"></span>
+              </InputFormFlex>
+              <InputFormFlex>
+                <span className="span1">
+                  <span>
+                    <img src={SoccerBall} alt="" />
+                  </span>
+                </span>
+                <span
+                  onClick={() => {
+                    modalCountToggle(1);
+                    toggleModal();
+                  }}
+                  className="spanInput"
+                >
+                  {football_club?.name}
+                </span>
+                <span className="span2"></span>
+              </InputFormFlex>
+              <InputFormFlex>
+                <span className="span1">
+                  <span>
+                    <img src={SoccerShoe} alt="" />
+                  </span>
+                </span>
+                <span
+                  onClick={() => {
+                    modalCountToggle(2);
+                    toggleModal();
+                  }}
+                  className="spanInput"
+                >
+                  {position === 1
+                    ? "Goalkeeper"
+                    : position === 2
+                    ? "Defender"
+                    : position === 4
+                    ? "Forward"
+                    : position === 3
+                    ? "Midfielder"
+                    : null}
+                </span>
+                <span className="span2"></span>
+              </InputFormFlex>
+              <InputFormFlex>
+                <span className="span1">
+                  <span>
+                    <img src={Location} alt="" />
+                  </span>
+                </span>
+                <span
+                  onClick={() => {
+                    modalCountToggle(3);
+                    toggleModal();
+                  }}
+                  className="spanInput"
+                >
+                  {city?.name}
+                </span>
+                <span className="span2"></span>
+              </InputFormFlex>
+              <InputFormFlex>
+                <span className="span1">
+                  <span>
+                    <img src={Location} alt="" />
+                  </span>
+                </span>
+                <span
+                  onClick={() => {
+                    modalCountToggle(4);
+                    toggleModal();
+                  }}
+                  className="spanInput"
+                >
+                  {region?.name}
+                </span>
+                <span className="span2"></span>
+              </InputFormFlex>
+            </form>
+          </AppMAIN>
+          <AppFooter>
+            <button type="submit" className="appBtnGreen">
+              Сохранить изменения
+            </button>
+          </AppFooter>
+        </>
+      ) : (
+        <>
+          {modal ? (
+            <Modal
+              link={modalClose}
+              title={
+                modalCount === 1
+                  ? titleClubsForm
+                  : modalCount === 2
+                  ? titlePositionForm
+                  : modalCount === 3
+                  ? titleCityForm
+                  : modalCount === 4
+                  ? titleRegionForm
+                  : null
+              }
+            >
+              {modalCount === 1 ? (
+                <>
+                  <InputFormFlex>
+                    <span className="span1">
+                      <span>
+                        <img src={SearchLine} alt="" />
+                      </span>
+                    </span>
+                    <input
+                      ref={ref}
+                      type="text"
+                      onChange={handleSearch}
+                      value={searchClubs}
+                      placeholder="Введите название команды"
+                    />
+                    <span className="span2"></span>
+                  </InputFormFlex>
 
-          <InputFormFlex>
-            <span className="span1">
-              <span>
-                <img src={Profile2} alt="" />
-              </span>
-            </span>
-            <input
-              onChange={(e) => changeUserInfo(e)}
-              // onFocus={() => onFocus("fullName_error")}
-              value={full_name}
-              type="text"
-              name="full_name"
-              placeholder="Полное имя"
-            />
-            <span className="span2"></span>
-          </InputFormFlex>
-          <CustomRadio>
-            <ProfileRadioDiv>
-              <div>
-                <input
-                  type="radio"
-                  id="test1"
-                  name="gender"
-                  value={gender}
-                  onClick={() => setGender("man")}
-                  checked={gender === "man"}
-                />
-                <label htmlFor="test1">Мужчина</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  id="test2"
-                  name="gender"
-                  value={gender}
-                  onClick={() => setGender("woman")}
-                  checked={gender === "woman"}
-                />
-                <label htmlFor="test2">Женщина</label>
-              </div>
-            </ProfileRadioDiv>
-          </CustomRadio>
-          <InputFormFlex>
-            <span className="span1">
-              <span>
-                <img src={Calendar} alt="" />
-              </span>
-            </span>
-            <input
-              type="date"
-              name="birth_date"
-              value={birth_date}
-              onChange={(e) => changeUserInfo(e)}
-            />
-            {/* <DatePicker
-              dateFormat="yyyy-MM-dd"
-              selected={startDate}
-              name="birth_date"
-              scrollableYearDropdown
-              showFullMonthYearPicker
-              onChange={(date) => setStartDate(date)}
-              peekNextMonth
-              dropdownMode="select"
-            /> */}
-            <span className="span2"></span>
-          </InputFormFlex>
-          <InputFormFlex>
-            <span className="span1">
-              <span>
-                <img src={CallProfile} alt="" />
-              </span>
-            </span>
-            <PhoneInput
-              onChange={(e) => changeUserInfo(e)}
-              // onFocus={() => onFocus("phone_error")}
-              value={phone}
-              inputExtraProps={{
-                required: true,
-                autoFocus: true,
-              }}
-              country={"uz"}
-              onlyCountries={["uz"]}
-              masks={{ uz: "(..) ...-..-.." }}
-              placeholder={"+998 () ___--__"}
-              areaCodes={{ uz: ["998"] }}
-              autocomplete="off"
-            />
-            <span className="span2"></span>
-          </InputFormFlex>
-          <InputFormFlex>
-            <span className="span1">
-              <span>
-                <img src={SoccerBall} alt="" />
-              </span>
-            </span>
-            <select
-              onChange={(e) => changeUserInfo(e)}
-              // onFocus={() => onFocus("phone_error")}
-              name="football_club"
-              value={football_club}
-              // disabled={erp_disable}
-            >
-              <option value="" selected>
-                Футбольный клуб
-              </option>
-              {clubs
-                ? clubs.map((item, index) => (
-                    <option
-                      key={index}
-                      selected={item.id === football_club ? "selected" : ""}
-                      value={item.id}
-                    >
-                      {item.name}
-                    </option>
-                  ))
-                : null}
-            </select>
-            <span className="span2"></span>
-          </InputFormFlex>
-          <InputFormFlex>
-            <span className="span1">
-              <span>
-                <img src={SoccerShoe} alt="" />
-              </span>
-            </span>
-            <select
-              onChange={(e) => changeUserInfo(e)}
-              // onFocus={() => onFocus("phone_error")}
-              name="position"
-              value={position}
-            >
-              <option value="" selected>
-                Позиция
-              </option>
-              {playerPosition
-                ? playerPosition.map((item, index) => (
-                    <option
-                      key={index}
-                      selected={item.id === position ? "selected" : ""}
-                      value={item.id}
-                    >
-                      {item.name}
-                    </option>
-                  ))
-                : null}
-            </select>
-            <span className="span2"></span>
-          </InputFormFlex>
-          <InputFormFlex>
-            <span className="span1">
-              <span>
-                <img src={Location} alt="" />
-              </span>
-            </span>
-            <input
-              onChange={(e) => changeUserInfo(e)}
-              // onFocus={() => onFocus("fullName_error")}
-              value={city}
-              type="text"
-              name="city"
-              placeholder="Город"
-            />
-            <span className="span2"></span>
-          </InputFormFlex>
-          <InputFormFlex>
-            <span className="span1">
-              <span>
-                <img src={Location} alt="" />
-              </span>
-            </span>
-            <input
-              onChange={(e) => changeUserInfo(e)}
-              // onFocus={() => onFocus("fullName_error")}
-              value={region}
-              type="text"
-              name="region"
-              placeholder="Область"
-            />
-            <span className="span2"></span>
-          </InputFormFlex>
-        </form>
-      </AppMAIN>
-      <AppFooter>
-        <button type="submit" className="appBtnGreen">
-          Сбросить пароль
-        </button>
-      </AppFooter>
+                  <InfiniteScroll
+                    dataLength={clubs.length}
+                    next={() => {
+                      getClubs(2, nextUrlClubs);
+                    }}
+                    hasMore={nextUrlClubs ? true : false}
+                    loader={<p style={{ textAlign: "center" }}>Loading...</p>}
+                  >
+                    <RadioInputFlexTop>
+                      {clubs
+                        ? clubs.map((club, index) => {
+                            const { id, name, image } = club;
+                            return (
+                              <RadioInputFlex key={index}>
+                                <label className="gg" htmlFor={id}>
+                                  <img
+                                    src={
+                                      image
+                                        ? image
+                                        : image === null
+                                        ? DefaultClub
+                                        : DefaultClub
+                                    }
+                                    style={{
+                                      width: "32px",
+                                      height: "32px",
+                                    }}
+                                    alt=""
+                                  />
+                                  <span
+                                    style={{
+                                      marginLeft: "8px",
+                                    }}
+                                  >
+                                    {name}
+                                  </span>
+                                </label>
+                                <input
+                                  type="radio"
+                                  id={id}
+                                  name="football_club"
+                                  onChange={() => {
+                                    setUserProfile({
+                                      ...userProfile,
+                                      football_club: club,
+                                    });
+                                    toggleModal();
+                                  }}
+                                  checked={
+                                    id === football_club?.id ? "checked" : ""
+                                  }
+                                />
+                              </RadioInputFlex>
+                            );
+                          })
+                        : null}
+                    </RadioInputFlexTop>
+                  </InfiniteScroll>
+                </>
+              ) : modalCount === 2 ? (
+                <>
+                  <RadioInputFlexTop>
+                    {playerPosition
+                      ? playerPosition.map((playerPos, index) => {
+                          const { id, name } = playerPos;
+                          return (
+                            <RadioInputFlex key={index}>
+                              <label className="gg" htmlFor={id}>
+                                <span>{name}</span>
+                              </label>
+                              <input
+                                type="radio"
+                                id={id}
+                                name="position"
+                                onChange={() => {
+                                  setUserProfile({
+                                    ...userProfile,
+                                    position: id,
+                                  });
+                                  toggleModal();
+                                }}
+                                checked={id === position ? "checked" : ""}
+                              />
+                            </RadioInputFlex>
+                          );
+                        })
+                      : null}
+                  </RadioInputFlexTop>
+                </>
+              ) : modalCount === 3 ? (
+                <>
+                  <InputFormFlex>
+                    <span className="span1">
+                      <span>
+                        <img src={SearchLine} alt="" />
+                      </span>
+                    </span>
+                    <input
+                      type="text"
+                      ref={ref}
+                      onChange={handleSearchCities}
+                      value={searchCities}
+                      placeholder="Введите название городы"
+                    />
+                    <span className="span2"></span>
+                  </InputFormFlex>
+                  <InfiniteScroll
+                    dataLength={cities.length}
+                    next={() => {
+                      getCities(2, nextUrlCities);
+                    }}
+                    hasMore={nextUrlCities ? true : false}
+                    loader={<p style={{ textAlign: "center" }}>Loading...</p>}
+                  >
+                    <RadioInputFlexTop>
+                      {cities
+                        ? cities.map((c, index) => {
+                            const { id, name } = c;
+                            return (
+                              <RadioInputFlex key={index}>
+                                <label className="gg" htmlFor={id}>
+                                  <span>{name}</span>
+                                </label>
+                                <input
+                                  type="radio"
+                                  id={id}
+                                  name="city"
+                                  onChange={() => {
+                                    setUserProfile({
+                                      ...userProfile,
+                                      city: c,
+                                    });
+                                    toggleModal();
+                                  }}
+                                  checked={id === city?.id ? "checked" : ""}
+                                />
+                              </RadioInputFlex>
+                            );
+                          })
+                        : null}
+                    </RadioInputFlexTop>
+                  </InfiniteScroll>
+                </>
+              ) : modalCount === 4 ? (
+                <>
+                  <InputFormFlex>
+                    <span className="span1">
+                      <span>
+                        <img src={SearchLine} alt="" />
+                      </span>
+                    </span>
+                    <input
+                      type="text"
+                      ref={ref}
+                      onChange={handleSearchCities}
+                      value={searchCities}
+                      placeholder="Введите название городы"
+                    />
+                    <span className="span2"></span>
+                  </InputFormFlex>
+                  <InfiniteScroll
+                    dataLength={cities.length}
+                    next={() => {
+                      getCities(2, nextUrlCities);
+                    }}
+                    hasMore={nextUrlCities ? true : false}
+                    loader={<p style={{ textAlign: "center" }}>Loading...</p>}
+                  >
+                    <RadioInputFlexTop>
+                      {cities
+                        ? cities.map((c, index) => {
+                            const { id, name } = c;
+                            return (
+                              <RadioInputFlex key={index}>
+                                <label className="gg" htmlFor={id}>
+                                  <span>{name}</span>
+                                </label>
+                                <input
+                                  type="radio"
+                                  id={id}
+                                  name="city"
+                                  onChange={() => {
+                                    setUserProfile({
+                                      ...userProfile,
+                                      city: c,
+                                    });
+                                    toggleModal();
+                                  }}
+                                  checked={id === city?.id ? "checked" : ""}
+                                />
+                              </RadioInputFlex>
+                            );
+                          })
+                        : null}
+                    </RadioInputFlexTop>
+                  </InfiniteScroll>
+                </>
+              ) : null}
+            </Modal>
+          ) : (
+            ""
+          )}
+        </>
+      )}
     </>
   );
 };
