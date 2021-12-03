@@ -19,12 +19,12 @@ import SoccerShoe from "../assets/svg/soccershoe.svg";
 import Location from "../assets/svg/Location.svg";
 import PhoneInput from "react-phone-input-2";
 import CallProfile from "../assets/svg/CallProfile.svg";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { GetAuthInstance } from "../helpers/httpClient";
-import _ from "lodash";
+import _, { get } from "lodash";
 import DefaultImg from "../assets/Img/default.png";
 import DefaultClub from "../assets/Img/defaultClub.png";
 import SearchLine from "../assets/svg/SearchLine.svg";
@@ -44,11 +44,11 @@ const ProfileEdit = () => {
     football_club: "",
     position: "",
     city: { id: "", name: "" },
-    region: "",
+    region: { id: "", name: "" },
     phone: "",
     gender: "man",
+    avatar: "",
   });
-
   const {
     full_name,
     birth_date,
@@ -58,8 +58,8 @@ const ProfileEdit = () => {
     region,
     phone,
     gender,
+    avatar,
   } = userProfile;
-
   const changeUserInfo = (e) => {
     const { value, name } = e.target;
     setUserProfile({
@@ -70,7 +70,6 @@ const ProfileEdit = () => {
   const [playerPosition, setPlayerPosition] = useState([]);
   const [modal, setModal] = useState(false);
   const [modalCount, setModalCount] = useState(null);
-  const [img, setImg] = useState(null);
   const ref = useRef(null);
   const [nextUrlClubs, setNextUrlClubs] = useState("");
   const [clubs, setClubs] = useState([]);
@@ -78,8 +77,17 @@ const ProfileEdit = () => {
   const [nextUrlCities, setNextUrlCities] = useState("");
   const [cities, setCities] = useState([]);
   const [searchCities, setSearchCities] = useState("");
+  const [nextUrlRegions, setNextUrlRegions] = useState("");
+  const [regions, setRegions] = useState([]);
+  const [searchRegions, setSearchRegions] = useState("");
   const [loading, setLoading] = useState(false);
   const [typingTimeOut, setTypingTimeOut] = useState(0);
+  const [updateLists, setUpdateLists] = useState([]);
+
+  const findRegion = regions.find(({ id }) => id === region?.id);
+  const selectedRegion = findRegion
+    ? findRegion
+    : { name: "Tumaningizni tanlang" };
 
   const toggleModal = () => {
     if (modal) {
@@ -91,18 +99,30 @@ const ProfileEdit = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
+    var formData = new FormData();
+    formData.append("full_name", full_name);
+    formData.append("gender", gender);
+    formData.append("birth_date", birth_date);
+    formData.append("football_club", football_club?.id);
+    formData.append("position", position);
+    formData.append("city", city?.id);
+    formData.append("region", region?.id);
+    GetAuthInstance()
+      .post("/api/v1/edit-profil/", formData)
+      .then((response) => {
+        setUpdateLists([...updateLists, response.formData]);
+        setUserProfile({ ...userProfile });
+      })
+      .catch((err) => {});
   };
 
   const handleImgChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setImg(URL.createObjectURL(e.target.files[0]));
-    }
     var formData = new FormData();
     formData.append("avatar", e.target.files[0]);
     GetAuthInstance()
       .post("/api/v1/edit-profil-image/", formData)
       .then((result) => {
-        setImg(result.data.date.avatar);
+        setUserProfile({ ...userProfile, avatar: result?.data?.data?.avatar });
       })
       .catch((err) => {});
   };
@@ -112,7 +132,7 @@ const ProfileEdit = () => {
     GetAuthInstance()
       .post("/api/v1/edit-profil-image/", formData)
       .then((result) => {
-        setImg(DefaultImg);
+        setUserProfile({ ...userProfile, avatar: "" });
       })
       .catch((err) => {});
   };
@@ -189,6 +209,31 @@ const ProfileEdit = () => {
         setCities([]);
       });
   };
+  const getRegions = (
+    page = 1,
+    next_url = `/api/v1/region?page=${page}&per_page=20&city=${city?.id}`,
+    search = ""
+  ) => {
+    let s = "";
+    if (search) {
+      s = "&search=" + search;
+    }
+    GetAuthInstance()
+      .get(next_url + s)
+      .then((response) => {
+        if (response.status === 200) {
+          const result =
+            page === 1
+              ? response.data.results
+              : [...regions, ...response.data.results];
+          setRegions(result);
+          setNextUrlRegions(response.data.next);
+        }
+      })
+      .catch((err) => {
+        setRegions([]);
+      });
+  };
 
   useEffect(() => {
     getPosition();
@@ -196,6 +241,9 @@ const ProfileEdit = () => {
     getUser();
     getCities();
   }, []);
+  useEffect(() => {
+    getRegions();
+  }, [city]);
 
   const handleSearch = (e) => {
     setSearchClubs(e.target.value);
@@ -226,19 +274,19 @@ const ProfileEdit = () => {
     }
   };
 
-  // const handleSearchRegions = (e) => {
-  //   setSearchRegions(e.target.value);
-  //   let page = 1;
-  //   let next_url = `/api/v1/region/?page=${page}&per_page=20&city=41`;
-  //   setTypingTimeOut(
-  //     setTimeout(() => {
-  //       getRegions(page, next_url, e.target.value);
-  //     }, 1000)
-  //   );
+  const handleSearchRegions = (e) => {
+    setSearchRegions(e.target.value);
+    let page = 1;
+    let next_url = `api/v1/region?page=${page}&per_page=20&city=41`;
+    setTypingTimeOut(
+      setTimeout(() => {
+        getRegions(page, next_url, e.target.value);
+      }, 1000)
+    );
 
-  //   if (typingTimeOut) {
-  //     clearTimeout(typingTimeOut);
-  //   }
+    if (typingTimeOut) {
+      clearTimeout(typingTimeOut);
+    }
   };
 
   const modalClose = (
@@ -269,12 +317,12 @@ const ProfileEdit = () => {
               <div />
             </AppHeaderFlex>
           </AppHeader>
-          <AppMAIN>
-            <form onSubmit={(e) => handleUpdate(e)}>
+          <form onSubmit={(e) => handleUpdate(e)}>
+            <AppMAIN>
               <ProfileHeaderFlex>
                 <div className="profileHeaderFlexSub1">
                   <img
-                    src={img ? img : DefaultImg}
+                    src={avatar ? avatar : DefaultImg}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = DefaultImg;
@@ -294,6 +342,7 @@ const ProfileEdit = () => {
                         id="files"
                         style={{ visibility: "hidden" }}
                         type="file"
+                        accept="image/*"
                         onChange={handleImgChange}
                       />
                     </span>
@@ -444,17 +493,17 @@ const ProfileEdit = () => {
                   }}
                   className="spanInput"
                 >
-                  {region?.name}
+                  {selectedRegion?.name}
                 </span>
                 <span className="span2"></span>
               </InputFormFlex>
-            </form>
-          </AppMAIN>
-          <AppFooter>
-            <button type="submit" className="appBtnGreen">
-              Сохранить изменения
-            </button>
-          </AppFooter>
+            </AppMAIN>
+            <AppFooter>
+              <button type="submit" className="appBtnGreen">
+                Сохранить изменения
+              </button>
+            </AppFooter>
+          </form>
         </>
       ) : (
         <>
@@ -645,24 +694,24 @@ const ProfileEdit = () => {
                     <input
                       type="text"
                       ref={ref}
-                      onChange={handleSearchCities}
-                      value={searchCities}
-                      placeholder="Введите название городы"
+                      onChange={handleSearchRegions}
+                      value={searchRegions}
+                      placeholder="Введите название регионы"
                     />
                     <span className="span2"></span>
                   </InputFormFlex>
                   <InfiniteScroll
-                    dataLength={cities.length}
+                    dataLength={regions.length}
                     next={() => {
-                      getCities(2, nextUrlCities);
+                      getRegions(2, nextUrlRegions);
                     }}
-                    hasMore={nextUrlCities ? true : false}
+                    hasMore={nextUrlRegions ? true : false}
                     loader={<p style={{ textAlign: "center" }}>Loading...</p>}
                   >
                     <RadioInputFlexTop>
-                      {cities
-                        ? cities.map((c, index) => {
-                            const { id, name } = c;
+                      {regions
+                        ? regions.map((r, index) => {
+                            const { id, name } = r;
                             return (
                               <RadioInputFlex key={index}>
                                 <label className="gg" htmlFor={id}>
@@ -671,15 +720,15 @@ const ProfileEdit = () => {
                                 <input
                                   type="radio"
                                   id={id}
-                                  name="city"
+                                  name="region"
                                   onChange={() => {
                                     setUserProfile({
                                       ...userProfile,
-                                      city: c,
+                                      region: r,
                                     });
                                     toggleModal();
                                   }}
-                                  checked={id === city?.id ? "checked" : ""}
+                                  checked={id === region?.id ? "checked" : ""}
                                 />
                               </RadioInputFlex>
                             );
