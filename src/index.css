@@ -27,3 +27,11 @@
   src: url("./assets/fonts/Manrope-SemiBold.ttf") format("truetype");
   font-style: normal;
 }
+
+.showModal {
+  display: block;
+}
+
+.hideModal {
+  display: none;
+}

@@ -14,6 +14,7 @@ import PitchDetail from "../components/PitchDetail";
 import CommentsRating from "../components/sections/CommentsRating";
 import GamePlayerReting from "../components/GamePlayerReting";
 import GamePlayerRatingMark from "../components/GamePlayerRatingMark";
+import ProfileEdit from "../components/ProfileEdit";
 
 const Routess = () => {
   return (
@@ -33,6 +34,7 @@ const Routess = () => {
       <Route path="/game-player-reting/:id" element={<GamePlayerReting />} />
       <Route path="/game-player-reting-mark/:id" element={<GamePlayerRatingMark />} />
       <Route path="/comments-rating" element={<CommentsRating />} />
+      <Route path="/profile-edit" element={<ProfileEdit />} />
     </Routes>
   );
 };
