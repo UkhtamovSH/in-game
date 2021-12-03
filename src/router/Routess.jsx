@@ -13,6 +13,7 @@ import ResetPassword from "../components/ResetPassword";
 import PitchDetail from "../components/PitchDetail";
 import CommentsRating from "../components/sections/CommentsRating";
 import GamePlayerReting from "../components/GamePlayerReting";
+import GamePlayerRatingMark from "../components/GamePlayerRatingMark";
 
 const Routess = () => {
   return (
@@ -30,6 +31,7 @@ const Routess = () => {
       <Route path="/pitches/:id" element={<PitchDetail />} />
       <Route path="/rating-players" element={<RatingPlayers />} />
       <Route path="/game-player-reting/:id" element={<GamePlayerReting />} />
+      <Route path="/game-player-reting-mark/:id" element={<GamePlayerRatingMark />} />
       <Route path="/comments-rating" element={<CommentsRating />} />
     </Routes>
   );

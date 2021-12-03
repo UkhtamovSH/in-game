@@ -27,7 +27,8 @@ export const ContainerFluid = styled.div`
 `;
 
 export const AppHeader = styled.div`
-  padding: 12px;
+  padding: 12px 16px;
+  box-sizing: border-box;
   transform: translate(-50.09%, 0);
   position: fixed;
   left: 50%;
@@ -86,6 +87,27 @@ export const AppMainWrapp = styled.div`
   margin: 65px 0 100px 0;
 `;
 export const AppMAIN = styled.div`
+.star-rating {
+  border-bottom: 1px solid #333333;
+  margin: 20px 0;
+}
+button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 30px;
+  margin-right: 5px;
+}
+.on {
+  color: #F6CE42;
+}
+.off {
+  color: #333333;
+}
+.infiniteScroll {
+  margin: 0 0 65px 0;
+}
   .worldPlayers {
     padding: 5px 15px;
     display: flex;
@@ -93,14 +115,16 @@ export const AppMAIN = styled.div`
     gap: 10px;
     margin-top: 20px  ;
     .numberLine{
+      width: 20px;
+      height: 20px;
+      padding: 3px;
     background: #F6CE42;
     border-radius: 50%;
-    padding: 0 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 500;
     }
     .avatar{
       display: flex;
@@ -194,7 +218,7 @@ export const AppMAIN = styled.div`
       height: 254px;
       margin: 10px auto;
       border-radius: 16px;
-      background-color: #f6ce42;
+      background-color: #4fd2;
       .poolyaImg img {
         width: 450px;
       }

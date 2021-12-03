@@ -66,7 +66,7 @@ export const HomeSwiperStyle = styled.div`
     width: 277px;
     margin-top: 20px;
     padding: 10px 0;
-     p {
+    a {
       text-align: center;
       padding: 15px 0px;
       cursor: pointer;
