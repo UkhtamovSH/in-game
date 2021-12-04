@@ -88,27 +88,20 @@ export const AppMainWrapp = styled.div`
   margin: 65px 0 100px 0;
 `;
 export const AppMAIN = styled.div`
-.star-rating {
-  border-bottom: 1px solid #333333;
-  margin: 20px 0;
-}
-button {
-  background-color: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-size: 30px;
-  margin-right: 5px;
-}
-.on {
-  color: #F6CE42;
-}
-.off {
-  color: #333333;
-}
-.infiniteScroll {
+  margin-top: 53px;
+  margin-bottom: 82px;
+  padding-bottom: 20px;
+  .on {
+    color: #f6ce42;
+  }
+  .off {
+    color: #333333;
+  }
+  /* .infiniteScroll {
   margin: 0 0 65px 0;
 }
+
+
   .worldPlayers {
     padding: 5px 15px;
     display: flex;
@@ -148,6 +141,7 @@ button {
     color: black;
       }
 }
+
     }
     .winsWrap{
       display: flex;
@@ -252,8 +246,8 @@ button {
           }
         }
       }
-    }
- `;
+    } */
+`;
 
 export const StadionPage = styled.div`
   margin: 60px 0;

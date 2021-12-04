@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, keyframes } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   body{
@@ -21,8 +21,27 @@ export const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar-thumb {
     background: #000; 
   }
+  .AppLoader2 {
+    margin-left: 15px;
+    border: 4px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 4px solid #666464;
+    width: 40px;
+    height: 40px;
+   -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  } 
 
-  
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 
 .appBtnGreen,
@@ -234,6 +253,90 @@ export const CustomRadio = styled.div`
     transform: scale(1);
   }
 `;
-export const SkeletonInput = styled.div`
-  margin: 16px;
+
+const animation = keyframes`
+	0% {
+		left: -150px;
+	}
+	100% {
+		left: calc(100% + 150px);
+	}
+`;
+export const SContainer = styled.div`
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  z-index: 9999999;
+  transform: translate(-50.09%, 0);
+  left: 50%;
+  width: 100%;
+  & .beforeAnimation {
+    position: relative;
+    &:before {
+      content: "";
+      width: 150px;
+      height: 100%;
+      position: absolute;
+      left: -30px;
+      top: 0;
+      transform: rotate(120deg);
+      background: linear-gradient(
+        90deg,
+        #000 0px,
+        rgba(134, 130, 130, 0.8) 75px,
+        #000 150px
+      );
+      animation: ${animation} 0.7s infinite ease-in-out;
+    }
+  }
+  @media (max-width: 8000px) and (min-width: 576px) {
+    max-width: 450px;
+  }
+
+  @media only screen and (max-width: 576px) and (min-width: 320px) {
+    max-width: 94%;
+  }
+`;
+export const SContainerHeader = styled.div`
+  box-sizing: border-box;
+  transform: translate(-50.09%, 0);
+  position: fixed;
+  left: 50%;
+  top: 0;
+  width: 100%;
+  z-index: 4;
+  @media (max-width: 8000px) and (min-width: 576px) {
+    max-width: 450px;
+  }
+
+  & .subSkeletonHeader {
+    overflow: hidden;
+    margin-top: 15px;
+    height: 60px;
+    width: 100%;
+    background-color: #484343;
+    border-radius: 12px;
+  }
+`;
+export const SContainerFooter = styled.div`
+  box-sizing: border-box;
+  transform: translate(-50.09%, 0);
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  width: 100%;
+  z-index: 4;
+
+  @media (max-width: 8000px) and (min-width: 576px) {
+    max-width: 450px;
+  }
+
+  & .subSkeletonFooter {
+    overflow: hidden;
+    margin-bottom: 15px;
+    height: 60px;
+    width: 100%;
+    background-color: #484343;
+    border-radius: 12px;
+  }
 `;

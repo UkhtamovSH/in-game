@@ -12,36 +12,36 @@ import {
 import {
   GamePlayerRatingMarkWrapp,
   GamerAppBtn,
+  StarRating,
   RatingMarks,
   RatingTextArea,
 } from "../styles/GamePlayerRatingMark.style";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
-import commentIcon from "../assets/Img/Profile.png"
+import commentIcon from "../assets/Img/Profile.png";
 const GamePlayerRatingMark = () => {
   const params = useParams();
   const [data, setData] = useState([]);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const [lists, setLists] = useState([])
+  const [lists, setLists] = useState([]);
 
-  const handleSubmit  = (e) => {
-    
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const postData =  {
-      text:comment,
-    }
+    const postData = {
+      text: comment,
+    };
 
-      GetAuthInstance()
-      .post(`/api/v1/game-user/?game=${params.id}`,postData)
+    GetAuthInstance()
+      .post(`/api/v1/game-user/?game=${params.id}`, postData)
       .then((res) => {
         setData(res);
-        setComment("")
-        setLists([lists,res.postData])
+        setComment("");
+        setLists([lists, res.postData]);
         console.log(res.data);
       })
       .catch((err) => {});
-    };
+  };
   return (
     <AppHeader>
       <AppHeaderFlex>
@@ -56,7 +56,8 @@ const GamePlayerRatingMark = () => {
         <div className=""></div>
       </AppHeaderFlex>
       <AppMAIN>
-        <div className="star-rating">
+        <StarRating></StarRating>
+        <StarRating>
           <p>Скорость</p>
           {[...Array(5)].map((star, index) => {
             index += 1;
@@ -73,16 +74,16 @@ const GamePlayerRatingMark = () => {
               </>
             );
           })}
-        </div>
+        </StarRating>
       </AppMAIN>
       <RatingTextArea>
-      <form action="">
-      <textarea
-          placeholder="Отзыв об игроке"
-          className="gamerTextArea"
-        ></textarea>
-      </form>
-        <img src={commentIcon} alt="" className="commentIconImg"/>
+        <form action="">
+          <textarea
+            placeholder="Отзыв об игроке"
+            className="gamerTextArea"
+          ></textarea>
+        </form>
+        <img src={commentIcon} alt="" className="commentIconImg" />
       </RatingTextArea>
       <GamerAppBtn>
         <div className="appBtnGreen">Сохранить</div>

@@ -1,10 +1,6 @@
 import { AppFooter2, AppMAIN2 } from "../styles/ContainerFluid.styled";
 import Navigation from "../components/sections/Navigation";
-import {
-  HomeContainer,
-  HomeStyle,
-  HomeTimeStyle,
-} from "../styles/Home.styled";
+import { HomeContainer, HomeStyle, HomeTimeStyle } from "../styles/Home.styled";
 import settingImg from "../assets/Img/Setting.png";
 import editImg from "../assets/Img/Edit.png";
 import InGameLogo from "../assets/Img/Ball.png";
@@ -15,24 +11,28 @@ import HomeSwiper from "../components/sections/HomeSwiper";
 import CommentSwiper from "../components/sections/CommentSwiper";
 import { useEffect, useState } from "react";
 import { GetAuthInstance } from "../helpers/httpClient";
-import {get} from "lodash";
+import { get } from "lodash";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loading } from "../redux/actions";
 
 const Home = () => {
   const [data, setData] = useState([]);
 
+  const dispatch = useDispatch();
   const getData = () => {
+    dispatch(loading(true));
     GetAuthInstance()
       .get("/api/v1/get-user/?lan=en")
       .then((res) => {
         setData(res.data.data);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {})
+      .finally(() => dispatch(loading(false)));
   };
   useEffect(() => {
     getData();
   }, []);
-
 
   return (
     <>
@@ -40,7 +40,9 @@ const Home = () => {
         <HomeStyle>
           <div className="topSetting">
             <div>
-              <img src={editImg} alt="" />
+              <Link to="/profile-edit">
+                <img src={editImg} alt="" />
+              </Link>
             </div>
             <div>
               <img src={settingImg} alt="" />
@@ -76,7 +78,7 @@ const Home = () => {
                     <div className="topWinContain">
                       <img src={InGameLogo} alt="" />
                       <div className="topWin">
-                        <p>{get(data,"positions.Forward")}% </p>
+                        <p>{get(data, "positions.Forward")}% </p>
                         <p>Forward</p>
                       </div>
                     </div>
@@ -85,14 +87,14 @@ const Home = () => {
                     <div className="topWinContain">
                       <img src={InGameLogo} alt="" />
                       <div className="topWin">
-                        <p>{get(data,"positions.Midfielder")}% </p>
+                        <p>{get(data, "positions.Midfielder")}% </p>
                         <p>Midfielder</p>
                       </div>
                     </div>
                     <div className="topWinContain">
                       <img src={InGameLogo} alt="" />
                       <div className="topWin">
-                        <p>{get(data,"positions.Defender")}% </p>
+                        <p>{get(data, "positions.Defender")}% </p>
                         <p>Defender</p>
                       </div>
                     </div>
@@ -131,7 +133,6 @@ const Home = () => {
               </HomeTimeStyle>
               <HomeSwiper />
               <CommentSwiper />
-            
             </div>
           </HomeContainer>
         </HomeStyle>

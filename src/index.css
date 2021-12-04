@@ -35,3 +35,13 @@
 .hideModal {
   display: none;
 }
+
+.inputError {
+  font-family: "Manrope-SemiBold", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+  text-align: right;
+  color: red;
+  margin: 0 16px;
+}

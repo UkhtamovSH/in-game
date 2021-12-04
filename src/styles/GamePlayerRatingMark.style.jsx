@@ -45,3 +45,7 @@ export const RatingMarks = styled.div`
     height: 19px;
   }
 `;
+export const StarRating = styled.div`
+  border-bottom: 1px solid #333333;
+  margin: 20px 0;
+`;
