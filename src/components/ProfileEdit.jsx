@@ -502,6 +502,7 @@ const ProfileEdit = () => {
           )}
         </>
       )}
+      {console.log(modalCount)}
     </>
   );
 };

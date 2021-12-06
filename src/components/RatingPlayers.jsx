@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { first, get } from "lodash";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
@@ -11,40 +11,69 @@ import {
   AppMAIN,
 } from "../styles/ContainerFluid.styled";
 import Navigation from "./sections/Navigation";
+import ListRatingPlayer from "./sections/ratingplayer/ListRatingPlayer";
 
 const RatingPlayers = () => {
-  const [changeColor, setChangeColor] = useState(false);
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [nextUrl, setNextUrl] = useState("");
-  const [hasMore, setHasMore] = useState(false);
+  const [worldPlayerLists, setWorldPlayerLists] = useState([]);
+  const [regPlayerLists, setRegPlayerLists] = useState([]);
+  const [nextUrlWPlayers, setNextUrlWPlayers] = useState("");
+  const [nextUrlRegPlayers, setNextUrlRegPlayers] = useState("");
 
-  useEffect(() => {
-    getData();
-  }, []);
-  const getData = () => {
-    if (page === 1) {
-      setLoading(true);
-    }
+  const [countTab, setCountTab] = useState(1);
+
+  const getWorldPlayers = (
+    page = 1,
+    next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`
+  ) => {
     GetAuthInstance()
-      .get(`api/v1/user-filter-list?per_page=8&page=${page}`)
+      .get(next_url)
       .then((res) => {
-        setData([...data, ...res.data.results]);
-        setNextUrl(res.data.next);
-        setPage(page + 1);
-        setLoading(false);
-        console.log(res);
-        if (res.data.next) {
-          setHasMore(true);
-        } else {
-          setHasMore(false);
+        if (res.status === 200) {
+          const result =
+            page === 1
+              ? res.data.results
+              : [...worldPlayerLists, ...res.data.results];
+          setWorldPlayerLists(result);
+          setNextUrlWPlayers(res.data.next);
         }
       })
       .catch((err) => {
-        setHasMore(false);
+        setWorldPlayerLists([]);
       });
   };
+
+  const getRegionPlayers = (
+    page = 1,
+    next_url = `/api/v1/user-filter-list/?page=${page}&per_page=10`
+  ) => {
+    GetAuthInstance()
+      .get(next_url)
+      .then((res) => {
+        if (res.status === 200) {
+          const result =
+            page === 1
+              ? res.data.results
+              : [...regPlayerLists, ...res.data.results];
+          setRegPlayerLists(result);
+          setNextUrlRegPlayers(res.data.next);
+        }
+      })
+      .catch((err) => {
+        setRegPlayerLists([]);
+      });
+  };
+
+  useEffect(() => {
+    getWorldPlayers();
+    getRegionPlayers();
+  }, []);
+
+  const clickCountTab = (i) => {
+    setCountTab(i);
+    getRegionPlayers();
+    getWorldPlayers();
+  };
+
   return (
     <>
       <AppHeader>
@@ -60,68 +89,106 @@ const RatingPlayers = () => {
           </div>
         </AppHeaderFlex>
       </AppHeader>
-      <AppMAIN>
-        <div className="filterOfPlayers">
-          <p
-            className={!changeColor ? "colorP click" : "changeP"}
-            onClick={() => setChangeColor(!changeColor)}
-          >
-            Мировой
-          </p>
-          <p
-            className={changeColor ? "colorP click" : "changeP"}
-            onClick={() => setChangeColor(!changeColor)}
-          >
-            Региональный
-          </p>
+      <AppMAIN style={{ marginLeft: "15px", marginRight: "15px" }}>
+        <div
+          onClick={() => {
+            clickCountTab(1);
+          }}
+        >
+          Мировой
         </div>
-        {loading ? (
-          <h3>Loading...</h3>
-        ) : (
-          <InfiniteScroll
-            dataLength={data.length}
-            next={getData}
-            hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>You have seen it all</b>
-              </p>
-            }
-            className="infiniteScroll"
-          >
-            {data.map((item, index) => (
-              <div className="worldPlayers" key={index}>
-                <p className="numberLine">{index + 1}</p>
-                <div className="avatar">
-                  <div className="avatarFiltrImg">
-                    <img src={_.get(item, "avatar")} alt="" />
 
-                    <span>{_.get(item, "position")}</span>
-                  </div>
-                  <div className="AvatarName">
-                    <h5>{_.get(item, "full_name")}</h5>
-                    <div className="avatarAge">
-                      <p>{_.get(item, "age")} года</p>
-                      <span></span>
-                      <p>{_.get(item, "city.name")} </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="winsWrap">
-                  <div className="winsPersant">
-                    <p>{_.get(item, "victory")}%</p>
-                    <span>Побед</span>
-                  </div>
-                  <div className="markPersant">
-                    <p>{_.get(item, "ball")}</p>
-                    <span>Очков</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </InfiniteScroll>
-        )}
+        <div
+          onClick={() => {
+            clickCountTab(2);
+          }}
+        >
+          Региональный
+        </div>
+
+        <div>
+          {countTab === 1 ? (
+            <InfiniteScroll
+              dataLength={worldPlayerLists.length}
+              next={() => {
+                getWorldPlayers(2, nextUrlWPlayers);
+              }}
+              hasMore={nextUrlWPlayers ? true : false}
+              loader={
+                <p
+                  style={{
+                    textAlign: "center",
+                    transform: "translate(0,10px)",
+                  }}
+                >
+                  Loading...
+                </p>
+              }
+            >
+              <>
+                {worldPlayerLists
+                  ? worldPlayerLists.map((wpList, index) => {
+                      let cityN = get(wpList, "city.name", "");
+                      return (
+                        <ListRatingPlayer
+                          position={wpList.position}
+                          full_name={wpList.full_name}
+                          id={index + 1}
+                          key={index}
+                          age={wpList.age}
+                          avatar={wpList.avatar}
+                          ball={wpList.ball}
+                          city={cityN.split(" ")[0]}
+                          victory={wpList.victory}
+                        />
+                      );
+                    })
+                  : null}
+              </>
+            </InfiniteScroll>
+          ) : countTab === 2 ? (
+            <InfiniteScroll
+              dataLength={regPlayerLists.length}
+              next={() => {
+                getRegionPlayers(2, nextUrlRegPlayers);
+              }}
+              hasMore={nextUrlRegPlayers ? true : false}
+              loader={
+                <p
+                  style={{
+                    textAlign: "center",
+                    transform: "translate(0,10px)",
+                  }}
+                >
+                  Loading...
+                </p>
+              }
+            >
+              <>
+                {regPlayerLists
+                  ? regPlayerLists.map((regList, index) => {
+                      let cityN = get(regList, "city.name", "");
+                      return (
+                        <ListRatingPlayer
+                          position={regList.position}
+                          full_name={regList.full_name}
+                          id={index + 1}
+                          key={index}
+                          age={regList.age}
+                          avatar={regList.avatar}
+                          ball={regList.ball}
+                          city={cityN.split(" ")[0]}
+                          victory={regList.victory}
+                        />
+                      );
+                    })
+                  : null}
+              </>
+            </InfiniteScroll>
+          ) : (
+            ""
+          )}
+        </div>
       </AppMAIN>
       <AppFooter2>
         <Navigation />

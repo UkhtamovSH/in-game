@@ -38,7 +38,7 @@ export const AppHeader = styled.div`
   z-index: 4;
 
   @media (max-width: 8000px) and (min-width: 576px) {
-    max-width: 450px;
+    max-width: 475px;
   }
 
   @media only screen and (max-width: 576px) and (min-width: 320px) {
@@ -58,7 +58,7 @@ export const AppFooter = styled.div`
   border-top: 1px solid #565050;
 
   @media (max-width: 8000px) and (min-width: 576px) {
-    max-width: 450px;
+    max-width: 451px;
   }
 
   @media only screen and (max-width: 576px) and (min-width: 320px) {
@@ -77,7 +77,7 @@ export const AppFooter2 = styled.div`
   z-index: 99 !important;
 
   @media (max-width: 8000px) and (min-width: 576px) {
-    max-width: 450px;
+    max-width: 451px;
   }
 
   @media only screen and (max-width: 576px) and (min-width: 320px) {
