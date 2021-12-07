@@ -11,6 +11,7 @@ import {
   SContainer,
   SContainerFooter,
   SContainerHeader,
+  StylesHidden,
 } from "../styles/Global.styled";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import { ProfileRadioDiv } from "../styles/Profile.styled";
@@ -23,18 +24,13 @@ import CallProfile from "../assets/svg/CallProfile.svg";
 import React, { useEffect, useState } from "react";
 import { GetAuthInstance } from "../helpers/httpClient";
 import Modal from "./sections/Modal";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import ChangeProfileImg from "../components/sections/editprofile/ChangeProfileImg";
 import SelectProfileClubs from "../components/sections/editprofile/SelectProfileClubs";
 import SelectProfilePositions from "../components/sections/editprofile/SelectProfilePositions";
 import SelectProfileCities from "../components/sections/editprofile/SelectProfileCities";
 import SelectProfileRegions from "../components/sections/editprofile/SelectProfileRegions";
 
-const Styles = createGlobalStyle`
-	body {
-		overflow: hidden !important;
-	}
-`;
 const SContainerMainProfEdit = styled.div`
   margin-top: 93px;
   margin-bottom: 82px;
@@ -236,7 +232,7 @@ const ProfileEdit = () => {
           <SContainerFooter>
             <div className="subSkeletonFooter beforeAnimation" />
           </SContainerFooter>
-          <Styles />
+          <StylesHidden />
         </SContainer>
       ) : (
         <>
@@ -502,7 +498,6 @@ const ProfileEdit = () => {
           )}
         </>
       )}
-      {console.log(modalCount)}
     </>
   );
 };

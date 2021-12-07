@@ -45,3 +45,32 @@
   color: red;
   margin: 0 16px;
 }
+
+.css-1f43avz-a11yText-A11yText {
+  z-index: 99 !important;
+}
+
+.css-b62m3t-container {
+  margin: 0 22px !important;
+}
+
+.css-1s2u09g-control {
+  background: #333333 !important;
+  border-radius: 16px !important;
+  height: 45px !important;
+  border: none !important;
+}
+
+.css-1pahdxg-control {
+  background: #333333 !important;
+  border-radius: 16px !important;
+  height: 45px !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.css-1hb7zxy-IndicatorsContainer {
+  display: none !important;
+}
+
+#react-select-2-listbox {}

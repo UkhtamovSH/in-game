@@ -1,5 +1,13 @@
 import styled, { createGlobalStyle, keyframes } from "styled-components";
 
+const animation = keyframes`
+	0% {
+		left: -150px;
+	}
+	100% {
+		left: calc(100% + 150px);
+	}
+`;
 export const GlobalStyle = createGlobalStyle`
   body{
     background: ${({ theme }) => theme.appColors.gray};    
@@ -32,6 +40,25 @@ export const GlobalStyle = createGlobalStyle`
     animation: spin 2s linear infinite;
   } 
 
+  .beforeAnimation {
+    position: relative;
+    &:before {
+      content: "";
+      width: 150px;
+      height: 100%;
+      position: absolute;
+      left: -30px;
+      top: 0;
+      transform: rotate(120deg);
+      background: linear-gradient(
+        90deg,
+        #000 0px,
+        rgba(134, 130, 130, 0.8) 75px,
+        #000 150px
+      );
+      animation: ${animation} 0.7s infinite ease-in-out;
+    }}
+  
 /* Safari */
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
@@ -96,13 +123,20 @@ export const GlobalStyle = createGlobalStyle`
 }
 `;
 
+export const StylesHidden = createGlobalStyle`
+	body {
+		overflow: hidden !important;
+	}
+`;
+
 export const InputFormFlex = styled.div`
   display: flex;
   background: ${({ theme }) => theme.appColors.blackGray};
   border-radius: 16px;
   margin: 16px;
   height: 45px;
-  .spanInput {
+  .spanInput,
+  .spanInput2 {
     width: 100%;
     align-items: center;
     display: flex;
@@ -111,6 +145,14 @@ export const InputFormFlex = styled.div`
     font-weight: normal;
     font-size: 16px;
     color: ${({ theme }) => theme?.appColors.gray};
+  }
+
+  .spanInput2 {
+    border-radius: 16px;
+    padding: 0 16px;
+  }
+
+  .spanInput {
     cursor: pointer;
   }
   .react-datepicker__input-container {
@@ -254,14 +296,6 @@ export const CustomRadio = styled.div`
   }
 `;
 
-const animation = keyframes`
-	0% {
-		left: -150px;
-	}
-	100% {
-		left: calc(100% + 150px);
-	}
-`;
 export const SContainer = styled.div`
   position: fixed;
   top: 0;

@@ -366,3 +366,20 @@ export const AppHeaderFlex = styled.div`
   height: 100%;
   width: 100%;
 `;
+
+export const AppHeaderFlex2PRating = styled.div`
+  display: flex;
+  justify-content: space-space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  div {
+    padding: 12px 0;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+  }
+  .countTabActive {
+    border-bottom: 2px solid #0eb800;
+  }
+`;
