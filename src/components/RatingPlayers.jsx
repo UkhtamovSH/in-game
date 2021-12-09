@@ -1,4 +1,4 @@
-import { get, times } from "lodash";
+import { get } from "lodash";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
@@ -100,27 +100,38 @@ const RatingPlayers = () => {
   const [nextUrlRegPlayers, setNextUrlRegPlayers] = useState("");
   const [preLoading, setPreLoading] = useState(false);
   const [modal, setModal] = useState(false);
-  const [filterBall, setFilterBall] = useState("");
   const [typingTimeOut, setTypingTimeOut] = useState(0);
-
+  const [filter, setFilter] = useState({});
   const [countTab, setCountTab] = useState(1);
 
   const getWorldPlayers = (
     page = 1,
     next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`,
-    ball = ""
+    filters = {}
   ) => {
     if (page === 1) {
       setPreLoading(true);
     }
 
+    let c = "";
     let b = "";
-    if (ball) {
-      b = "&ball=" + ball;
+    let p = "";
+    let d = "";
+    if (filters.cityy) {
+      c = "&city=" + filters.cityy;
     }
-
+    if (filters.ball) {
+      b = "&ball=" + filters.ball;
+    }
+    if (filters.pos) {
+      p = "&position=" + filters.pos;
+    }
+    if (filters.divisionn) {
+      d = "&division=" + filters.divisionn;
+    }
+    setFilter(filters);
     GetAuthInstance()
-      .get(next_url + b)
+      .get(next_url + b + p + d + c)
       .then((res) => {
         if (res.status === 200) {
           const result =
@@ -162,12 +173,6 @@ const RatingPlayers = () => {
       .finally(() => setPreLoading(false));
   };
 
-  useEffect(() => {
-    getWorldPlayers();
-    getRegionPlayers();
-    window.scrollTo(0, 0);
-  }, []);
-
   const clickCountTab = (i) => {
     setCountTab(i);
     getRegionPlayers();
@@ -175,46 +180,14 @@ const RatingPlayers = () => {
   };
 
   const toggleModal = () => {
-    if (modal) {
-      setFilterBall("");
-      if (filterBall === "") {
-        getWorldPlayers();
-      }
-    }
     setModal(!modal);
   };
 
-  let SkeletonArr = [];
-
-  times(9, (index) => {
-    SkeletonArr.push(
-      <div className="sRPayerFlexMain" key={index}>
-        <div className="sRPayerFlexSub1">
-          <div className="sRPayerFlexSub1Flex">
-            <div className="Sub1Round beforeAnimation" />
-            <div className="Sub1Round2 beforeAnimation" />
-            <div className="">
-              <div className="Sub1Round2Right1 beforeAnimation" />
-              <div className="Sub1Round2Right2 beforeAnimation" />
-              <div className="Sub1Round2Right2 beforeAnimation" />
-            </div>
-          </div>
-        </div>
-        <div className="sRPayerFlexSub2">
-          <div className="sRPayerFlexSub2Flex">
-            <div className="Sub2Main">
-              <div className="Sub2 beforeAnimation" />
-              <div className="Sub2 beforeAnimation" />
-            </div>
-            <div className="Sub22Main">
-              <div className="Sub2 beforeAnimation" />
-              <div className="Sub2 beforeAnimation" />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  });
+  useEffect(() => {
+    getWorldPlayers();
+    getRegionPlayers();
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -267,7 +240,35 @@ const RatingPlayers = () => {
           >
             {preLoading ? (
               <SRatingPlayerContainer>
-                {SkeletonArr}
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => {
+                  return (
+                    <div className="sRPayerFlexMain" key={index}>
+                      <div className="sRPayerFlexSub1">
+                        <div className="sRPayerFlexSub1Flex">
+                          <div className="Sub1Round beforeAnimation" />
+                          <div className="Sub1Round2 beforeAnimation" />
+                          <div className="">
+                            <div className="Sub1Round2Right1 beforeAnimation" />
+                            <div className="Sub1Round2Right2 beforeAnimation" />
+                            <div className="Sub1Round2Right2 beforeAnimation" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="sRPayerFlexSub2">
+                        <div className="sRPayerFlexSub2Flex">
+                          <div className="Sub2Main">
+                            <div className="Sub2 beforeAnimation" />
+                            <div className="Sub2 beforeAnimation" />
+                          </div>
+                          <div className="Sub22Main">
+                            <div className="Sub2 beforeAnimation" />
+                            <div className="Sub2 beforeAnimation" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
                 <StylesHidden />
               </SRatingPlayerContainer>
             ) : (
@@ -375,12 +376,11 @@ const RatingPlayers = () => {
               </AppHeader>
               {countTab === 1 ? (
                 <FilterOneRPlayer
-                  setFilterBall={setFilterBall}
                   getWorldPlayers={getWorldPlayers}
-                  filterBall={filterBall}
                   toggleModal={toggleModal}
                   setTypingTimeOut={setTypingTimeOut}
                   typingTimeOut={typingTimeOut}
+                  filter={filter}
                 />
               ) : countTab === 2 ? (
                 <FilterTwoRPlayer />

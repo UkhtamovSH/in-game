@@ -144,7 +144,7 @@ export const InputFormFlex = styled.div`
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
-    color: ${({ theme }) => theme?.appColors.gray};
+    color: #bdbdbd;
   }
 
   .spanInput2 {
