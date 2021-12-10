@@ -73,4 +73,6 @@
   display: none !important;
 }
 
-#react-select-2-listbox {}
+.activeList {
+  background-color: red;
+}

@@ -6,18 +6,12 @@ import {
 } from "../../../styles/ContainerFluid.styled";
 import { InputFormFlex } from "../../../styles/Global.styled";
 import FilterBall from "./FilterBall";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FilterDivision from "./FilterDivision";
 import FilterPosition from "./FilterPosition";
 import FilterCity from "./FilterCity";
 
 const FilterOneRPlayer = (props) => {
-  const [modal, setModal] = useState(false);
-  const [modalCount, setModalCount] = useState(null);
-
-  const toggleModalCount = (i) => setModalCount(i);
-  const toggleModalFilter = () => setModal(!modal);
-
   const {
     getWorldPlayers,
     toggleModal,
@@ -27,6 +21,49 @@ const FilterOneRPlayer = (props) => {
     filterBall,
     filter,
   } = props;
+
+  const [cities, setCities] = useState([]);
+  const [citiesAnother, setCitiesAnother] = useState([]);
+  const [nextUrlCities, setNextUrlCities] = useState("");
+  const [searchCities, setSearchCities] = useState("");
+
+  const [modal, setModal] = useState(false);
+  const [modalCount, setModalCount] = useState(null);
+  const toggleModalCount = (i) => setModalCount(i);
+  const toggleModalFilter = () => setModal(!modal);
+
+  // const [list, updateList] = useState([
+  //   { name: "1" },
+  //   { name: "2" },
+  //   { name: "3" },
+  // ]);
+
+  // const [anotherList, setAnotherList] = useState([]);
+
+  // const handleRemoveItem = (e) => {
+  //   const name = e.target.getAttribute("name");
+  //   let fL = list.filter((item) => item.name !== name);
+  //   let tL = list.filter((item) => item.name === name);
+  //   updateList(fL);
+
+  //   setAnotherList([...anotherList, ...tL]);
+  // };
+
+  const handleRemoveItem = (id) => {
+    let fL = cities.filter((item) => item.id !== id);
+    let tL = cities.filter((item) => item.id === id);
+    setCities(fL);
+
+    setCitiesAnother([...citiesAnother, ...tL]);
+  };
+
+  const backCityItem = (id) => {
+    let fL = citiesAnother.filter((item) => item.id !== id);
+    let tL = citiesAnother.filter((item) => item.id === id);
+    setCitiesAnother(fL);
+
+    setCities([...cities, ...tL]);
+  };
 
   return (
     <>
@@ -41,7 +78,17 @@ const FilterOneRPlayer = (props) => {
                 }}
                 className="spanInput2"
               >
-                {filter.cityy ? filter.cityy : "Город"}
+                {citiesAnother.length > 0
+                  ? citiesAnother.map((cA, index) => {
+                      const { id, name } = cA;
+                      return (
+                        <span key={index}>
+                          <span style={{ marginRight: "10px" }}>{name}</span>
+                          <span onClick={() => backCityItem(id)}>x</span>
+                        </span>
+                      );
+                    })
+                  : "Город"}
               </span>
             </InputFormFlex>
             <InputFormFlex>
@@ -90,6 +137,16 @@ const FilterOneRPlayer = (props) => {
                   : "Позиция"}
               </span>
             </InputFormFlex>
+            {/* {list.map((item, index) => {
+              return (
+                <div key={index}>
+                  <span style={{ marginRight: "10px" }}>{item.name}</span>
+                  <span name={item.name} onClick={handleRemoveItem}>
+                    x
+                  </span>
+                </div>
+              );
+            })} */}
           </AppMAIN>
           <AppFooter>
             <button onClick={toggleModal} className="appBtnGreen">
@@ -117,6 +174,13 @@ const FilterOneRPlayer = (props) => {
                   getWorldPlayers={getWorldPlayers}
                   typingTimeOut={typingTimeOut}
                   filter={filter}
+                  cities={cities}
+                  setCities={setCities}
+                  nextUrlCities={nextUrlCities}
+                  setNextUrlCities={setNextUrlCities}
+                  searchCities={searchCities}
+                  setSearchCities={setSearchCities}
+                  handleRemoveItem={handleRemoveItem}
                 />
               ) : modalCount === 2 ? (
                 ""

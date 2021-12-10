@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { GetAuthInstance } from "../../../helpers/httpClient";
-import { AppMAIN } from "../../../styles/ContainerFluid.styled";
+import { AppFooter, AppMAIN } from "../../../styles/ContainerFluid.styled";
 import { InputFormFlex } from "../../../styles/Global.styled";
 import {
   RadioInputFlex,
@@ -16,11 +16,14 @@ const FilterCity = (props) => {
     setTypingTimeOut,
     filter,
     toggleModalFilter,
+    cities,
+    setCities,
+    nextUrlCities,
+    setNextUrlCities,
+    searchCities,
+    setSearchCities,
+    handleRemoveItem,
   } = props;
-
-  const [cities, setCities] = useState([]);
-  const [nextUrlCities, setNextUrlCities] = useState("");
-  const [searchCities, setSearchCities] = useState("");
 
   const getCities = (
     page = 1,
@@ -124,7 +127,7 @@ const FilterCity = (props) => {
                       key={index}
                       onClick={() => {
                         handleFilterCity(id);
-                        toggleModalFilter();
+                        handleRemoveItem(id);
                       }}
                     >
                       <div className="gg" htmlFor={id}>
@@ -142,6 +145,11 @@ const FilterCity = (props) => {
           </RadioInputFlexTop>
         </InfiniteScroll>
       </AppMAIN>
+      <AppFooter>
+        <button onClick={toggleModalFilter} className="appBtnGreen">
+          Показать результаты
+        </button>
+      </AppFooter>
     </>
   );
 };
