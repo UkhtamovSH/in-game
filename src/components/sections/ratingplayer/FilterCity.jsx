@@ -8,6 +8,7 @@ import {
 } from "../../../styles/Modal.styled";
 import SearchLine from "../../../assets/svg/SearchLine.svg";
 import InfiniteScroll from "react-infinite-scroll-component";
+import _ from "lodash";
 
 const FilterCity = (props) => {
   const {
@@ -24,6 +25,22 @@ const FilterCity = (props) => {
     setSearchCities,
     handleRemoveItem,
   } = props;
+
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [active, setActive] = useState();
+
+  const handleClick = (id) => {
+    if (selectedItems.includes(id)) {
+      let s = [];
+      selectedItems.forEach((item) => {
+        if (item !== id) s.push(item);
+      });
+      setSelectedItems(s);
+    } else {
+      setActive(id);
+      setSelectedItems([...selectedItems, id]);
+    }
+  };
 
   const getCities = (
     page = 1,
@@ -69,15 +86,10 @@ const FilterCity = (props) => {
   const handleFilterCity = (id) => {
     let page = 1;
     let next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`;
-    setTypingTimeOut(
-      setTimeout(() => {
-        getWorldPlayers(page, next_url, { ...filter, cityy: id });
-      }, 1000)
-    );
-
-    if (typingTimeOut) {
-      clearTimeout(typingTimeOut);
-    }
+    getWorldPlayers(page, next_url, {
+      ...filter,
+      cityy: [..._.get(filter, "cityy", selectedItems), id],
+    });
   };
 
   useEffect(() => {
@@ -126,14 +138,14 @@ const FilterCity = (props) => {
                     <RadioInputFlex
                       key={index}
                       onClick={() => {
-                        handleFilterCity(id);
-                        handleRemoveItem(id);
+                        // handleRemoveItem(id);
+                        handleClick(id);
                       }}
                     >
-                      <div className="gg" htmlFor={id}>
+                      <div htmlFor={id}>
                         <span>{name}</span>
                       </div>
-                      {id === filter.cityy ? (
+                      {selectedItems.includes(id) ? (
                         <div className="divRadioInput2" />
                       ) : (
                         <div className="divRadioInput" />
@@ -146,7 +158,13 @@ const FilterCity = (props) => {
         </InfiniteScroll>
       </AppMAIN>
       <AppFooter>
-        <button onClick={toggleModalFilter} className="appBtnGreen">
+        <button
+          onClick={() => {
+            handleFilterCity();
+            toggleModalFilter();
+          }}
+          className="appBtnGreen"
+        >
           Показать результаты
         </button>
       </AppFooter>

@@ -32,38 +32,21 @@ const FilterOneRPlayer = (props) => {
   const toggleModalCount = (i) => setModalCount(i);
   const toggleModalFilter = () => setModal(!modal);
 
-  // const [list, updateList] = useState([
-  //   { name: "1" },
-  //   { name: "2" },
-  //   { name: "3" },
-  // ]);
+  // const handleRemoveItem = (id) => {
+  //   let fL = cities.filter((item) => item.id !== id);
+  //   let tL = cities.filter((item) => item.id === id);
+  //   setCities(fL);
 
-  // const [anotherList, setAnotherList] = useState([]);
-
-  // const handleRemoveItem = (e) => {
-  //   const name = e.target.getAttribute("name");
-  //   let fL = list.filter((item) => item.name !== name);
-  //   let tL = list.filter((item) => item.name === name);
-  //   updateList(fL);
-
-  //   setAnotherList([...anotherList, ...tL]);
+  //   setCitiesAnother([...citiesAnother, ...tL]);
   // };
 
-  const handleRemoveItem = (id) => {
-    let fL = cities.filter((item) => item.id !== id);
-    let tL = cities.filter((item) => item.id === id);
-    setCities(fL);
+  // const backCityItem = (id) => {
+  //   let fL = citiesAnother.filter((item) => item.id !== id);
+  //   let tL = citiesAnother.filter((item) => item.id === id);
+  //   setCitiesAnother(fL);
 
-    setCitiesAnother([...citiesAnother, ...tL]);
-  };
-
-  const backCityItem = (id) => {
-    let fL = citiesAnother.filter((item) => item.id !== id);
-    let tL = citiesAnother.filter((item) => item.id === id);
-    setCitiesAnother(fL);
-
-    setCities([...cities, ...tL]);
-  };
+  //   setCities([...cities, ...tL]);
+  // };
 
   return (
     <>
@@ -84,7 +67,7 @@ const FilterOneRPlayer = (props) => {
                       return (
                         <span key={index}>
                           <span style={{ marginRight: "10px" }}>{name}</span>
-                          <span onClick={() => backCityItem(id)}>x</span>
+                          {/* <span onClick={() => backCityItem(id)}>x</span> */}
                         </span>
                       );
                     })
@@ -137,16 +120,6 @@ const FilterOneRPlayer = (props) => {
                   : "Позиция"}
               </span>
             </InputFormFlex>
-            {/* {list.map((item, index) => {
-              return (
-                <div key={index}>
-                  <span style={{ marginRight: "10px" }}>{item.name}</span>
-                  <span name={item.name} onClick={handleRemoveItem}>
-                    x
-                  </span>
-                </div>
-              );
-            })} */}
           </AppMAIN>
           <AppFooter>
             <button onClick={toggleModal} className="appBtnGreen">
@@ -180,7 +153,7 @@ const FilterOneRPlayer = (props) => {
                   setNextUrlCities={setNextUrlCities}
                   searchCities={searchCities}
                   setSearchCities={setSearchCities}
-                  handleRemoveItem={handleRemoveItem}
+                  // handleRemoveItem={handleRemoveItem}
                 />
               ) : modalCount === 2 ? (
                 ""

@@ -117,8 +117,11 @@ const RatingPlayers = () => {
     let b = "";
     let p = "";
     let d = "";
-    if (filters.cityy) {
-      c = "&city=" + filters.cityy;
+    if (get(filters, "cityy", []).length) {
+      c = "";
+      get(filters, "cityy", []).forEach((item) => {
+        c += "&city[]=" + item;
+      });
     }
     if (filters.ball) {
       b = "&ball=" + filters.ball;
