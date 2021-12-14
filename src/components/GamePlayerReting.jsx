@@ -11,6 +11,7 @@ import { GetAuthInstance } from "../helpers/httpClient";
 import {
   GamePlayer,
   GamePlayerCont,
+  GamePlayerContain,
   GamePlayerIcon,
   GamePlayerImg,
   GamePlayerName,
@@ -25,6 +26,9 @@ const GamePlayerReting = () => {
   const [goal, setGoal] = useState([]);
   const params = useParams();
   const [nextUrl, setNextUrl] = useState("");
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getData();
@@ -32,13 +36,26 @@ const GamePlayerReting = () => {
   }, [params.id]);
 
   const getData = () => {
-    const next_url = `/api/v1/game-user/?game=${params.id}`;
+    if (page === 1) {
+      setLoading(true);
+    }
     GetAuthInstance()
-      .get(next_url)
+      .get(`/api/v1/game-user/?per_page=10&game=${params.id}&page=${page}`)
       .then((res) => {
-        setData(res.data.results);
+        setData([...data, ...res.data.results]);
+        setNextUrl(res.data.next);
+        setPage(page + 1);
+        setLoading(false);
+        console.log(res);
+        if (res.data.next) {
+          setHasMore(true);
+        } else {
+          setHasMore(false);
+        }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setHasMore(false);
+      });
   };
 
   const getGoal = () => {
@@ -62,9 +79,9 @@ const GamePlayerReting = () => {
             </Link>
           </div>
           {goal.map((item, index) => (
-            <>
+            <div key={index}>
               {params.id == item.id ? (
-                <div className="" key={index}>
+                <div className="">
                   <span>
                     {_.get(item.GameClub[0], "football_club.name", 0)}{" "}
                     {_.get(item.GameClub[0], "goal")}:
@@ -75,7 +92,7 @@ const GamePlayerReting = () => {
               ) : (
                 ""
               )}
-            </>
+            </div>
           ))}
           <div />
         </AppHeaderFlex>
@@ -83,43 +100,96 @@ const GamePlayerReting = () => {
           <GamePlayerRating>
             <p>Выберите игрока которого хотите оценить</p>
           </GamePlayerRating>
-          <InfiniteScroll
-            dataLength={data.length} //This is important field to render the next data
-            next={() => {
-              getData(2, nextUrl);
-            }}
-            hasMore={nextUrl ? true : false}
-            loader={<h4>Loading...</h4>}
-            endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>You have seen it all</b>
-              </p>
-            }
-          >
-            {data.map((item, index) => (
-              <Link to={`/game-player-reting-mark/${item.id}`} key={index}>
-                <GamePlayer>
-                  <GamePlayerCont>
-                    <GamePlayerImg>
-                      <img src={_.get(item, "user.avatar")} alt="" />
-                      <p>{item.position}</p>
-                    </GamePlayerImg>
-                    <GamePlayerName>
-                      <h3>{_.get(item, "user.full_name")}</h3>
-                      <GamePlayerRegion>
-                        <p>{_.get(item, "user.age")} года</p>
-                        <span></span>
-                        <p>{_.get(item, "user.city")}</p>
-                      </GamePlayerRegion>
-                    </GamePlayerName>
-                  </GamePlayerCont>
-                  <GamePlayerIcon>
-                    <img src={ArrowRight2} alt="" />
-                  </GamePlayerIcon>
-                </GamePlayer>
-              </Link>
-            ))}
-          </InfiniteScroll>
+          {loading ? (
+            <h3>Loading......</h3>
+          ) : (
+            <InfiniteScroll
+              dataLength={data.length} //This is important field to render the next data
+              next={getData}
+              hasMore={hasMore}
+              loader={<h4>Loading...</h4>}
+            >
+              {data.map((item, index) => (
+                <GamePlayerContain key={index}>
+                  <Link to={`/game-player-reting-mark/${item.id}`} >
+                    <GamePlayer>
+                      <GamePlayerCont>
+                        <GamePlayerImg>
+                          <img src={_.get(item, "user.avatar")} alt="" />
+                          <p>
+                            {item.position === 1
+                              ? "a"
+                              : item.position === 2
+                              ? "b"
+                              : item.position === 3
+                              ? "c"
+                              : item.position === 4
+                              ? "d"
+                              : ""}
+                          </p>
+                        </GamePlayerImg>
+                        <GamePlayerName>
+                          <h3>{_.get(item, "user.full_name")}</h3>
+                          <GamePlayerRegion>
+                            <p>
+                              {" "}
+                              {item.user.age === 1 ||
+                              item.user.age === 21 ||
+                              item.user.age === 31 ||
+                              item.user.age === 41 ||
+                              item.user.age === 51 ||
+                              item.user.age === 61 ||
+                              item.user.age === 71 ||
+                              item.user.age === 81 ||
+                              item.user.age === 91 ||
+                              item.user.age === 101 ||
+                              item.user.age === 111
+                                ? `${item.user.age} год`
+                                : (item.user.age > 1 && item.user.age <= 4) ||
+                                  (item.user.age > 21 && item.user.age <= 24) ||
+                                  (item.user.age > 31 && item.user.age <= 34) ||
+                                  (item.user.age > 41 && item.user.age <= 44) ||
+                                  (item.user.age > 51 && item.user.age <= 54) ||
+                                  (item.user.age > 61 && item.user.age <= 64) ||
+                                  (item.user.age > 71 && item.user.age <= 74) ||
+                                  (item.user.age > 81 && item.user.age <= 84) ||
+                                  (item.user.age > 91 && item.user.age <= 94) ||
+                                  (item.user.age > 101 &&
+                                    item.user.age <= 104) ||
+                                  (item.user.age > 111 && item.user.age <= 114)
+                                ? `${item.user.age} года`
+                                : (item.user.age > 4 && item.user.age <= 20) ||
+                                  (item.user.age > 24 && item.user.age <= 30) ||
+                                  (item.user.age > 34 && item.user.age <= 40) ||
+                                  (item.user.age > 44 && item.user.age <= 50) ||
+                                  (item.user.age > 54 && item.user.age <= 60) ||
+                                  (item.user.age > 64 && item.user.age <= 70) ||
+                                  (item.user.age > 74 && item.user.age <= 80) ||
+                                  (item.user.age > 84 && item.user.age <= 90) ||
+                                  (item.user.age > 94 &&
+                                    item.user.age <= 100) ||
+                                  (item.user.age > 104 &&
+                                    item.user.age <= 110) ||
+                                  (item.user.age > 114 && item.user.age <= 120)
+                                ? `${item.user.age} лет`
+                                : item.user.age === 0
+                                ? ""
+                                : ""}
+                            </p>
+                            {/* <span></span> */}
+                            <p>{_.get(item, "user.city")}</p>
+                          </GamePlayerRegion>
+                        </GamePlayerName>
+                      </GamePlayerCont>
+                      <GamePlayerIcon>
+                        <img src={ArrowRight2} alt="" />
+                      </GamePlayerIcon>
+                    </GamePlayer>
+                  </Link>
+                </GamePlayerContain>
+              ))}
+            </InfiniteScroll>
+          )}
         </AppMAIN>
       </AppHeader>
     </>

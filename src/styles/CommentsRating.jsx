@@ -10,13 +10,12 @@ border-radius: 16px;
 padding: 10px 15px;
     .commenterImg {
         display: flex;
-        align-items: center;
         gap: 20px;
         margin-bottom: 15px;
         .commenterName {
             .ageAvatar2 {
                 display: flex;
-                align-items: center;
+                align-items:baseline !important;
                 gap: 5px;
                 margin-top: 5px;
                 span {

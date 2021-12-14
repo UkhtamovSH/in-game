@@ -4,13 +4,14 @@ import {
   AppHeader,
   AppHeaderFlex,
   AppMAIN,
-  AppMainWrapp
+  AppMainWrapp,
 } from "../styles/ContainerFluid.styled";
 import priceStar from "../assets/Img/Vector.png";
 import Filter from "../assets/svg/Filter.svg";
 import Navigation from "./sections/Navigation";
 import { useEffect, useState } from "react";
 import { GetAuthInstance } from "../helpers/httpClient";
+import { Polya, AppMainContain } from "../styles/Pitches.style";
 
 const Pitches = () => {
   const [data, setData] = useState([]);
@@ -47,29 +48,28 @@ const Pitches = () => {
       <AppMainWrapp>
         {data.map((item, index) => (
           <AppMAIN key={index}>
-            <Link to={"/pitches/" + item.id}>
-              <div
-                className="polya"
-                style={{ backgroundImage: `url(${item.Image})` }}
-              >
-                <div className="poolyaImg">
-                  {/* <img src={item.Image} alt="" /> */}
-                </div>
-                <div className="stadion">
-                  <div className="leftFree">
-                    {<p>{item.status}</p> ? <p>Занято</p> : <p>Свободно</p>}
+            <AppMainContain>
+              <Polya style={{ backgroundImage: `url(${item.Image})` }}>
+                <Link to={"/pitches/" + item.id}>
+                  <div className="poolyaImg">
+                    {/* <img src={item.Image} alt="" /> */}
                   </div>
-                  <div className="rightFree">
-                    <img src={priceStar} alt="" />
-                    <p>{item.review_avg}</p>
+                  <div className="stadion">
+                    <div className="leftFree">
+                      {<p>{item.status}</p> ? <p>Занято</p> : <p>Свободно</p>}
+                    </div>
+                    <div className="rightFree">
+                      <img src={priceStar} alt="" />
+                      <p>{item.review_avg}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="address">
-                  <h4>{item.name}</h4>
-                  <p>{item.region.name}, ориентир: кафе Бахор</p>
-                </div>
-              </div>
-            </Link>
+                  <div className="address">
+                    <h4>{item.name}</h4>
+                    <p>{item.region.name}, ориентир: кафе Бахор</p>
+                  </div>
+                </Link>
+              </Polya>
+            </AppMainContain>
           </AppMAIN>
         ))}
       </AppMainWrapp>

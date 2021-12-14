@@ -1,58 +1,18 @@
 import styled from "styled-components";
 
-export const HomeSwiperStyle = styled.div`
-  .lastPlays {
-    label a {
-      text-decoration: none;
-      color: #fff;
-    }
-  }
-  .slick-slider {
-    width: 425px;
-    @media (max-width: 8000px) and (min-width: 576px) {
-      width: 425px;
-    }
-
-    @media only screen and (max-width: 576px) and (min-width: 320px) {
-      .slick-list {
-        .slick-track {
-          .slick-slide {
-            div {
-              margin: 0 40px;
-            }
-          }
-        }
-      }
-      width: 390px;
-    }
-    .slick-list {
-      margin: 0 0 0 -45px;
-      overflow: visible;
-      .slick-track {
-        .slick-slide {
-          div {
-            background-color: #252525;
-            border-radius: 16px;
-            margin: 0 20px;
-          }
-        }
-      }
-    }
-  }
-  .slick-prev:before,
-  .slick-next:before {
-    display: none;
-  }
+export const AllGamesContainer = styled.div`
+  padding: 20px;
+`;
+export const AllGamesMain = styled.div`
   .sliderImg {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
-    a {
-      img {
-        width: 90px;
-        height: 60px;
-        border: none !important;
-      }
+    margin: 0 0 !important;
+    padding: 0px 20px;
+
+    img {
+      /* width: 90px; */
+      height: 60px;
     }
   }
 
@@ -63,10 +23,10 @@ export const HomeSwiperStyle = styled.div`
     padding: 5px 5px;
   }
   .sliderDiv {
-    margin: 0 0 !important;
-    width: 277px;
-    margin-top: 20px;
+    margin: 20px 0 !important;
     padding: 10px 0;
+    background-color: #252525;
+    border-radius: 16px;
     a {
       text-align: center;
       padding: 15px 0px;
@@ -117,11 +77,6 @@ export const HomeSwiperStyle = styled.div`
   }
   .commenterImg {
     display: flex;
-    img {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-    }
     .commenterName {
       h5 {
         font-weight: 500;
@@ -135,6 +90,7 @@ export const HomeSwiperStyle = styled.div`
           font-size: 12px;
           line-height: 140%;
           color: #bdbdbd;
+
         }
         span {
           border-radius: 50%;

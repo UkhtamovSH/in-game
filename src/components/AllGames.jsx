@@ -1,55 +1,44 @@
-import Slider from "react-slick";
-import sliderImg from "../../assets/Img/Rectangle 1531.png";
-import { HomeSwiperStyle } from "../../styles/HomeSwiperStyle";
-import strokeIcon from "../../assets/Img/Stroke 1.png";
-
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { GetAuthInstance } from "../../helpers/httpClient";
-import { useState, useEffect } from "react";
-import _ from "lodash";
+import React from "react";
 import { Link } from "react-router-dom";
-import ImageLoading from "../../assets/Img/default.png";
+import { AllGamesContainer, AllGamesMain } from "../styles/AllGames.style";
+import { AppHeaderFlex } from "../styles/ContainerFluid.styled";
+import ArrowRight from "../assets/svg/Arrow - Right.svg";
+import _ from "lodash";
+import { useState } from "react";
+import { GetAuthInstance } from "../helpers/httpClient";
+import { useEffect } from "react";
 
-const HomeSwiper = () => {
-  // const params =useParams
-
-  const settings = {
-    className: "center",
-    centerMode: true,
-    centerPadding: "40px",
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    speed: 500,
-    autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 2000,
-  };
-
+const AllGames = () => {
   const [data, setData] = useState([]);
+
   const getData = () => {
     GetAuthInstance()
       .get("/api/v1/game-end/?")
       .then((res) => {
         setData(res.data.results);
+        console.log(res.data.results);
       })
       .catch((err) => {});
   };
+
   useEffect(() => {
     getData();
   }, []);
+
   return (
-    <HomeSwiperStyle>
-      <div className="lastPlays">
-        <label>Прошедшие игры</label>
-        <label>
-          <Link to="/all-games">
-            Все игры <img src={strokeIcon} alt="" />{" "}
+    <AllGamesContainer>
+      <AppHeaderFlex>
+        <div className="">
+          <Link to="/home" className="">
+            <img src={ArrowRight} alt="" />
           </Link>
-        </label>
-      </div>
-      <Slider {...settings}>
+        </div>
+        <div className="">
+          <span>Прошедшие игры</span>
+        </div>
+        <div className=""></div>
+      </AppHeaderFlex>
+      <AllGamesMain>
         {data.map((item, index) => (
           <div className="sliderDiv" key={index}>
             <div className="commandResult">
@@ -77,21 +66,14 @@ const HomeSwiper = () => {
             </div>
             <div className="sliderImg">
               <Link to={"/photos/" + item.id}>
-                <img src={_.get(item.Gallery, 0)} alt="" />
+                <img src={_.get(item.Gallery, 0)} alt="" />{" "}
               </Link>
               <Link to={"/photos/" + item.id}>
                 {" "}
                 <img src={_.get(item.Gallery, 1)} alt="" />
               </Link>
               <Link to={"/photos/" + item.id}>
-                <img
-                  src={
-                    _.get(item.Gallery, 2)
-                      ? _.get(item.Gallery, 2)
-                      : ImageLoading
-                  }
-                  alt=""
-                />
+                <img src={_.get(item.Gallery, 2)} alt="" />
               </Link>
             </div>
             <Link to={`/game-player-reting/${item.id}`}>
@@ -99,9 +81,9 @@ const HomeSwiper = () => {
             </Link>
           </div>
         ))}
-      </Slider>
-    </HomeSwiperStyle>
+      </AllGamesMain>
+    </AllGamesContainer>
   );
 };
 
-export default HomeSwiper;
+export default AllGames;

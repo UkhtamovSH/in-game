@@ -4,6 +4,11 @@ export const GlobalStyle = createGlobalStyle`
   body{
     background: ${({ theme }) => theme.appColors.gray};    
     font-family: "Manrope",sans-serif;
+    user-select:none;
+  }
+  body .ReactModal__Overlay--after-open {
+    background-color:#000000b3 !important;
+    z-index:999!important;
   }
   html, body {
   margin:0px;

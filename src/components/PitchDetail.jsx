@@ -1,4 +1,4 @@
-import { StadionPage } from "../styles/ContainerFluid.styled";
+import { StadionPage } from "../styles/PitchesDtail.style";
 import arrowRight from "../assets/Img/Arrow - Right.png";
 import minipolya from "../assets/Img/minipolya.png";
 import { Link, useParams } from "react-router-dom";
@@ -11,7 +11,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { GetAuthInstance } from "../helpers/httpClient";
 import _ from "lodash";
-
 const PitchDetail = () => {
   const [data, setData] = useState([]);
   const params = useParams();
@@ -64,8 +63,8 @@ const PitchDetail = () => {
               <div className="appBtnGreen">Позвонить</div>
             </div>
             <h3>Контактные данные</h3>
-            {_.get(data,"Contact",[]).map((item,index) => (
-            <p>{item.phone}</p>
+            {_.get(data, "Contact", []).map((item, index) => (
+              <p>{item.phone}</p>
             ))}
             <p className="polyaGmail">{data.email}</p>
           </div>
@@ -92,7 +91,7 @@ const PitchDetail = () => {
           </div>
           <div className="polyaMap">
             <h3>Адрес поля</h3>
-            <p>{_.get(data,"region",[]).name}</p>
+            <p>{_.get(data, "region", []).name}</p>
             <div className="polyaInMap">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.8953998465963!2d69.27740401526155!3d41.31113907927126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b2931f41f23%3A0x81095e06b654b845!2z0KHQutCy0LXRgCDQuNC8LiDQkNC80LjRgNCwINCi0LjQvNGD0YDQsA!5e0!3m2!1sru!2s!4v1637925377925!5m2!1sru!2s"
