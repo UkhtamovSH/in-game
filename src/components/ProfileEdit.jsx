@@ -346,7 +346,7 @@ const ProfileEdit = () => {
                       }}
                       className="spanInput"
                     >
-                      {football_club?.name}
+                      {football_club ? football_club?.name : "Список клубов"}
                     </span>
                     <span className="span2"></span>
                   </InputFormFlex>
@@ -371,7 +371,7 @@ const ProfileEdit = () => {
                         ? "Forward"
                         : position === 3
                         ? "Midfielder"
-                        : null}
+                        : "Позиция в игре"}
                     </span>
                     <span className="span2"></span>
                   </InputFormFlex>
@@ -388,7 +388,7 @@ const ProfileEdit = () => {
                       }}
                       className="spanInput"
                     >
-                      {city?.name}
+                      {city ? city?.name : "Выберите регион"}
                     </span>
                     <span className="span2"></span>
                   </InputFormFlex>
@@ -405,7 +405,7 @@ const ProfileEdit = () => {
                       }}
                       className="spanInput"
                     >
-                      {region?.name}
+                      {region ? region?.name : "Выберите город"}
                     </span>
                     <span className="span2"></span>
                   </InputFormFlex>

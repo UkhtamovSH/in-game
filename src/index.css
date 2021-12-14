@@ -30,10 +30,12 @@
 
 .showModal {
   display: block;
+  cursor: pointer;
 }
 
 .hideModal {
   display: none;
+  justify-content: flex-end;
 }
 
 .inputError {
