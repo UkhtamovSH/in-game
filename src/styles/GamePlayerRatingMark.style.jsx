@@ -8,26 +8,26 @@ i{
   cursor: pointer;
 }
 `;
-export const StarRating = styled.div`
-  .star-rating {
-    border-bottom: 1px solid #333333;
-    margin: 20px 0;
-  }
-  button {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 30px;
-    margin-right: 5px;
-  }
-  .on {
-    color: #f6ce42;
-  }
-  .off {
-    color: #333333;
-  }
-`;
+// export const StarRating = styled.div`
+//   .star-rating {
+//     border-bottom: 1px solid #333333;
+//     margin: 20px 0;
+//   }
+//   button {
+//     background-color: transparent;
+//     border: none;
+//     outline: none;
+//     cursor: pointer;
+//     font-size: 30px;
+//     margin-right: 5px;
+//   }
+//   .on {
+//     color: #f6ce42;
+//   }
+//   .off {
+//     color: #333333;
+//   }
+// `;
 
 export const GamerAppBtn = styled.div`
   &.appBtnGreen {
@@ -69,4 +69,8 @@ export const RatingMarks = styled.div`
     width: 20px;
     height: 19px;
   }
+`;
+export const StarRating = styled.div`
+  border-bottom: 1px solid #333333;
+  margin: 20px 0;
 `;

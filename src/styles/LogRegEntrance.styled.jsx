@@ -17,8 +17,8 @@ export const FlexBottom = styled.div`
   align-items: flex-end;
   justify-content: center;
   width: 100%;
-  height: 100%; 
-  & div{
+  height: 100%;
+  & div {
     width: 100%;
   }
 `;
@@ -29,15 +29,15 @@ export const AppLogo = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%; 
-  & p{
-    font-family: "Manrope-Regular",sans-serif;
+  height: 100%;
+  & p {
+    font-family: "Manrope-Regular", sans-serif;
     font-weight: 600;
     font-size: 44px;
     text-align: center;
-    color: ${({ theme }) => theme.appColors.white}
+    color: ${({ theme }) => theme.appColors.white};
   }
   & div > div {
     text-align: center;
   }
-`
+`;

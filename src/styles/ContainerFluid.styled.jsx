@@ -29,16 +29,16 @@ export const ContainerFluid = styled.div`
 export const AppHeader = styled.div`
   padding: 12px 16px;
   box-sizing: border-box;
-  /* transform: translate(-50.09%, 0);
-  position: fixed; */
-  /* left: 50%;
-  top: 0; */
-  /* width: 100%; */
+  transform: translate(-50.09%, 0);
+  position: fixed;
+  left: 50%;
+  top: 0; 
+  width: 100%;
   background-color: ${({ theme }) => theme.appColors.black};
   z-index: 4;
 
   @media (max-width: 8000px) and (min-width: 576px) {
-    /* max-width: 450px; */
+    max-width: 475px;
   }
 
   @media only screen and (max-width: 576px) and (min-width: 320px) {
@@ -58,7 +58,7 @@ export const AppFooter = styled.div`
   border-top: 1px solid #565050;
 
   @media (max-width: 8000px) and (min-width: 576px) {
-    max-width: 450px;
+    max-width: 451px;
   }
 
   @media only screen and (max-width: 576px) and (min-width: 320px) {
@@ -77,7 +77,7 @@ export const AppFooter2 = styled.div`
   z-index: 99 !important;
 
   @media (max-width: 8000px) and (min-width: 576px) {
-    max-width: 450px;
+    max-width: 451px;
   }
 
   @media only screen and (max-width: 576px) and (min-width: 320px) {
@@ -93,6 +93,7 @@ export const AppMAIN = styled.div`
   padding-bottom: 20px;
 `;
 
+
 export const AppMAIN2 = styled.div`
   margin-bottom: 82px;
   padding-bottom: 20px;
@@ -104,4 +105,21 @@ export const AppHeaderFlex = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
+`;
+
+export const AppHeaderFlex2PRating = styled.div`
+  display: flex;
+  justify-content: space-space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  div {
+    padding: 12px 0;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+  }
+  .countTabActive {
+    border-bottom: 2px solid #0eb800;
+  }
 `;

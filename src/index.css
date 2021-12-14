@@ -30,8 +30,52 @@
 
 .showModal {
   display: block;
+  cursor: pointer;
 }
 
 .hideModal {
   display: none;
+  justify-content: flex-end;
 }
+
+.inputError {
+  font-family: "Manrope-SemiBold", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+  text-align: right;
+  color: red;
+  margin: 0 16px;
+}
+
+.css-1f43avz-a11yText-A11yText {
+  z-index: 99 !important;
+}
+
+.css-b62m3t-container {
+  margin: 0 22px !important;
+}
+
+.css-1s2u09g-control {
+  background: #333333 !important;
+  border-radius: 16px !important;
+  height: 45px !important;
+  border: none !important;
+}
+
+.css-1pahdxg-control {
+  background: #333333 !important;
+  border-radius: 16px !important;
+  height: 45px !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.css-1hb7zxy-IndicatorsContainer {
+  display: none !important;
+}
+
+.activeList {
+  background-color: red;
+}
+

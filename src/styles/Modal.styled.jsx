@@ -22,6 +22,29 @@ export const RadioInputFlex = styled.div`
   padding: 10px 0;
   border-top: 1px solid #252525;
   border-bottom: 1px solid #252525;
+  .divRadioInput {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #bdbdbd;
+  }
+  .divRadioInput2 {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #bdbdbd;
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 1.5px;
+      left: 1.5px;
+      width: 13px;
+      height: 13px;
+      background-color: #0eb800;
+      border-radius: 50%;
+    }
+  }
   label {
     display: flex;
     align-items: center;

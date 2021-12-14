@@ -9,9 +9,10 @@ import {
   GamePlayerRatingMarkWrapp,
   GamerAppBtn,
   RatingIconsStar,
+  StarRating,
   RatingMarks,
   RatingTextArea,
-  StarRating,
+  // StarRating,
 } from "../styles/GamePlayerRatingMark.style";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import commentIcon from "../assets/Img/Profile.png";
@@ -19,25 +20,9 @@ import { GetAuthInstance } from "../helpers/httpClient";
 import { get } from "lodash";
 import { setToken } from "../helpers/tokenStorage";
 const GamePlayerRatingMark = () => {
-  const [rating, setRating] = useState(0);
   const [updatedLists, setUpdatedLists] = useState([]);
-  const [comment, setComment] = useState("");
 
   const [content, setContent] = useState("");
-
-  // const [lists, setLists] = useState({
-  //   content: "",
-  // });
-
-  // const { content } = lists;
-
-  // const changeInput = (e) => {
-  //   const { name, value } = e.target;
-  //   setLists({
-  //     ...lists,
-  //     [name]: value,
-  //   });
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -78,9 +63,7 @@ const GamePlayerRatingMark = () => {
           <div className=""></div>
         </AppHeaderFlex>
         <AppMAIN>
-        
-        </AppMAIN>
-        <RatingTextArea>
+                <RatingTextArea>
         <textarea
           placeholder="Отзыв об игроке"
           className="gamerTextArea"
@@ -89,6 +72,8 @@ const GamePlayerRatingMark = () => {
         />
         <img src={commentIcon} alt="" className="commentIconImg" />
         </RatingTextArea>
+        </AppMAIN>
+
         <GamerAppBtn>
           <button className="appBtnGreen" type="submit">
             Сохранить
