@@ -96,7 +96,16 @@ const SelectProfileRegions = (props) => {
           getRegions(2, nextUrlRegions);
         }}
         hasMore={nextUrlRegions ? true : false}
-        loader={<p style={{ textAlign: "center" }}>Loading...</p>}
+        loader={
+          <p
+            style={{
+              textAlign: "center",
+              transform: "translate(0,16px)",
+            }}
+          >
+            Loading...
+          </p>
+        }
       >
         <RadioInputFlexTop>
           {regions

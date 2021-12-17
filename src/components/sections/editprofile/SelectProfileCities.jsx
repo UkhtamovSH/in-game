@@ -95,7 +95,16 @@ const SelectProfileCities = (props) => {
           getCities(2, nextUrlCities);
         }}
         hasMore={nextUrlCities ? true : false}
-        loader={<p style={{ textAlign: "center" }}>Loading...</p>}
+        loader={
+          <p
+            style={{
+              textAlign: "center",
+              transform: "translate(0,16px)",
+            }}
+          >
+            Loading...
+          </p>
+        }
       >
         <RadioInputFlexTop>
           {cities

@@ -1,15 +1,15 @@
-import { LOADING } from "./type";
-
 const INITIAL_STATE = {
-  loading: false,
+  minutes: 0,
+  gameActive: false,
 };
 
 const reducers = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case LOADING:
+    case "SET_MINUTES":
       return {
         ...state,
-        loading: action.loading,
+        minutes: action.payload,
+        gameActive: true,
       };
     default:
       return state;

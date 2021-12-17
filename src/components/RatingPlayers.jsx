@@ -287,7 +287,7 @@ const RatingPlayers = () => {
                       <p
                         style={{
                           textAlign: "center",
-                          transform: "translate(0,10px)",
+                          transform: "translate(0,16px)",
                         }}
                       >
                         Loading...
@@ -326,7 +326,7 @@ const RatingPlayers = () => {
                       <p
                         style={{
                           textAlign: "center",
-                          transform: "translate(0,10px)",
+                          transform: "translate(0,16px)",
                         }}
                       >
                         Loading...

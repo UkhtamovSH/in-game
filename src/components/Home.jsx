@@ -14,23 +14,19 @@ import { GetAuthInstance } from "../helpers/httpClient";
 import { get } from "lodash";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loading } from "../redux/actions";
 
 const Home = () => {
   const [data, setData] = useState([]);
   const [status, setStatus] = useState([]);
 
-  const dispatch = useDispatch();
   const getData = () => {
-    dispatch(loading(true));
     GetAuthInstance()
       .get("/api/v1/get-user/?lan=en")
       .then((res) => {
         setData(res.data.data);
         setStatus(res.data.status);
       })
-      .catch((err) => {})
-      .finally(() => dispatch(loading(false)));
+      .catch((err) => {});
   };
   useEffect(() => {
     getData();
@@ -48,7 +44,7 @@ const Home = () => {
             </div>
             <div>
               <Link to="/setting">
-              <img src={settingImg} alt="" />
+                <img src={settingImg} alt="" />
               </Link>
             </div>
           </div>

@@ -1,5 +1,4 @@
-import styled from "@emotion/styled";
-
+import styled from "styled-components";
 
 export const StadionPage = styled.div`
   margin: 60px 0;

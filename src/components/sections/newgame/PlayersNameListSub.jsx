@@ -1,6 +1,6 @@
 import { PlayersRatingMain } from "../../../styles/PlayersRatingStyle";
 
-const ListRatingPlayer = (props) => {
+const PlayersNameListSub = (props) => {
   const { id, age, avatar, ball, city, victory, position, full_name } = props;
   return (
     <>
@@ -99,4 +99,4 @@ const ListRatingPlayer = (props) => {
   );
 };
 
-export default ListRatingPlayer;
+export default PlayersNameListSub;

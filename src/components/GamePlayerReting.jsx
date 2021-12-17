@@ -111,7 +111,7 @@ const GamePlayerReting = () => {
             >
               {data.map((item, index) => (
                 <GamePlayerContain key={index}>
-                  <Link to={`/game-player-reting-mark/${item.id}`} >
+                  <Link to={`/game-player-reting-mark/${item.id}`}>
                     <GamePlayer>
                       <GamePlayerCont>
                         <GamePlayerImg>

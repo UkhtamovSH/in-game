@@ -22,6 +22,7 @@ export const RadioInputFlex = styled.div`
   padding: 10px 0;
   border-top: 1px solid #252525;
   border-bottom: 1px solid #252525;
+  cursor: pointer;
   .divRadioInput {
     width: 16px;
     height: 16px;

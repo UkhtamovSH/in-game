@@ -1,6 +1,8 @@
-import { LOADING } from "./type";
-
-export const loading = (loading) => ({
-  type: LOADING,
-  loading,
-});
+export const setMinutes = (minute) => {
+  return (dispatch) => {
+    dispatch({
+      type: "SET_MINUTES",
+      payload: minute,
+    });
+  };
+};
