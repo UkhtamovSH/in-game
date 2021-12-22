@@ -41,11 +41,11 @@ const Game = () => {
 
   let history = useNavigate();
 
-  useEffect(() => {
-    if (!gameActive) {
-      history("/newgame");
-    }
-  }, [gameActive]);
+  // useEffect(() => {
+  //   if (!gameActive) {
+  //     history("/newgame");
+  //   }
+  // }, [gameActive]);
 
   const TimerComp = () => (
     <Timer

@@ -62,12 +62,12 @@ const NewGame = () => {
   const [possibleModalCount, setPossibleModalCount] = useState(null);
   const [possibleModal, setPossibleModal] = useState(false);
 
-  const [activeTeam] = useState({
-    clubOneActive: 1,
-    clubTwoActive: 2,
-  });
+  // const [activeTeam] = useState({
+  //   clubOneActive: 1,
+  //   clubTwoActive: 2,
+  // });
 
-  const { clubOneActive, clubTwoActive } = activeTeam;
+  // const { clubOneActive, clubTwoActive } = activeTeam;
 
   const [typeTeam] = useState({
     Goalkeeper: 1,
@@ -87,10 +87,16 @@ const NewGame = () => {
         setModal(false);
       } else if (teamOne?.id) {
         if (typeTeam.Goalkeeper === type) {
-          console.log("Goalkeeper");
+          console.log("Goalkeeper teamOne");
           console.log(type);
         } else if (typeTeam.Defender === type) {
-          console.log("Defender");
+          console.log("Defender teamOne");
+          console.log(type);
+        } else if (typeTeam.Midfielder === type) {
+          console.log("Midfielder teamOne");
+          console.log(type);
+        } else if (typeTeam.Forward === type) {
+          console.log("Forward teamOne");
           console.log(type);
         }
       }
@@ -99,12 +105,22 @@ const NewGame = () => {
         setPossibleModal(true);
         setModal(false);
       } else if (teamTwo?.id) {
-        console.log("teamTwo");
+        if (typeTeam.Goalkeeper === type) {
+          console.log("Goalkeeper teamTwo");
+          console.log(type);
+        } else if (typeTeam.Defender === type) {
+          console.log("Defender teamTwo");
+          console.log(type);
+        } else if (typeTeam.Midfielder === type) {
+          console.log("Midfielder teamTwo");
+          console.log(type);
+        } else if (typeTeam.Forward === type) {
+          console.log("Forward teamTwo");
+          console.log(type);
+        }
       }
     }
   };
-
-  const findActiveRight = () => {};
 
   let history = useNavigate();
 
@@ -134,7 +150,6 @@ const NewGame = () => {
         {
           club: teamOne?.id,
           number: 1,
-          // users: teamOnePlayers,
           // users: [teamOneWratar, ...teamOnejashitnik],
         },
 
@@ -148,9 +163,10 @@ const NewGame = () => {
     };
     GetAuthInstance()
       .post("/api/v1/game/", dataGame)
-      .then((res) => {})
+      .then((res) => {
+        history("/game");
+      })
       .catch((err) => {});
-    history("/game");
   };
 
   useEffect(() => {
@@ -250,7 +266,7 @@ const NewGame = () => {
                           onClick={() => {
                             toggleCountModal(4);
                             toggleModal();
-                            findPossiblePlayerPos(2);
+                            findPossiblePlayerPos(2, 1);
                           }}
                         >
                           <img src={Player2} alt="" />
@@ -281,7 +297,14 @@ const NewGame = () => {
                     </div>
                     <div className="div2Main">
                       <div className="div2">
-                        <div className="">
+                        <div
+                          className=""
+                          onClick={() => {
+                            toggleCountModal(4);
+                            toggleModal();
+                            findPossiblePlayerPos(2, 2);
+                          }}
+                        >
                           <img src={Player2} alt="" />
                           <p>Игрок</p>
                         </div>
@@ -295,7 +318,14 @@ const NewGame = () => {
                   <div className="NewGamePositionFlex">
                     <div className="div1Main">
                       <div className="div1">
-                        <div className="">
+                        <div
+                          className=""
+                          onClick={() => {
+                            toggleCountModal(4);
+                            toggleModal();
+                            findPossiblePlayerPos(1, 3);
+                          }}
+                        >
                           <img src={Player1} alt="" />
                           <p>Игрок</p>
                         </div>
@@ -303,7 +333,14 @@ const NewGame = () => {
                     </div>
                     <div className="div2Main">
                       <div className="div2">
-                        <div className="">
+                        <div
+                          className=""
+                          onClick={() => {
+                            toggleCountModal(4);
+                            toggleModal();
+                            findPossiblePlayerPos(2, 3);
+                          }}
+                        >
                           <img src={Player2} alt="" />
                           <p>Игрок</p>
                         </div>
@@ -317,7 +354,14 @@ const NewGame = () => {
                   <div className="NewGamePositionFlex">
                     <div className="div1Main">
                       <div className="div1">
-                        <div className="">
+                        <div
+                          className=""
+                          onClick={() => {
+                            toggleCountModal(4);
+                            toggleModal();
+                            findPossiblePlayerPos(1, 4);
+                          }}
+                        >
                           <img src={Player1} alt="" />
                           <p>Игрок</p>
                         </div>
@@ -325,7 +369,14 @@ const NewGame = () => {
                     </div>
                     <div className="div2Main">
                       <div className="div2">
-                        <div className="">
+                        <div
+                          className=""
+                          onClick={() => {
+                            toggleCountModal(4);
+                            toggleModal();
+                            findPossiblePlayerPos(2, 4);
+                          }}
+                        >
                           <img src={Player2} alt="" />
                           <p>Игрок</p>
                         </div>
@@ -334,26 +385,13 @@ const NewGame = () => {
                   </div>
                 </NewGamePositionCard>
 
-                {minutes === 0 ? (
-                  <button
-                    className="appBtnGray"
-                    style={{
-                      marginTop: "16px",
-                      color: "#BDBDBD",
-                      background: "#565656",
-                    }}
-                  >
-                    Начать игру
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    className="appBtnGreen"
-                    style={{ marginTop: "16px" }}
-                  >
-                    Начать игру
-                  </button>
-                )}
+                <button
+                  type="submit"
+                  className="appBtnGreen"
+                  style={{ marginTop: "16px" }}
+                >
+                  Начать игру
+                </button>
               </form>
             </NewGameWrapper>
           </AppMAIN>
@@ -362,7 +400,6 @@ const NewGame = () => {
           </AppFooter2>
           {possibleModal ? (
             <PossibleModal>
-              <div className="possibleModalSubBack" />
               <div className="">
                 <div className="possibleModalSub">
                   <div className="sub1">

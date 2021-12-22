@@ -143,6 +143,7 @@ export const PossibleModal = styled.div`
   z-index: 999990;
   transform: translate(-50.09%, 0);
   left: 50%;
+  width: 100%;
   .possibleModalSub {
     width: 300px;
     text-align: center;
