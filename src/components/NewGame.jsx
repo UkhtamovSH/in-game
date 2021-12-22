@@ -14,6 +14,7 @@ import {
   NewGameHeaderFlex,
   NewGamePositionCard,
   NewGameWrapper,
+  PossibleModal,
 } from "../styles/NewGame.styled";
 import MinutesList from "../components/sections/newgame/MinutesList";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +23,7 @@ import TeamsNameList from "./sections/newgame/TeamsNameList";
 import { get } from "lodash";
 import { GetAuthInstance } from "../helpers/httpClient";
 import PlayersNameList from "./sections/newgame/PlayersNameList";
+import { StylesHidden } from "../styles/Global.styled";
 
 const NewGame = () => {
   const [modalCount, setModalCount] = useState(null);
@@ -38,13 +40,71 @@ const NewGame = () => {
   const [teamOne, setTeamOne] = useState({});
   const [teamTwo, setTeamTwo] = useState({});
 
-  //players
+  //players list
   const [players, setPlayers] = useState([]);
   const [searchPlayers, setSearchPlayers] = useState("");
   const [nextUrlPlayers, setNextUrlPlayers] = useState("");
   const [activePlayers, setActivePlayers] = useState();
-  const [teamTwoPlayers, setTeamTwoPlayers] = useState([]);
-  const [teamOnePlayers, setTeamOnePlayers] = useState([]);
+
+  //for team one players
+  const [teamOneGoalkeeper, setTeamOneGoalkeeper] = useState({});
+  const [teamOneDefender, setTeamOneDefender] = useState([]);
+  const [teamOneMidfielder, setTeamOneMidfielder] = useState([]);
+  const [teamOneForward, setTeamOneForward] = useState([]);
+
+  //for team team players
+  const [teamTwoGoalkeeper, setTeamTwoGoalkeeper] = useState({});
+  const [teamTwoDefender, setTeamTwoDefender] = useState([]);
+  const [teamTwoMidfielder, setTeamTwoMidfielder] = useState([]);
+  const [teamTwoForward, setTeamTwoForward] = useState([]);
+
+  //possible error modal :)
+  const [possibleModalCount, setPossibleModalCount] = useState(null);
+  const [possibleModal, setPossibleModal] = useState(false);
+
+  const [activeTeam] = useState({
+    clubOneActive: 1,
+    clubTwoActive: 2,
+  });
+
+  const { clubOneActive, clubTwoActive } = activeTeam;
+
+  const [typeTeam] = useState({
+    Goalkeeper: 1,
+    Defender: 2,
+    Midfielder: 3,
+    Forward: 4,
+  });
+
+  const { Goalkeeper, Defender, Midfielder, Forward } = typeTeam;
+
+  const togglePossibleModal = () => setPossibleModal(!possibleModal);
+
+  const findPossiblePlayerPos = (target = 1, type = 0) => {
+    if (target === 1) {
+      if (teamOne?.id === undefined) {
+        setPossibleModal(true);
+        setModal(false);
+      } else if (teamOne?.id) {
+        if (typeTeam.Goalkeeper === type) {
+          console.log("Goalkeeper");
+          console.log(type);
+        } else if (typeTeam.Defender === type) {
+          console.log("Defender");
+          console.log(type);
+        }
+      }
+    } else if (target === 2) {
+      if (teamTwo?.id === undefined) {
+        setPossibleModal(true);
+        setModal(false);
+      } else if (teamTwo?.id) {
+        console.log("teamTwo");
+      }
+    }
+  };
+
+  const findActiveRight = () => {};
 
   let history = useNavigate();
 
@@ -67,19 +127,21 @@ const NewGame = () => {
     dispatch(setMinutes(mL));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const dataGame = {
       game_club: [
         {
           club: teamOne?.id,
           number: 1,
-          users: teamOnePlayers,
+          // users: teamOnePlayers,
+          // users: [teamOneWratar, ...teamOnejashitnik],
         },
 
         {
           club: teamTwo?.id,
           number: 2,
-          users: teamTwoPlayers,
+          // users: ,
         },
       ],
       game_time: minutes,
@@ -109,9 +171,9 @@ const NewGame = () => {
               <div />
             </AppHeaderFlex>
           </AppHeader>
-          <AppMAIN style={{ padding: "0 15px" }}>
+          <AppMAIN style={{ padding: "0 15px", position: "relative" }}>
             <NewGameWrapper>
-              <form onSubmit={() => handleSubmit()}>
+              <form onSubmit={(e) => handleSubmit(e)}>
                 <NewGameHeaderFlex>
                   <div
                     className="div1Main"
@@ -173,6 +235,7 @@ const NewGame = () => {
                           onClick={() => {
                             toggleCountModal(4);
                             toggleModal();
+                            findPossiblePlayerPos(1, 1);
                           }}
                         >
                           <img src={Player1} alt="" />
@@ -182,7 +245,14 @@ const NewGame = () => {
                     </div>
                     <div className="div2Main">
                       <div className="div2">
-                        <div className="">
+                        <div
+                          className=""
+                          onClick={() => {
+                            toggleCountModal(4);
+                            toggleModal();
+                            findPossiblePlayerPos(2);
+                          }}
+                        >
                           <img src={Player2} alt="" />
                           <p>Игрок</p>
                         </div>
@@ -196,7 +266,14 @@ const NewGame = () => {
                   <div className="NewGamePositionFlex">
                     <div className="div1Main">
                       <div className="div1">
-                        <div className="">
+                        <div
+                          className=""
+                          onClick={() => {
+                            toggleCountModal(4);
+                            toggleModal();
+                            findPossiblePlayerPos(1, 2);
+                          }}
+                        >
                           <img src={Player1} alt="" />
                           <p>Игрок</p>
                         </div>
@@ -283,6 +360,23 @@ const NewGame = () => {
           <AppFooter2>
             <Navigation />
           </AppFooter2>
+          {possibleModal ? (
+            <PossibleModal>
+              <div className="possibleModalSubBack" />
+              <div className="">
+                <div className="possibleModalSub">
+                  <div className="sub1">
+                    <p>Ошибка</p>
+                    <p>Cначала выберите клубы</p>
+                  </div>
+                  <div className="sub2" onClick={togglePossibleModal}>
+                    OK
+                  </div>
+                </div>
+              </div>
+              <StylesHidden />
+            </PossibleModal>
+          ) : null}
         </>
       ) : (
         <>
@@ -348,10 +442,6 @@ const NewGame = () => {
                   setTypingTimeOut={setTypingTimeOut}
                   setPreLoading={setPreLoading}
                   preLoading={preLoading}
-                  setTeamOnePlayers={setTeamOnePlayers}
-                  teamOnePlayers={teamOnePlayers}
-                  setTeamTwoPlayers={setTeamTwoPlayers}
-                  teamTwoPlayers={teamTwoPlayers}
                   activePlayers={activePlayers}
                   setActivePlayers={setActivePlayers}
                   nextUrlPlayers={nextUrlPlayers}
