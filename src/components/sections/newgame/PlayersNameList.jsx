@@ -1,5 +1,4 @@
 import {
-  AppFooter,
   AppHeader,
   AppHeaderFlex,
   AppHeaderFlex2PRating,
@@ -11,11 +10,6 @@ import SearchLine from "../../../assets/svg/SearchLine.svg";
 import { GetAuthInstance } from "../../../helpers/httpClient";
 import { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import DefaultClub from "../../../assets/Img/defaultClub.png";
-import {
-  RadioInputFlexTop,
-  RadioInputFlex,
-} from "../../../styles/Modal.styled";
 import styled from "styled-components";
 import { get } from "lodash";
 import PlayersNameListSub from "./PlayersNameListSub";
@@ -106,92 +100,19 @@ const PlayersNameList = (props) => {
     players,
     setSearchPlayers,
     searchPlayers,
-    modalCount,
+    addUsers,
+    activeType,
+    activeTarget,
+    oneUsers,
+    twoUsers,
+
+    getPlayers,
+    handleSearch,
   } = props;
-
-  // let newClubs = [];
-  // if (modalCount === 2) {
-  //   newClubs = clubs.filter((club) => {
-  //     if (club?.id !== teamTwo?.id) {
-  //       return club;
-  //     }
-  //   });
-  // } else if (modalCount === 3) {
-  //   newClubs = clubs.filter((club) => {
-  //     if (club?.id !== teamOne?.id) {
-  //       return club;
-  //     }
-  //   });
-  // }
-  const getPlayers = (
-    page = 1,
-    next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`,
-    search = ""
-  ) => {
-    if (page === 1) {
-      setPreLoading(true);
-    }
-    let s = "";
-    if (search) {
-      s = "&search=" + search;
-    }
-    GetAuthInstance()
-      .get(next_url + s)
-      .then((res) => {
-        if (res.status === 200) {
-          const result =
-            page === 1 ? res.data.results : [...players, ...res.data.results];
-          setPlayers(result);
-          setNextUrlPlayers(res.data.next);
-        }
-      })
-      .catch(() => {
-        setPlayers([]);
-      })
-      .finally(() => setPreLoading(false));
-  };
-
-  const handleSearch = (e) => {
-    setSearchPlayers(e.target.value);
-    let page = 1;
-    let next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`;
-    setTypingTimeOut(
-      setTimeout(() => {
-        getPlayers(page, next_url, e.target.value);
-      }, 1000)
-    );
-
-    if (typingTimeOut) {
-      clearTimeout(typingTimeOut);
-    }
-  };
 
   const addNewPLAYERS = () => {
     setPlayers([...players, { name: searchPlayers }]);
   };
-
-  // const handleSelect = (id) => {
-  //   if (modalCount === 2) {
-  //     setActive(id);
-  //   }
-  //   if (modalCount === 3) {
-  //     setActive2(id);
-  //   }
-  // };
-
-  // const HandleGetTeamOne = () => {
-  //   let removeFrom = clubs.filter((item) => item.id !== active);
-  //   let findFrom = clubs.filter((item) => item.id === active);
-  //   setClubs(removeFrom);
-  //   setTeamOne(get(findFrom, "0", {}));
-  // };
-
-  // const HandleGetTeamTwo = () => {
-  //   let removeFrom = clubs.filter((item) => item.id !== active2);
-  //   let findFrom = clubs.filter((item) => item.id === active2);
-  //   setClubs(removeFrom);
-  //   setTeamTwo(get(findFrom, "0", {}));
-  // };
 
   useEffect(() => {
     getPlayers();
@@ -294,19 +215,38 @@ const PlayersNameList = (props) => {
                 {players
                   ? players.map((wpList, index) => {
                       let cityN = get(wpList, "city.name", "");
-                      return (
-                        <PlayersNameListSub
-                          position={wpList.position}
-                          full_name={wpList.full_name}
-                          id={index + 1}
-                          key={index}
-                          age={wpList.age}
-                          avatar={wpList.avatar}
-                          ball={wpList.ball}
-                          city={cityN.split(" ")[0]}
-                          victory={wpList.victory}
-                        />
-                      );
+                      if (
+                        [...oneUsers, ...twoUsers].filter((o) => {
+                          return o.id === wpList.id;
+                        }).length === 0
+                      ) {
+                        return (
+                          <PlayersNameListSub
+                            addUsers={() =>
+                              addUsers(
+                                activeTarget,
+                                activeType,
+                                wpList.id,
+                                wpList.full_name,
+                                wpList.avatar,
+                                wpList.ball
+                              )
+                            }
+                            position={wpList.position}
+                            full_name={wpList.full_name}
+                            id={index + 1}
+                            key={index}
+                            age={wpList.age}
+                            avatar={wpList.avatar}
+                            ball={wpList.ball}
+                            city={cityN.split(" ")[0]}
+                            victory={wpList.victory}
+                            toggleModal={toggleModal}
+                          />
+                        );
+                      } else {
+                        return "";
+                      }
                     })
                   : null}
               </>

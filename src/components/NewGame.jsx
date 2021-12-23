@@ -20,7 +20,7 @@ import MinutesList from "../components/sections/newgame/MinutesList";
 import { useDispatch, useSelector } from "react-redux";
 import { setMinutes } from "../redux/actions";
 import TeamsNameList from "./sections/newgame/TeamsNameList";
-import { get } from "lodash";
+import { get, pluck } from "lodash";
 import { GetAuthInstance } from "../helpers/httpClient";
 import PlayersNameList from "./sections/newgame/PlayersNameList";
 import { StylesHidden } from "../styles/Global.styled";
@@ -44,80 +44,69 @@ const NewGame = () => {
   const [players, setPlayers] = useState([]);
   const [searchPlayers, setSearchPlayers] = useState("");
   const [nextUrlPlayers, setNextUrlPlayers] = useState("");
-  const [activePlayers, setActivePlayers] = useState();
 
-  //for team one players
-  const [teamOneGoalkeeper, setTeamOneGoalkeeper] = useState({});
-  const [teamOneDefender, setTeamOneDefender] = useState([]);
-  const [teamOneMidfielder, setTeamOneMidfielder] = useState([]);
-  const [teamOneForward, setTeamOneForward] = useState([]);
-
-  //for team team players
-  const [teamTwoGoalkeeper, setTeamTwoGoalkeeper] = useState({});
-  const [teamTwoDefender, setTeamTwoDefender] = useState([]);
-  const [teamTwoMidfielder, setTeamTwoMidfielder] = useState([]);
-  const [teamTwoForward, setTeamTwoForward] = useState([]);
+  const [oneUsers, setOneUsers] = useState([]);
+  const [twoUsers, setTwoUsers] = useState([]);
+  const [activeType, setActiveType] = useState(0);
+  const [activeTarget, setActiveTarget] = useState(0);
+  const [totalPrice, setTotalPrice] = useState([]);
+  const [totalPrice2, setTotalPrice2] = useState([]);
 
   //possible error modal :)
-  const [possibleModalCount, setPossibleModalCount] = useState(null);
   const [possibleModal, setPossibleModal] = useState(false);
+  const [possibleModal2, setPossibleModal2] = useState(false);
+  const [possibleModal3, setPossibleModal3] = useState(false);
+  const togglePossibleModal = () => setPossibleModal(!possibleModal);
+  const togglePossibleModal2 = () => setPossibleModal2(!possibleModal2);
+  const togglePossibleModal3 = () => setPossibleModal3(!possibleModal3);
 
-  // const [activeTeam] = useState({
-  //   clubOneActive: 1,
-  //   clubTwoActive: 2,
+  // const [typeTeam] = useState({
+  //   Goalkeeper: 1,
+  //   Defender: 2,
+  //   Midfielder: 3,
+  //   Forward: 4,
   // });
 
-  // const { clubOneActive, clubTwoActive } = activeTeam;
-
-  const [typeTeam] = useState({
-    Goalkeeper: 1,
-    Defender: 2,
-    Midfielder: 3,
-    Forward: 4,
-  });
-
-  const { Goalkeeper, Defender, Midfielder, Forward } = typeTeam;
-
-  const togglePossibleModal = () => setPossibleModal(!possibleModal);
+  const addUsers = (target, type, id, name, img, ball) => {
+    if (target === 1) {
+      if (type === 1) {
+        let l = oneUsers.filter((o) => {
+          return o.position !== 1;
+        });
+        l.push({ position: type, id: id, name: name, img: img, ball: ball });
+        setOneUsers(l);
+      } else
+        setOneUsers([
+          ...oneUsers,
+          { position: type, id: id, name: name, img: img, ball: ball },
+        ]);
+    } else if (target === 2) {
+      if (type === 1) {
+        let lt = twoUsers.filter((o) => {
+          return o.position !== 1;
+        });
+        lt.push({ position: type, id: id, name: name, img: img, ball: ball });
+        setTwoUsers(lt);
+      } else
+        setTwoUsers([
+          ...twoUsers,
+          { position: type, id: id, name: name, img: img, ball: ball },
+        ]);
+    }
+  };
 
   const findPossiblePlayerPos = (target = 1, type = 0) => {
+    setActiveTarget(target);
+    setActiveType(type);
     if (target === 1) {
       if (teamOne?.id === undefined) {
         setPossibleModal(true);
         setModal(false);
-      } else if (teamOne?.id) {
-        if (typeTeam.Goalkeeper === type) {
-          console.log("Goalkeeper teamOne");
-          console.log(type);
-        } else if (typeTeam.Defender === type) {
-          console.log("Defender teamOne");
-          console.log(type);
-        } else if (typeTeam.Midfielder === type) {
-          console.log("Midfielder teamOne");
-          console.log(type);
-        } else if (typeTeam.Forward === type) {
-          console.log("Forward teamOne");
-          console.log(type);
-        }
       }
     } else if (target === 2) {
       if (teamTwo?.id === undefined) {
         setPossibleModal(true);
         setModal(false);
-      } else if (teamTwo?.id) {
-        if (typeTeam.Goalkeeper === type) {
-          console.log("Goalkeeper teamTwo");
-          console.log(type);
-        } else if (typeTeam.Defender === type) {
-          console.log("Defender teamTwo");
-          console.log(type);
-        } else if (typeTeam.Midfielder === type) {
-          console.log("Midfielder teamTwo");
-          console.log(type);
-        } else if (typeTeam.Forward === type) {
-          console.log("Forward teamTwo");
-          console.log(type);
-        }
       }
     }
   };
@@ -125,6 +114,12 @@ const NewGame = () => {
   let history = useNavigate();
 
   const toggleModal = () => {
+    let page = 1;
+    let next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`;
+
+    if (modal) {
+      getPlayers(page, next_url, "");
+    }
     setModal(!modal);
   };
   const toggleCountModal = (i) => {
@@ -143,6 +138,19 @@ const NewGame = () => {
     dispatch(setMinutes(mL));
   };
 
+  let ballAddOneUser = oneUsers.map((user) => user.ball);
+  let ballAddTwoUser = twoUsers.map((user) => user.ball);
+
+  let onUsersPos1 = oneUsers.filter((p) => p.position === 1);
+  let onUsersPos2 = oneUsers.filter((p) => p.position === 2);
+  let onUsersPos3 = oneUsers.filter((p) => p.position === 3);
+  let onUsersPos4 = oneUsers.filter((p) => p.position === 4);
+
+  let twoUsersPos1 = twoUsers.filter((p) => p.position === 1);
+  let twoUsersPos2 = twoUsers.filter((p) => p.position === 2);
+  let twoUsersPos3 = twoUsers.filter((p) => p.position === 3);
+  let twoUsersPos4 = twoUsers.filter((p) => p.position === 4);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataGame = {
@@ -150,29 +158,113 @@ const NewGame = () => {
         {
           club: teamOne?.id,
           number: 1,
-          // users: [teamOneWratar, ...teamOnejashitnik],
+          users: oneUsers,
         },
 
         {
           club: teamTwo?.id,
           number: 2,
-          // users: ,
+          users: twoUsers,
         },
       ],
       game_time: minutes,
     };
+    if (oneUsers.length === 0 || twoUsers.length === 0) {
+      setPossibleModal3(true);
+    } else if (
+      onUsersPos1.length === 0 ||
+      onUsersPos2.length === 0 ||
+      onUsersPos3.length === 0 ||
+      onUsersPos4.length === 0
+    ) {
+      setPossibleModal3(true);
+    } else if (
+      twoUsersPos1.length === 0 ||
+      twoUsersPos2.length === 0 ||
+      twoUsersPos3.length === 0 ||
+      twoUsersPos4.length === 0
+    ) {
+      setPossibleModal3(true);
+    } else {
+      setPossibleModal3(false);
+      GetAuthInstance()
+        .post("/api/v1/game/", dataGame)
+        .then((res) => {
+          const status = get(res, "data.status");
+          if (status === 1) {
+            history("/game");
+            setPossibleModal2(false);
+          } else {
+            setPossibleModal2(true);
+          }
+        })
+        .catch((err) => {});
+    }
+  };
+
+  const getPlayers = (
+    page = 1,
+    next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`,
+    search = ""
+  ) => {
+    if (page === 1) {
+      setPreLoading(true);
+    }
+    let s = "";
+    if (search) {
+      s = "&search=" + search;
+    }
     GetAuthInstance()
-      .post("/api/v1/game/", dataGame)
+      .get(next_url + s)
       .then((res) => {
-        history("/game");
+        if (res.status === 200) {
+          const result =
+            page === 1 ? res.data.results : [...players, ...res.data.results];
+          setPlayers(result);
+          setNextUrlPlayers(res.data.next);
+        }
       })
-      .catch((err) => {});
+      .catch(() => {
+        setPlayers([]);
+      })
+      .finally(() => setPreLoading(false));
+  };
+
+  const handleSearch = (e) => {
+    setSearchPlayers(e.target.value);
+    let page = 1;
+    let next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`;
+    setTypingTimeOut(
+      setTimeout(() => {
+        getPlayers(page, next_url, e.target.value);
+      }, 1000)
+    );
+
+    if (typingTimeOut) {
+      clearTimeout(typingTimeOut);
+    }
   };
 
   useEffect(() => {
     setSearchClubs("");
     window.scrollTo(0, 0);
   }, [modal]);
+
+  useEffect(() => {
+    let ballSum = 0;
+    oneUsers.map((i) => {
+      ballSum += i.ball;
+      setTotalPrice(ballSum);
+    });
+  });
+
+  useEffect(() => {
+    let ballSum2 = 0;
+    twoUsers.map((i) => {
+      ballSum2 += i.ball;
+      setTotalPrice2(ballSum2);
+    });
+  });
 
   return (
     <>
@@ -205,7 +297,15 @@ const NewGame = () => {
                         "Команда 1"
                       )}
                     </div>
-                    <p>Кол-во очков</p>
+                    <p>
+                      {get(teamOne, "id") ? (
+                        <span style={{ color: "#1787E7" }}>
+                          {ballAddOneUser.length ? totalPrice : 0} очков
+                        </span>
+                      ) : (
+                        "Кол-во очков"
+                      )}
+                    </p>
                   </div>
                   <div
                     className="div2"
@@ -238,7 +338,15 @@ const NewGame = () => {
                         "Команда 2"
                       )}
                     </div>
-                    <p>Кол-во очков</p>
+                    <p>
+                      {get(teamTwo, "id") ? (
+                        <span style={{ color: "#0EB800" }}>
+                          {ballAddTwoUser.length ? totalPrice2 : 0} очков
+                        </span>
+                      ) : (
+                        "Кол-во очков"
+                      )}
+                    </p>
                   </div>
                 </NewGameHeaderFlex>
                 <p className="newGame__Title">Вратари</p>
@@ -246,32 +354,72 @@ const NewGame = () => {
                   <div className="NewGamePositionFlex">
                     <div className="div1Main">
                       <div className="div1">
-                        <div
-                          className=""
-                          onClick={() => {
-                            toggleCountModal(4);
-                            toggleModal();
-                            findPossiblePlayerPos(1, 1);
-                          }}
-                        >
-                          <img src={Player1} alt="" />
-                          <p>Игрок</p>
-                        </div>
+                        {onUsersPos1.length ? (
+                          onUsersPos1.map((oUser, index) => {
+                            const { name, img } = oUser;
+                            return (
+                              <div
+                                className=""
+                                key={index}
+                                onClick={() => {
+                                  toggleCountModal(4);
+                                  toggleModal();
+                                  findPossiblePlayerPos(1, 1);
+                                }}
+                              >
+                                <img src={img} className="divIMG" alt="" />
+                                <p>{name.split(" ")[0]}</p>
+                              </div>
+                            );
+                          })
+                        ) : (
+                          <div
+                            className=""
+                            onClick={() => {
+                              toggleCountModal(4);
+                              toggleModal();
+                              findPossiblePlayerPos(1, 1);
+                            }}
+                          >
+                            <img src={Player1} className="divIMG" alt="" />
+                            <p>Игрок</p>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="div2Main">
                       <div className="div2">
-                        <div
-                          className=""
-                          onClick={() => {
-                            toggleCountModal(4);
-                            toggleModal();
-                            findPossiblePlayerPos(2, 1);
-                          }}
-                        >
-                          <img src={Player2} alt="" />
-                          <p>Игрок</p>
-                        </div>
+                        {twoUsersPos1.length ? (
+                          twoUsersPos1.map((oUser, index) => {
+                            const { name, img } = oUser;
+                            return (
+                              <div
+                                className=""
+                                key={index}
+                                onClick={() => {
+                                  toggleCountModal(4);
+                                  toggleModal();
+                                  findPossiblePlayerPos(2, 1);
+                                }}
+                              >
+                                <img src={img} className="divIMG" alt="" />
+                                <p>{name.split(" ")[0]}</p>
+                              </div>
+                            );
+                          })
+                        ) : (
+                          <div
+                            className=""
+                            onClick={() => {
+                              toggleCountModal(4);
+                              toggleModal();
+                              findPossiblePlayerPos(2, 1);
+                            }}
+                          >
+                            <img src={Player2} className="divIMG" alt="" />
+                            <p>Игрок</p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -290,13 +438,35 @@ const NewGame = () => {
                             findPossiblePlayerPos(1, 2);
                           }}
                         >
-                          <img src={Player1} alt="" />
+                          <img src={Player1} className="divIMG" alt="" />
                           <p>Игрок</p>
                         </div>
+                        {onUsersPos2.length
+                          ? onUsersPos2.map((oUser, index) => {
+                              const { name, img } = oUser;
+                              return (
+                                <div className="" key={index}>
+                                  <img src={img} className="divIMG" alt="" />
+                                  <p>{name.split(" ")[0]}</p>
+                                </div>
+                              );
+                            })
+                          : null}
                       </div>
                     </div>
                     <div className="div2Main">
                       <div className="div2">
+                        {twoUsersPos2.length
+                          ? twoUsersPos2.map((oUser, index) => {
+                              const { name, img } = oUser;
+                              return (
+                                <div className="" key={index}>
+                                  <img src={img} className="divIMG" alt="" />
+                                  <p>{name.split(" ")[0]}</p>
+                                </div>
+                              );
+                            })
+                          : null}
                         <div
                           className=""
                           onClick={() => {
@@ -305,7 +475,7 @@ const NewGame = () => {
                             findPossiblePlayerPos(2, 2);
                           }}
                         >
-                          <img src={Player2} alt="" />
+                          <img src={Player2} className="divIMG" alt="" />
                           <p>Игрок</p>
                         </div>
                       </div>
@@ -326,13 +496,35 @@ const NewGame = () => {
                             findPossiblePlayerPos(1, 3);
                           }}
                         >
-                          <img src={Player1} alt="" />
+                          <img src={Player1} className="divIMG" alt="" />
                           <p>Игрок</p>
                         </div>
+                        {onUsersPos3.length
+                          ? onUsersPos3.map((oUser, index) => {
+                              const { name, img } = oUser;
+                              return (
+                                <div className="" key={index}>
+                                  <img src={img} className="divIMG" alt="" />
+                                  <p>{name.split(" ")[0]}</p>
+                                </div>
+                              );
+                            })
+                          : null}
                       </div>
                     </div>
                     <div className="div2Main">
                       <div className="div2">
+                        {twoUsersPos3.length
+                          ? twoUsersPos3.map((oUser, index) => {
+                              const { name, img } = oUser;
+                              return (
+                                <div className="" key={index}>
+                                  <img src={img} className="divIMG" alt="" />
+                                  <p>{name.split(" ")[0]}</p>
+                                </div>
+                              );
+                            })
+                          : null}
                         <div
                           className=""
                           onClick={() => {
@@ -341,7 +533,7 @@ const NewGame = () => {
                             findPossiblePlayerPos(2, 3);
                           }}
                         >
-                          <img src={Player2} alt="" />
+                          <img src={Player2} className="divIMG" alt="" />
                           <p>Игрок</p>
                         </div>
                       </div>
@@ -362,13 +554,35 @@ const NewGame = () => {
                             findPossiblePlayerPos(1, 4);
                           }}
                         >
-                          <img src={Player1} alt="" />
+                          <img src={Player1} className="divIMG" alt="" />
                           <p>Игрок</p>
                         </div>
+                        {onUsersPos4.length
+                          ? onUsersPos4.map((oUser, index) => {
+                              const { name, img } = oUser;
+                              return (
+                                <div className="" key={index}>
+                                  <img src={img} className="divIMG" alt="" />
+                                  <p>{name.split(" ")[0]}</p>
+                                </div>
+                              );
+                            })
+                          : null}
                       </div>
                     </div>
                     <div className="div2Main">
                       <div className="div2">
+                        {twoUsersPos4.length
+                          ? twoUsersPos4.map((oUser, index) => {
+                              const { name, img } = oUser;
+                              return (
+                                <div className="" key={index}>
+                                  <img src={img} className="divIMG" alt="" />
+                                  <p>{name.split(" ")[0]}</p>
+                                </div>
+                              );
+                            })
+                          : null}
                         <div
                           className=""
                           onClick={() => {
@@ -377,7 +591,7 @@ const NewGame = () => {
                             findPossiblePlayerPos(2, 4);
                           }}
                         >
-                          <img src={Player2} alt="" />
+                          <img src={Player2} className="divIMG" alt="" />
                           <p>Игрок</p>
                         </div>
                       </div>
@@ -407,6 +621,40 @@ const NewGame = () => {
                     <p>Cначала выберите клубы</p>
                   </div>
                   <div className="sub2" onClick={togglePossibleModal}>
+                    OK
+                  </div>
+                </div>
+              </div>
+              <StylesHidden />
+            </PossibleModal>
+          ) : null}
+
+          {possibleModal2 ? (
+            <PossibleModal>
+              <div className="">
+                <div className="possibleModalSub">
+                  <div className="sub1">
+                    <p>Ошибка</p>
+                    <p>Игра не создавалась. Пожалуйста, попробуйте еще раз!</p>
+                  </div>
+                  <div className="sub2" onClick={togglePossibleModal2}>
+                    OK
+                  </div>
+                </div>
+              </div>
+              <StylesHidden />
+            </PossibleModal>
+          ) : null}
+
+          {possibleModal3 ? (
+            <PossibleModal>
+              <div className="">
+                <div className="possibleModalSub">
+                  <div className="sub1">
+                    <p>Ошибка</p>
+                    <p>Дабавить играков</p>
+                  </div>
+                  <div className="sub2" onClick={togglePossibleModal3}>
                     OK
                   </div>
                 </div>
@@ -474,13 +722,18 @@ const NewGame = () => {
                 />
               ) : modalCount === 4 ? (
                 <PlayersNameList
+                  addUsers={(target, type, id, name, img, ball) =>
+                    addUsers(target, type, id, name, img, ball)
+                  }
+                  oneUsers={oneUsers}
+                  twoUsers={twoUsers}
+                  activeTarget={activeTarget}
+                  activeType={activeType}
                   toggleModal={toggleModal}
                   typingTimeOut={typingTimeOut}
                   setTypingTimeOut={setTypingTimeOut}
                   setPreLoading={setPreLoading}
                   preLoading={preLoading}
-                  activePlayers={activePlayers}
-                  setActivePlayers={setActivePlayers}
                   nextUrlPlayers={nextUrlPlayers}
                   setNextUrlPlayers={setNextUrlPlayers}
                   setPlayers={setPlayers}
@@ -488,6 +741,8 @@ const NewGame = () => {
                   setSearchPlayers={setSearchPlayers}
                   searchPlayers={searchPlayers}
                   modalCount={modalCount}
+                  getPlayers={getPlayers}
+                  handleSearch={handleSearch}
                 />
               ) : (
                 ""

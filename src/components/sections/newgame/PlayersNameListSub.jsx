@@ -1,25 +1,27 @@
 import { PlayersRatingMain } from "../../../styles/PlayersRatingStyle";
 
 const PlayersNameListSub = (props) => {
-  const { id, age, avatar, ball, city, victory, position, full_name } = props;
+  const {
+    age,
+    avatar,
+    ball,
+    city,
+    victory,
+    position,
+    full_name,
+    addUsers,
+    toggleModal,
+  } = props;
   return (
     <>
-      <PlayersRatingMain>
+      <PlayersRatingMain
+        onClick={() => {
+          addUsers();
+          toggleModal();
+        }}
+      >
         <div className="">
           <div className="playersRatingSubFlex">
-            <p
-              className={
-                id === 1
-                  ? "listID1"
-                  : id === 2
-                  ? "listID2"
-                  : id === 3
-                  ? "listID3"
-                  : "listID4"
-              }
-            >
-              {id}
-            </p>
             <div className="userImg">
               <img src={avatar} alt="" />
               {position === 1 ? (
