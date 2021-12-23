@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import AppImg1 from "../assets/Img/Images.png";
 
 export const ContainerFluid = styled.div`
   display: grid;
@@ -32,7 +31,7 @@ export const AppHeader = styled.div`
   transform: translate(-50.09%, 0);
   position: fixed;
   left: 50%;
-  top: 0; 
+  top: 0;
   width: 100%;
   background-color: ${({ theme }) => theme.appColors.black};
   z-index: 4;
@@ -93,7 +92,6 @@ export const AppMAIN = styled.div`
   padding-bottom: 20px;
 `;
 
-
 export const AppMAIN2 = styled.div`
   margin-bottom: 82px;
   padding-bottom: 20px;
@@ -121,5 +119,8 @@ export const AppHeaderFlex2PRating = styled.div`
   }
   .countTabActive {
     border-bottom: 2px solid #0eb800;
+  }
+  .countTabActiveNot {
+    color: #bdbdbd;
   }
 `;

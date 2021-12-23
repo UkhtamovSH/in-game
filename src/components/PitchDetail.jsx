@@ -1,6 +1,5 @@
 import { StadionPage } from "../styles/PitchesDtail.style";
 import arrowRight from "../assets/Img/Arrow - Right.png";
-import minipolya from "../assets/Img/minipolya.png";
 import { Link, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import priceStar from "../assets/Img/Vector.png";
@@ -60,7 +59,7 @@ const PitchDetail = () => {
         <div className="aboutStadion">
           <div className="polyaNumber">
             <div className="btnPozvonit">
-              <div className="appBtnGreen">Позвонить</div>
+              <div className="appBtnGreen"><a href="tel: +998 71 267 00 67">Позвонить</a></div>
             </div>
             <h3>Контактные данные</h3>
             {_.get(data, "Contact", []).map((item, index) => (

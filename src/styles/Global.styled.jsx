@@ -18,6 +18,16 @@ export const GlobalStyle = createGlobalStyle`
     background-color:#000000b3 !important;
     z-index:999!important;
   }
+  .ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+    opacity: 1;
+}
+
+
   html, body {
   margin:0px;
   height:100%;

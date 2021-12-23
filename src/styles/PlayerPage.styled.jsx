@@ -1,8 +1,20 @@
 import styled from "styled-components";
 
 export const PlayerAvatarDiv = styled.div`
-  
-`
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+export const AvatarImgDiv = styled.div`
+ 
+`;
+export const AvatarWrapDiv = styled.div`
+  display: flex;
+  /* justify-content: space-between; */
+  gap:20px;
+  align-items: center;
+`;
 
 export const HomeStyle = styled.div`
   .lastPlays {
@@ -17,34 +29,16 @@ export const HomeStyle = styled.div`
     padding: 15px 20px;
     cursor: pointer;
   }
-  & .topSetting {
-    background-color: ${({ theme }) => theme.appColors.whiteGray};
-    width: 100%;
-    border-radius: 0px 0px 32px 32px;
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 20px;
-    box-sizing: border-box;
-    align-items: flex-end;
-    position: relative;
-    z-index: 2;
-    padding-top: 68px;
-    & div {
-      img {
-        cursor: pointer;
-      }
-    }
-  }
 `;
 export const HomeContainer = styled.div`
   position: relative;
   left: 0;
   & .wins {
-    margin: 0 15px;
+    padding: 0 15px;
     display: grid;
     grid-template-columns: auto auto;
     background-color: ${({ theme }) => theme.appColors.whiteGray};
-    border-radius: 64px 16px 16px 64px;
+    border-radius: 16px 64px 64px 16px;
     padding: 13px;
     box-sizing: border-box;
 
@@ -55,7 +49,6 @@ export const HomeContainer = styled.div`
       justify-content:space-between;
       margin:0 auto;
       gap: 40px;
-     
     }
 
     .topWinContain {
@@ -110,13 +103,12 @@ export const HomeContainer = styled.div`
     height: 120px;
   }
 
-  & .avatarWrap {
+  & .avatarWrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 10px;
-    position: relative;
-    bottom: 60px;
+
     .avatarImg {
       z-index: 2;
       border-radius: 50%;
@@ -125,7 +117,6 @@ export const HomeContainer = styled.div`
     & .ageAvatar {
       display: flex;
       align-items: center;
-      margin: 0 auto;
       gap: 5px;
       span {
         width: 5px;
@@ -149,14 +140,11 @@ export const HomeContainer = styled.div`
       font-size: 24px;
       line-height: 33px;
       text-align: center;
-      
-      margin: 0 auto;
     }
     & .beOnline {
       display: flex;
       align-items: center;
       gap: 5px;
-      margin: 0 auto;
       & span:nth-child(1) {
         width: 5px;
         height: 5px;
@@ -178,8 +166,8 @@ export const HomeTimeStyle = styled.div`
   margin-top: 16px;
   display: flex;
   justify-content: space-between;
-  padding:0 15px;
-  .firstTime {
+
+    .firstTime {
     width: 104px;
     height: 158px;
     background-color: ${({ theme }) => theme.appColors.whiteGray};
@@ -215,7 +203,4 @@ export const HomeTimeStyle = styled.div`
       }
     }
   }
-
 `;
-
-

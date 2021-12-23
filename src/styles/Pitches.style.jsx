@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import AppImg1 from "../assets/Img/Images.png";
 
 export const AppMainContain = styled.div``;

@@ -13,12 +13,15 @@ import ResetPassword from "../components/ResetPassword";
 import PitchDetail from "../components/PitchDetail";
 import CommentsRating from "../components/sections/CommentsRating";
 import GamePlayerReting from "../components/GamePlayerReting";
-import GamePlayerRatingMark from "../components/GamePlayerRatingMark";
 import ProfileEdit from "../components/ProfileEdit";
 import AllGames from "../components/AllGames";
 import Photos from "../components/sections/Photos";
 import Rate from "../components/sections/Rate";
 import Setting from "../components/sections/Setting";
+import PaymeComp from "../components/PaymeComp"
+import PlayerMap from "../components/PlayerMap";
+import PaymeHistory from "../components/PaymeHistory";
+import PlayersPage from "../components/PlayersPage";
 
 const Routess = () => {
   return (
@@ -33,7 +36,7 @@ const Routess = () => {
       <Route path="/players" element={<Players />} />
       <Route path="/newgame" element={<NewGame />} />
       <Route path="/pitches" element={<Pitches />} />
-      <Route path="/pitches/:id" element={<PitchDetail />} />
+      <Route path="/pitches" element={<PitchDetail />} />
       <Route path="/rating-players" element={<RatingPlayers />} />
       <Route path="/game-player-reting/:id" element={<GamePlayerReting />} />
       <Route path="/game-player-reting-mark/:id" element={<Rate />} />
@@ -42,6 +45,10 @@ const Routess = () => {
       <Route path="/all-games" element={<AllGames />} />
       <Route path="/photos/:id" element={<Photos />} />
       <Route path="/setting" element={<Setting />} />
+      <Route path="/payment" element={<PaymeComp />} />
+      <Route path="/player-map" element={<PlayerMap />} />
+      <Route path="/payment-history" element={<PaymeHistory />} />
+      <Route path="/player-page/:id" element={<PlayersPage />} />
     </Routes>
   );
 };

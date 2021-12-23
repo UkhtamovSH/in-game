@@ -10,7 +10,9 @@ import { useEffect } from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 
-const CommentSwiper = () => {
+const CommentSwiper = (props) => {
+
+  const {comment} = props
   const [data, setData] = useState([]);
 
   const getData = () => {
@@ -43,11 +45,11 @@ const CommentSwiper = () => {
     <HomeSwiperStyle>
       <div className="lastPlays">
         <label>Отзывы о вас</label>
-        <label>
-          <Link to="/comments-rating">
+       { comment && (<label>
+          {<Link to="/comments-rating">
             Все отзывы <img src={strokeIcon} alt="" />{" "}
-          </Link>
-        </label>
+          </Link>}
+        </label>)}
       </div>
       <Slider {...settings}>
         {data.map((item, index) => (

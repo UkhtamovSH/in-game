@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ArrowRight from "../../assets/svg/Arrow - Right.svg";
 import Arrow from "../../assets/Img/Arrow - Right 2.png";
+import { get } from "lodash";
 import {
   AppFooter,
   AppHeader,
@@ -14,83 +15,39 @@ import {
   AutoSelectPlayerWrapp,
   AutoSelectSave,
 } from "../../styles/Setting.styled";
-
-import { styled } from "@mui/system";
-import SwitchUnstyled, {
-  switchUnstyledClasses,
-} from "@mui/base/SwitchUnstyled";
+import { SwitchDiv } from "./Switch.styled";
 import ModalApp from "./ModalApp";
+import { GetAuthInstance } from "../../helpers/httpClient";
 
 const Setting = () => {
-  const Root = styled("span")`
-    font-size: 0;
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 24px;
-    cursor: pointer;
-
-    &.${switchUnstyledClasses.disabled} {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    & .${switchUnstyledClasses.track} {
-      background: #252525;
-      border-radius: 10px;
-      display: block;
-      height: 100%;
-      width: 100%;
-      position: absolute;
-    }
-
-    & .${switchUnstyledClasses.thumb} {
-      display: block;
-      width: 16px;
-      height: 16px;
-      top: 4px;
-      left: 4px;
-      border-radius: 16px;
-      background-color: #333333;
-      position: relative;
-      transition: all 200ms ease;
-    }
-
-    &.${switchUnstyledClasses.focusVisible} .${switchUnstyledClasses.thumb} {
-      background-color: rgba(255, 255, 255, 1);
-      box-shadow: 0 0 1px 8px rgba(0, 0, 0, 0.25);
-    }
-
-    &.${switchUnstyledClasses.checked} {
-      .${switchUnstyledClasses.thumb} {
-        left: 21px;
-        top: 4px;
-        background-color: #fff;
-      }
-
-      .${switchUnstyledClasses.track} {
-        background: #0eb800;
-      }
-    }
-
-    & .${switchUnstyledClasses.input} {
-      cursor: inherit;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      z-index: 1;
-      margin: 0;
-    }
-  `;
-
   const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const [onSwitch, setOnSwitch] = useState(0);
+  const [autopadbor, setAutopadbor] = useState(0);
+  const [auto_roll, setAuto_roll] = useState(0);
+  const [updatedLists, setUpdatedLists] = useState([]);
 
   isOpenModal
     ? (document.body.style.overflow = "hidden")
     : (document.body.style.overflow = "unset");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const dataForm = new FormData();
+
+    dataForm.append("notification", onSwitch);
+    dataForm.append("autopadbor", autopadbor);
+    dataForm.append("auto_roll", auto_roll);
+
+    GetAuthInstance()
+      .post("api/v1/user-settings/", dataForm)
+      .then((res) => {
+        setUpdatedLists([...updatedLists, res.dataForm]);
+        // setOnSwitch();
+      })
+      .catch((err) => {});
+  };
 
   return (
     <div>
@@ -107,45 +64,101 @@ const Setting = () => {
           <div />
         </AppHeaderFlex>
       </AppHeader>
-      <AppMAIN>
-        <AutoSelectPlayerWrapp>
-          <AutoSelectPlayer>
-            <p>Автоподбор игроков</p>
-            <SwitchUnstyled component={Root} defaultChecked />
-          </AutoSelectPlayer>
-          <AutoSelectPlayer>
-            <p>Автораспределение ролей</p>
-            <SwitchUnstyled component={Root} />
-          </AutoSelectPlayer>
-          <AutoSelectPlayer>
-            <p>Push-уведомления</p>
-            <SwitchUnstyled component={Root} />
-          </AutoSelectPlayer>
-          <AutoSelectPlayer>
-            <p>Подписка</p>
-            <img src={Arrow} alt="" />
-          </AutoSelectPlayer>
-          <AutoSelectPlayer>
-            <p>История оплат</p>
-            <img src={Arrow} alt="" />
-          </AutoSelectPlayer>
-          <AutoSelectPlayerAccount>
-            <span onClick={() => setIsOpenModal(true)}>Выйти с аккаунта</span>
-          </AutoSelectPlayerAccount>
-          <ModalApp
-            isOpenProps={isOpenModal}
-            onRequestCloseProps={() => setIsOpenModal(false)}
-            setIsOpenModalProps={() => setIsOpenModal(false)}
-          ></ModalApp>
-        </AutoSelectPlayerWrapp>
-      </AppMAIN>
-      <AppFooter>
-        <AutoSelectSave>
-          <div className="appBtnGreen">Сохранить</div>
-        </AutoSelectSave>
-      </AppFooter>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <AppMAIN>
+          <AutoSelectPlayerWrapp>
+            <SwitchDiv>
+              <AutoSelectPlayer>
+                <p>Автоподбор игроков</p>
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    checked={onSwitch}
+                    onChange={(e) => {
+                      setOnSwitch(e.target.checked ? 1 : 0);
+                    }}
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </AutoSelectPlayer>
+              <AutoSelectPlayer>
+                <p>Автораспределение ролей</p>{" "}
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    checked={autopadbor}
+                    onChange={(e) => {
+                      setAutopadbor(e.target.checked ? 1 : 0);
+                    }}
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </AutoSelectPlayer>
+              <AutoSelectPlayer>
+                <p>Push-уведомления</p>{" "}
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    checked={auto_roll}
+                    onChange={(e) => {
+                      setAuto_roll(e.target.checked ? 1 : 0);
+                    }}
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </AutoSelectPlayer>
+            </SwitchDiv>
+            <Link
+              to="/payment"
+              style={{ textDecoration: "none", color: "#fff" }}
+            >
+              <AutoSelectPlayer>
+                <p>Подписка</p>
+                <img src={Arrow} alt="" />
+              </AutoSelectPlayer>
+            </Link>
+            <Link
+              to="/payment-history"
+              style={{ textDecoration: "none", color: "#fff" }}
+            >
+              <AutoSelectPlayer>
+                <p>История оплат</p>
+                <img src={Arrow} alt="" />
+              </AutoSelectPlayer>
+            </Link>
+            <AutoSelectPlayerAccount>
+              <span onClick={() => setIsOpenModal(true)}>Выйти с аккаунта</span>
+            </AutoSelectPlayerAccount>
+            <ModalApp
+              style={{
+                position: "absolute",
+                bottom: "20px",
+                left: "50%",
+                transform: "translate(-50%,-50%)",
+              }}
+              isOpenProps={isOpenModal}
+              onRequestCloseProps={() => setIsOpenModal(false)}
+              setIsOpenModalProps={() => setIsOpenModal(false)}
+              closeTimeoutMS={500}
+              spanText="Вы действительно хотите выйти со своего аккаунта?"
+              leaveApp="Да, выйти"
+              cancle="Отмена"
+              cancel
+              ModalImg
+
+              // spanText
+            ></ModalApp>
+          </AutoSelectPlayerWrapp>
+        </AppMAIN>
+        <AppFooter>
+          <AutoSelectSave>
+            <button className="appBtnGreen" type="submit">
+              Сохранить
+            </button>
+          </AutoSelectSave>
+        </AppFooter>
+      </form>
     </div>
   );
 };
-
 export default Setting;

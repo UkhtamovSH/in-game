@@ -1,26 +1,46 @@
 import Modal from "react-modal";
+import { useNavigate } from "react-router";
 import {
   ModalCancelBtn,
   ModalContainer,
   ModalWrapper,
 } from "../../styles/ModalApp.styled";
 
+
 const ModalApp = (props) => {
-  const { isOpenProps, onRequestCloseProps, setIsOpenModalProps } = props;
+  const {
+    isOpenProps,
+    onRequestCloseProps,
+    setIsOpenModalProps,
+    spanText,
+    leaveApp,
+    cancle,
+    cancel,
+
+  } = props;
+  
+  const history = useNavigate()
+
+  const handleSubmit  = () => {
+    window.localStorage.clear()
+    history("/")
+  }
   return (
     <Modal
       isOpen={isOpenProps}
       onRequestClose={onRequestCloseProps}
       className="modulWrapper"
     >
-      <ModalWrapper>
+      <ModalWrapper {...props}>
         <ModalContainer>
-          <p>Вы действительно хотите выйти со своего аккаунта?</p>
-          <span>Да, выйти</span>
+          <p>{spanText}</p>
+          <span onClick={() => handleSubmit()}>{leaveApp}</span>
         </ModalContainer>
-        <ModalCancelBtn onClick={setIsOpenModalProps}>
-          <p>Отмена</p>
-        </ModalCancelBtn>
+        {cancel && (
+          <ModalCancelBtn onClick={setIsOpenModalProps}>
+            <p>{cancle}</p>
+          </ModalCancelBtn>
+        )}
       </ModalWrapper>
     </Modal>
   );

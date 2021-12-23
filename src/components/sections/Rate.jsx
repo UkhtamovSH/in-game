@@ -11,12 +11,11 @@ import {
   AppMAIN,
 } from "../../styles/ContainerFluid.styled";
 import {
-  RatingMain,
   Container,
   Radio,
-  RateWrapper,
   Rating,
   RatingTextArea,
+  StarDiv,
 } from "../../styles/Rate.style";
 // import commentIcon from "../../assets/Img/Profile.png";
 
@@ -56,232 +55,238 @@ const Rate = () => {
   };
 
   return (
-    <AppHeader>
-      <AppHeaderFlex>
-        <div className="">
-          <Link to="/" className="">
-            <img src={ArrowRight} alt="" />
-          </Link>
-        </div>
-        <div className="">
-          <span>Рейтинг игроков</span>
-        </div>
-        <div />
-      </AppHeaderFlex>
+    <>
+      <AppHeader>
+        <AppHeaderFlex>
+          <div className="">
+            <Link to="/" className="">
+              <img src={ArrowRight} alt="" />
+            </Link>
+          </div>
+          <div className="">
+            <span>Рейтинг игроков</span>
+          </div>
+          <div />
+        </AppHeaderFlex>
+      </AppHeader>
       <form onSubmit={(e) => handleSubmit(e)}>
         <AppMAIN>
-          <div>
-            <p>Скорость</p>
-            <Container>
-              {[...Array(5)].map((item, index) => {
-                const givenRating = index + 1;
-                return (
-                  <label>
-                    <Radio
-                      type="radio"
-                      value={givenRating}
-                      onClick={() => {
-                        setRate(givenRating);
-                        console.log(`${givenRating}`);
-                      }}
-                    />
-                    <Rating>
-                      <FaStar
-                        color={
-                          givenRating < rate || givenRating === rate
-                            ? "F6CE42"
-                            : "#a7a2a2"
-                        }
-                      />
-                    </Rating>
-                  </label>
-                );
-              })}
-            </Container>
+          <div style={{ padding: "0 15px" }}>
+            <StarDiv style={{ margin: "10px 0" }}>
+              <div className="StarDivBorder">
+                <p>Скорость</p>
+                <Container>
+                  {[...Array(5)].map((item, index) => {
+                    const givenRating = index + 1;
+                    return (
+                      <label>
+                        <Radio
+                          type="radio"
+                          value={givenRating}
+                          onClick={() => {
+                            setRate(givenRating);
+                            console.log(`${givenRating}`);
+                          }}
+                        />
+                        <Rating>
+                          <FaStar
+                            color={
+                              givenRating < rate || givenRating === rate
+                                ? "F6CE42"
+                                : "#a7a2a2"
+                            }
+                          />
+                        </Rating>
+                      </label>
+                    );
+                  })}
+                </Container>
+              </div>
+              <div className="StarDivBorder">
+                <p>Дриблинг</p>
+                <Container>
+                  {[...Array(5)].map((item, index) => {
+                    const givenRating = index + 1;
+                    return (
+                      <label>
+                        <Radio
+                          type="radio"
+                          value={givenRating}
+                          onClick={() => {
+                            setDrib(givenRating);
+                            console.log(`${givenRating}`);
+                          }}
+                        />
+                        <Rating>
+                          <FaStar
+                            color={
+                              givenRating < drib || givenRating === drib
+                                ? "F6CE42"
+                                : "#a7a2a2"
+                            }
+                          />
+                        </Rating>
+                      </label>
+                    );
+                  })}
+                </Container>
+              </div>
+              <div className="StarDivBorder">
+                <p>Пас</p>
+                <Container>
+                  {[...Array(5)].map((item, index) => {
+                    const givenRating = index + 1;
+                    return (
+                      <label>
+                        <Radio
+                          type="radio"
+                          value={givenRating}
+                          onClick={() => {
+                            setPass(givenRating);
+                            console.log(`${givenRating}`);
+                          }}
+                        />
+                        <Rating>
+                          <FaStar
+                            color={
+                              givenRating < pass || givenRating === pass
+                                ? "F6CE42"
+                                : "#a7a2a2"
+                            }
+                          />
+                        </Rating>
+                      </label>
+                    );
+                  })}
+                </Container>
+              </div>
+              <div className="StarDivBorder">
+                <p>Точность удара</p>
+                <Container>
+                  {[...Array(5)].map((item, index) => {
+                    const givenRating = index + 1;
+                    return (
+                      <label>
+                        <Radio
+                          type="radio"
+                          value={givenRating}
+                          onClick={() => {
+                            setHit(givenRating);
+                            console.log(`${givenRating}`);
+                          }}
+                        />
+                        <Rating>
+                          <FaStar
+                            color={
+                              givenRating < hit || givenRating === hit
+                                ? "F6CE42"
+                                : "#a7a2a2"
+                            }
+                          />
+                        </Rating>
+                      </label>
+                    );
+                  })}
+                </Container>
+              </div>
+              <div className="StarDivBorder">
+                <p>Сила удара</p>
+                <Container>
+                  {[...Array(5)].map((item, index) => {
+                    const givenRating = index + 1;
+                    return (
+                      <label>
+                        <Radio
+                          type="radio"
+                          value={givenRating}
+                          onClick={() => {
+                            setForce(givenRating);
+                            console.log(`${givenRating}`);
+                          }}
+                        />
+                        <Rating>
+                          <FaStar
+                            color={
+                              givenRating < force || givenRating === force
+                                ? "F6CE42"
+                                : "#a7a2a2"
+                            }
+                          />
+                        </Rating>
+                      </label>
+                    );
+                  })}
+                </Container>
+              </div>
+              <div className="StarDivBorder">
+                <p>Удар головой</p>
+                <Container>
+                  {[...Array(5)].map((item, index) => {
+                    const givenRating = index + 1;
+                    return (
+                      <label>
+                        <Radio
+                          type="radio"
+                          value={givenRating}
+                          onClick={() => {
+                            setHeadbutt(givenRating);
+                            console.log(`${givenRating}`);
+                          }}
+                        />
+                        <Rating>
+                          <FaStar
+                            color={
+                              givenRating < headButt || givenRating === headButt
+                                ? "F6CE42"
+                                : "#a7a2a2"
+                            }
+                          />
+                        </Rating>
+                      </label>
+                    );
+                  })}
+                </Container>
+              </div>
+              <div className="StarDivBorder">
+                <p>Отбор</p>
+                <Container>
+                  {[...Array(5)].map((item, index) => {
+                    const givenRating = index + 1;
+                    return (
+                      <label>
+                        <Radio
+                          type="radio"
+                          value={givenRating}
+                          onClick={() => {
+                            setSelect(givenRating);
+                            console.log(`${givenRating}`);
+                          }}
+                        />
+                        <Rating>
+                          <FaStar
+                            color={
+                              givenRating < select || givenRating === select
+                                ? "F6CE42"
+                                : "#a7a2a2"
+                            }
+                          />
+                        </Rating>
+                      </label>
+                    );
+                  })}
+                </Container>
+              </div>
+            </StarDiv>
+            <RatingTextArea>
+              <textarea
+                placeholder="Отзыв об игроке"
+                className="gamerTextArea"
+                onChange={(e) => setContent(e.target.value)}
+                value={content}
+              />
+              {/* <img src={commentIcon} alt="" className="commentIconImg" /> */}
+            </RatingTextArea>
           </div>
-          <div>
-            <p>Дриблинг</p>
-            <Container>
-              {[...Array(5)].map((item, index) => {
-                const givenRating = index + 1;
-                return (
-                  <label>
-                    <Radio
-                      type="radio"
-                      value={givenRating}
-                      onClick={() => {
-                        setDrib(givenRating);
-                        console.log(`${givenRating}`);
-                      }}
-                    />
-                    <Rating>
-                      <FaStar
-                        color={
-                          givenRating < drib || givenRating === drib
-                            ? "F6CE42"
-                            : "#a7a2a2"
-                        }
-                      />
-                    </Rating>
-                  </label>
-                );
-              })}
-            </Container>
-          </div>
-          <div>
-            <p>Пас</p>
-            <Container>
-              {[...Array(5)].map((item, index) => {
-                const givenRating = index + 1;
-                return (
-                  <label>
-                    <Radio
-                      type="radio"
-                      value={givenRating}
-                      onClick={() => {
-                        setPass(givenRating);
-                        console.log(`${givenRating}`);
-                      }}
-                    />
-                    <Rating>
-                      <FaStar
-                        color={
-                          givenRating < pass || givenRating === pass
-                            ? "F6CE42"
-                            : "#a7a2a2"
-                        }
-                      />
-                    </Rating>
-                  </label>
-                );
-              })}
-            </Container>
-          </div>
-          <div>
-            <p>Точность удара</p>
-            <Container>
-              {[...Array(5)].map((item, index) => {
-                const givenRating = index + 1;
-                return (
-                  <label>
-                    <Radio
-                      type="radio"
-                      value={givenRating}
-                      onClick={() => {
-                        setHit(givenRating);
-                        console.log(`${givenRating}`);
-                      }}
-                    />
-                    <Rating>
-                      <FaStar
-                        color={
-                          givenRating < hit || givenRating === hit
-                            ? "F6CE42"
-                            : "#a7a2a2"
-                        }
-                      />
-                    </Rating>
-                  </label>
-                );
-              })}
-            </Container>
-          </div>
-          <div>
-            <p>Сила удара</p>
-            <Container>
-              {[...Array(5)].map((item, index) => {
-                const givenRating = index + 1;
-                return (
-                  <label>
-                    <Radio
-                      type="radio"
-                      value={givenRating}
-                      onClick={() => {
-                        setForce(givenRating);
-                        console.log(`${givenRating}`);
-                      }}
-                    />
-                    <Rating>
-                      <FaStar
-                        color={
-                          givenRating < force || givenRating === force
-                            ? "F6CE42"
-                            : "#a7a2a2"
-                        }
-                      />
-                    </Rating>
-                  </label>
-                );
-              })}
-            </Container>
-          </div>
-          <div>
-            <p>Удар головой</p>
-            <Container>
-              {[...Array(5)].map((item, index) => {
-                const givenRating = index + 1;
-                return (
-                  <label>
-                    <Radio
-                      type="radio"
-                      value={givenRating}
-                      onClick={() => {
-                        setHeadbutt(givenRating);
-                        console.log(`${givenRating}`);
-                      }}
-                    />
-                    <Rating>
-                      <FaStar
-                        color={
-                          givenRating < headButt || givenRating === headButt
-                            ? "F6CE42"
-                            : "#a7a2a2"
-                        }
-                      />
-                    </Rating>
-                  </label>
-                );
-              })}
-            </Container>
-          </div>
-          <div>
-            <p>Отбор</p>
-            <Container>
-              {[...Array(5)].map((item, index) => {
-                const givenRating = index + 1;
-                return (
-                  <label>
-                    <Radio
-                      type="radio"
-                      value={givenRating}
-                      onClick={() => {
-                        setSelect(givenRating);
-                        console.log(`${givenRating}`);
-                      }}
-                    />
-                    <Rating>
-                      <FaStar
-                        color={
-                          givenRating < select || givenRating === select
-                            ? "F6CE42"
-                            : "#a7a2a2"
-                        }
-                      />
-                    </Rating>
-                  </label>
-                );
-              })}
-            </Container>
-          </div>
-          <RatingTextArea>
-            <textarea
-              placeholder="Отзыв об игроке"
-              className="gamerTextArea"
-              onChange={(e) => setContent(e.target.value)}
-              value={content}
-            />
-            {/* <img src={commentIcon} alt="" className="commentIconImg" /> */}
-          </RatingTextArea>
         </AppMAIN>
         <AppFooter>
           <button className="appBtnGreen" type="submit">
@@ -289,7 +294,7 @@ const Rate = () => {
           </button>
         </AppFooter>
       </form>
-    </AppHeader>
+    </>
   );
 };
 

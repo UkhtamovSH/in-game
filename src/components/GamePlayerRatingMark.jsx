@@ -4,6 +4,7 @@ import {
   AppMAIN,
   AppHeader,
   AppHeaderFlex,
+  AppFooter,
 } from "../styles/ContainerFluid.styled";
 import {
   GamePlayerRatingMarkWrapp,
@@ -62,24 +63,23 @@ const GamePlayerRatingMark = () => {
           </div>
           <div className=""></div>
         </AppHeaderFlex>
-        <AppMAIN>
-                <RatingTextArea>
-        <textarea
-          placeholder="Отзыв об игроке"
-          className="gamerTextArea"
-          onChange={(e) => setContent(e.target.value)}
-          value={content}
-        />
-        <img src={commentIcon} alt="" className="commentIconImg" />
-        </RatingTextArea>
-        </AppMAIN>
-
-        <GamerAppBtn>
-          <button className="appBtnGreen" type="submit">
-            Сохранить
-          </button>
-        </GamerAppBtn>
       </AppHeader>
+      <AppMAIN>
+        <RatingTextArea>
+          <textarea
+            placeholder="Отзыв об игроке"
+            className="gamerTextArea"
+            onChange={(e) => setContent(e.target.value)}
+            value={content}
+          />
+          <img src={commentIcon} alt="" className="commentIconImg" />
+        </RatingTextArea>
+      </AppMAIN>
+      <AppFooter>
+        <button className="appBtnGreen" type="submit">
+          Сохранить
+        </button>
+      </AppFooter>
     </form>
   );
 };

@@ -61,7 +61,7 @@ const Login = () => {
         .post("/api/v1/login/", formData)
         .then((result) => {
           const status = get(result, "data.status");
-          if (status === 1) {
+            if (status === 1) {
             const token = get(result, "data.token");
             setToken(token, remember);
             setLists([...lists, result.formData]);

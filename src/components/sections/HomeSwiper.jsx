@@ -11,9 +11,7 @@ import _ from "lodash";
 import { Link } from "react-router-dom";
 import ImageLoading from "../../assets/Img/default.png";
 
-const HomeSwiper = () => {
-  // const params =useParams
-
+const HomeSwiper = (props) => {
   const settings = {
     className: "center",
     centerMode: true,
@@ -26,6 +24,10 @@ const HomeSwiper = () => {
     speed: 2000,
     autoplaySpeed: 2000,
   };
+
+  const { label } = props;
+
+  console.log(label);
 
   const [data, setData] = useState([]);
   const getData = () => {
@@ -43,11 +45,13 @@ const HomeSwiper = () => {
     <HomeSwiperStyle>
       <div className="lastPlays">
         <label>Прошедшие игры</label>
-        <label>
-          <Link to="/all-games">
-            Все игры <img src={strokeIcon} alt="" />{" "}
-          </Link>
-        </label>
+        {label && (
+          <label>
+            <Link to="/all-games">
+              Все игры <img src={strokeIcon} alt="" />
+            </Link>
+          </label>
+        )}
       </div>
       <Slider {...settings}>
         {data.map((item, index) => (
@@ -75,25 +79,37 @@ const HomeSwiper = () => {
                 <p>{_.get(item.GameClub[1], "football_club.name", 1)}</p>
               </div>
             </div>
-            <div className="sliderImg">
-              <Link to={"/photos/" + item.id}>
-                <img src={_.get(item.Gallery, 0)} alt="" />
-              </Link>
-              <Link to={"/photos/" + item.id}>
-                {" "}
-                <img src={_.get(item.Gallery, 1)} alt="" />
-              </Link>
-              <Link to={"/photos/" + item.id}>
-                <img
-                  src={
-                    _.get(item.Gallery, 2)
-                      ? _.get(item.Gallery, 2)
-                      : ImageLoading
-                  }
-                  alt=""
-                />
-              </Link>
-            </div>
+            {item.Gallery.length > 0 ? (
+              <div className="sliderImg">
+                <Link to={"/photos/" + item.id}>
+                  <img
+                    src={
+                      _.get(item.Gallery, 0)
+                        ? _.get(item.Gallery, 0)
+                        : ImageLoading
+                    }
+                    alt=""
+                  />
+                </Link>
+                <Link to={"/photos/" + item.id}>
+                  {" "}
+                  <img src={_.get(item.Gallery, 1)} alt="" />
+                </Link>
+                <Link to={"/photos/" + item.id}>
+                  <img
+                    src={
+                      _.get(item.Gallery, 2)
+                        ? _.get(item.Gallery, 2)
+                        : ImageLoading
+                    }
+                    alt=""
+                  />
+                </Link>
+              </div>
+            ) : (
+              ""
+            )}
+
             <Link to={`/game-player-reting/${item.id}`}>
               <p>Оценить игроков</p>
             </Link>

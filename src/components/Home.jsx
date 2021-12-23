@@ -20,6 +20,8 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [status, setStatus] = useState([]);
 
+  // const {label} = props
+
   const dispatch = useDispatch();
   const getData = () => {
     dispatch(loading(true));
@@ -135,8 +137,12 @@ const Home = () => {
                   </div>
                 </div>
               </HomeTimeStyle>
-              <HomeSwiper />
-              <CommentSwiper />
+              <HomeSwiper
+              label
+              />
+              <CommentSwiper 
+              comment
+              />
             </div>
           </HomeContainer>
         </HomeStyle>

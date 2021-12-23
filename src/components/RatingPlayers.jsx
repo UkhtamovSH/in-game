@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Filter from "../assets/svg/Filter.svg";
 import { GetAuthInstance } from "../helpers/httpClient";
-import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import {
   AppFooter,
   AppFooter2,
@@ -19,6 +18,7 @@ import Navigation from "./sections/Navigation";
 import ListRatingPlayer from "./sections/ratingplayer/ListRatingPlayer";
 import FilterOneRPlayer from "./sections/ratingplayer/FilterOneRPlayer";
 import FilterTwoRPlayer from "./sections/ratingplayer/FilterTwoRPlayer";
+import { useParams } from "react-router";
 
 const SRatingPlayerContainer = styled.div`
   padding: 15px 0;
@@ -103,10 +103,17 @@ const RatingPlayers = () => {
   const [typingTimeOut, setTypingTimeOut] = useState(0);
   const [filter, setFilter] = useState({});
   const [countTab, setCountTab] = useState(1);
+  const params = useParams();
 
+  useEffect(() => {
+    getWorldPlayers();
+    getRegionPlayers();
+    window.scrollTo(0, 0);
+  }, [params.id]);
   const getWorldPlayers = (
     page = 1,
-    next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`,
+    next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10` +
+      params.id,
     filters = {}
   ) => {
     if (page === 1) {
@@ -186,12 +193,6 @@ const RatingPlayers = () => {
     setModal(!modal);
   };
 
-  useEffect(() => {
-    getWorldPlayers();
-    getRegionPlayers();
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <>
       {!modal ? (
@@ -216,7 +217,9 @@ const RatingPlayers = () => {
             </AppHeaderFlex>
             <AppHeaderFlex2PRating>
               <div
-                className={countTab === 1 ? "countTabActive" : null}
+                className={
+                  countTab === 1 ? "countTabActive" : "countTabActiveNot"
+                }
                 onClick={() => {
                   clickCountTab(1);
                 }}
@@ -225,7 +228,9 @@ const RatingPlayers = () => {
               </div>
 
               <div
-                className={countTab === 2 ? "countTabActive" : null}
+                className={
+                  countTab === 2 ? "countTabActive" : "countTabActiveNot"
+                }
                 onClick={() => {
                   clickCountTab(2);
                 }}
@@ -303,6 +308,7 @@ const RatingPlayers = () => {
                                 position={wpList.position}
                                 full_name={wpList.full_name}
                                 id={index + 1}
+                                user_id={wpList.id}
                                 key={index}
                                 age={wpList.age}
                                 avatar={wpList.avatar}
@@ -341,6 +347,7 @@ const RatingPlayers = () => {
                               <ListRatingPlayer
                                 position={regList.position}
                                 full_name={regList.full_name}
+                                user_id={regList.id}
                                 id={index + 1}
                                 key={index}
                                 age={regList.age}
