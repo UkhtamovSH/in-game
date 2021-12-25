@@ -80,6 +80,12 @@ export const NewGamePositionCard = styled.div`
     img {
       cursor: pointer;
     }
+    .divIMG{
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
     .div1,
     .div2{
       font-family: "Manrope-Medium",sans-serif;
