@@ -20,7 +20,7 @@ import MinutesList from "../components/sections/newgame/MinutesList";
 import { useDispatch, useSelector } from "react-redux";
 import { setMinutes } from "../redux/actions";
 import TeamsNameList from "./sections/newgame/TeamsNameList";
-import { get, pluck } from "lodash";
+import { get } from "lodash";
 import { GetAuthInstance } from "../helpers/httpClient";
 import PlayersNameList from "./sections/newgame/PlayersNameList";
 import { StylesHidden } from "../styles/Global.styled";
@@ -56,41 +56,50 @@ const NewGame = () => {
   const [possibleModal, setPossibleModal] = useState(false);
   const [possibleModal2, setPossibleModal2] = useState(false);
   const [possibleModal3, setPossibleModal3] = useState(false);
+  const [possibleModal4, setPossibleModal4] = useState(false);
   const togglePossibleModal = () => setPossibleModal(!possibleModal);
   const togglePossibleModal2 = () => setPossibleModal2(!possibleModal2);
   const togglePossibleModal3 = () => setPossibleModal3(!possibleModal3);
+  const togglePossibleModal4 = () => setPossibleModal4(!possibleModal4);
 
-  // const [typeTeam] = useState({
-  //   Goalkeeper: 1,
-  //   Defender: 2,
-  //   Midfielder: 3,
-  //   Forward: 4,
-  // });
+  const addUsers = (target, type, user, name, img, ball) => {
+    getPlayers(2, nextUrlPlayers);
 
-  const addUsers = (target, type, id, name, img, ball) => {
     if (target === 1) {
       if (type === 1) {
         let l = oneUsers.filter((o) => {
           return o.position !== 1;
         });
-        l.push({ position: type, id: id, name: name, img: img, ball: ball });
+        l.push({
+          position: type,
+          user: user,
+          name: name,
+          img: img,
+          ball: ball,
+        });
         setOneUsers(l);
       } else
         setOneUsers([
           ...oneUsers,
-          { position: type, id: id, name: name, img: img, ball: ball },
+          { position: type, user: user, name: name, img: img, ball: ball },
         ]);
     } else if (target === 2) {
       if (type === 1) {
         let lt = twoUsers.filter((o) => {
           return o.position !== 1;
         });
-        lt.push({ position: type, id: id, name: name, img: img, ball: ball });
+        lt.push({
+          position: type,
+          user: user,
+          name: name,
+          img: img,
+          ball: ball,
+        });
         setTwoUsers(lt);
       } else
         setTwoUsers([
           ...twoUsers,
-          { position: type, id: id, name: name, img: img, ball: ball },
+          { position: type, user: user, name: name, img: img, ball: ball },
         ]);
     }
   };
@@ -114,12 +123,6 @@ const NewGame = () => {
   let history = useNavigate();
 
   const toggleModal = () => {
-    let page = 1;
-    let next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`;
-
-    if (modal) {
-      getPlayers(page, next_url, "");
-    }
     setModal(!modal);
   };
   const toggleCountModal = (i) => {
@@ -169,7 +172,9 @@ const NewGame = () => {
       ],
       game_time: minutes,
     };
-    if (oneUsers.length === 0 || twoUsers.length === 0) {
+    if (minutes === 0) {
+      setPossibleModal4(true);
+    } else if (oneUsers.length === 0 || twoUsers.length === 0) {
       setPossibleModal3(true);
     } else if (
       onUsersPos1.length === 0 ||
@@ -192,6 +197,7 @@ const NewGame = () => {
         .then((res) => {
           const status = get(res, "data.status");
           if (status === 1) {
+            window.sessionStorage.setItem("datagame", JSON.stringify(dataGame));
             history("/game");
             setPossibleModal2(false);
           } else {
@@ -207,27 +213,29 @@ const NewGame = () => {
     next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`,
     search = ""
   ) => {
-    if (page === 1) {
-      setPreLoading(true);
+    if (next_url) {
+      if (page === 1) {
+        setPreLoading(true);
+      }
+      let s = "";
+      if (search) {
+        s = "&search=" + search;
+      }
+      GetAuthInstance()
+        .get(next_url + s)
+        .then((res) => {
+          if (res.status === 200) {
+            const result =
+              page === 1 ? res.data.results : [...players, ...res.data.results];
+            setPlayers(result);
+            setNextUrlPlayers(res.data.next);
+          }
+        })
+        .catch(() => {
+          setPlayers([]);
+        })
+        .finally(() => setPreLoading(false));
     }
-    let s = "";
-    if (search) {
-      s = "&search=" + search;
-    }
-    GetAuthInstance()
-      .get(next_url + s)
-      .then((res) => {
-        if (res.status === 200) {
-          const result =
-            page === 1 ? res.data.results : [...players, ...res.data.results];
-          setPlayers(result);
-          setNextUrlPlayers(res.data.next);
-        }
-      })
-      .catch(() => {
-        setPlayers([]);
-      })
-      .finally(() => setPreLoading(false));
   };
 
   const handleSearch = (e) => {
@@ -256,15 +264,16 @@ const NewGame = () => {
       ballSum += i.ball;
       setTotalPrice(ballSum);
     });
-  });
 
-  useEffect(() => {
     let ballSum2 = 0;
     twoUsers.map((i) => {
       ballSum2 += i.ball;
       setTotalPrice2(ballSum2);
     });
   });
+  useEffect(() => {
+    getPlayers();
+  }, []);
 
   return (
     <>
@@ -599,13 +608,33 @@ const NewGame = () => {
                   </div>
                 </NewGamePositionCard>
 
-                <button
-                  type="submit"
-                  className="appBtnGreen"
-                  style={{ marginTop: "16px" }}
-                >
-                  Начать игру
-                </button>
+                {oneUsers.length === 0 ||
+                twoUsers.length === 0 ||
+                onUsersPos1.length === 0 ||
+                onUsersPos2.length === 0 ||
+                onUsersPos3.length === 0 ||
+                onUsersPos4.length === 0 ||
+                twoUsersPos1.length === 0 ||
+                twoUsersPos2.length === 0 ||
+                twoUsersPos3.length === 0 ||
+                twoUsersPos4.length === 0 ||
+                minutes === 0 ? (
+                  <button
+                    type="submit"
+                    className="appBtnGray"
+                    style={{ marginTop: "16px" }}
+                  >
+                    Начать игру
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="appBtnGreen"
+                    style={{ marginTop: "16px" }}
+                  >
+                    Начать игру
+                  </button>
+                )}
               </form>
             </NewGameWrapper>
           </AppMAIN>
@@ -655,6 +684,23 @@ const NewGame = () => {
                     <p>Дабавить играков</p>
                   </div>
                   <div className="sub2" onClick={togglePossibleModal3}>
+                    OK
+                  </div>
+                </div>
+              </div>
+              <StylesHidden />
+            </PossibleModal>
+          ) : null}
+
+          {possibleModal4 ? (
+            <PossibleModal>
+              <div className="">
+                <div className="possibleModalSub">
+                  <div className="sub1">
+                    <p>Ошибка</p>
+                    <p>Выберите время</p>
+                  </div>
+                  <div className="sub2" onClick={togglePossibleModal4}>
                     OK
                   </div>
                 </div>
@@ -722,8 +768,8 @@ const NewGame = () => {
                 />
               ) : modalCount === 4 ? (
                 <PlayersNameList
-                  addUsers={(target, type, id, name, img, ball) =>
-                    addUsers(target, type, id, name, img, ball)
+                  addUsers={(target, type, user, name, img, ball) =>
+                    addUsers(target, type, user, name, img, ball)
                   }
                   oneUsers={oneUsers}
                   twoUsers={twoUsers}

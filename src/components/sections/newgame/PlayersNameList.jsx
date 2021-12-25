@@ -114,10 +114,6 @@ const PlayersNameList = (props) => {
     setPlayers([...players, { name: searchPlayers }]);
   };
 
-  useEffect(() => {
-    getPlayers();
-  }, []);
-
   return (
     <>
       <AppHeader style={{ padding: "12px 0 0 0" }}>
@@ -217,7 +213,7 @@ const PlayersNameList = (props) => {
                       let cityN = get(wpList, "city.name", "");
                       if (
                         [...oneUsers, ...twoUsers].filter((o) => {
-                          return o.id === wpList.id;
+                          return o.user === wpList.id;
                         }).length === 0
                       ) {
                         return (
