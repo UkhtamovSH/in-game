@@ -22,6 +22,7 @@ import PaymeComp from "../components/PaymeComp"
 import PlayerMap from "../components/PlayerMap";
 import PaymeHistory from "../components/PaymeHistory";
 import PlayersPage from "../components/PlayersPage";
+import Game from "../components/Game";
 
 const Routess = () => {
   return (
@@ -35,11 +36,12 @@ const Routess = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/players" element={<Players />} />
       <Route path="/newgame" element={<NewGame />} />
+      <Route path="/game" element={<Game />} />
       <Route path="/pitches" element={<Pitches />} />
-      <Route path="/pitches" element={<PitchDetail />} />
+      <Route path="/pitches/:id" element={<PitchDetail />} />
       <Route path="/rating-players" element={<RatingPlayers />} />
       <Route path="/game-player-reting/:id" element={<GamePlayerReting />} />
-      <Route path="/game-player-reting-mark/:id" element={<Rate />} />
+      <Route path="/rating/:id/:user_id" element={<Rate />} />
       <Route path="/comments-rating" element={<CommentsRating />} />
       <Route path="/profile-edit" element={<ProfileEdit />} />
       <Route path="/all-games" element={<AllGames />} />

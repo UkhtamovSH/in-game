@@ -46,7 +46,6 @@ const GamePlayerReting = () => {
         setNextUrl(res.data.next);
         setPage(page + 1);
         setLoading(false);
-        console.log(res);
         if (res.data.next) {
           setHasMore(true);
         } else {
@@ -112,7 +111,7 @@ const GamePlayerReting = () => {
           >
             {data.map((item, index) => (
               <GamePlayerContain key={index}>
-                <Link to={`/game-player-reting-mark/${item.id}`}>
+                <Link to={`/rating/${params.id}/${get(item, "user.id")}`}>
                   <GamePlayer>
                     <GamePlayerCont>
                       <GamePlayerImg>

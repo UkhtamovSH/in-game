@@ -8,21 +8,62 @@ import {
 } from "../styles/ContainerFluid.styled";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import { PayDiv } from "../styles/PaymeComp.styled";
-import PaymeImg from "../assets/Img/Frame 4220.png";
-import ClickImg from "../assets/Img/Frame 4220 (1).png";
-import PaynetImg from "../assets/Img/Frame 4220 (2).png";
 import { useState } from "react";
 import ModalPay from "./sections/ModalPay";
-const PaymeComp = () => {
-  const [isOpenedModal, setIsOpenedModal] = useState(false);
-  const [state, setState] = useState();
-  const [error, setError] = useState();
+import { GetAuthInstance } from "../helpers/httpClient";
+import { useEffect } from "react";
+import { get } from "lodash";
 
-  const handleSubmit = () => {
-    if (state === "") {
-      setError("error");
-    }else{
-      setError("")
+const PaymeComp = () => {
+  const [data, setData] = useState([]);
+  const [isOpenedModal, setIsOpenedModal] = useState(false);
+  const [inputVal, setInputVal] = useState("");
+  const [check, setCheck] = useState(0);
+  const [payCom, setPayCom] = useState(0);
+  const [clickErr, setClickErr] = useState("");
+  const [PayMeErr, setPayMeErr] = useState("");
+
+  const postData = () => {
+    const dataForm = new FormData();
+    dataForm.append("amount", inputVal);
+    dataForm.append("pycom_type", payCom);
+
+    GetAuthInstance()
+      .post("api/v1/payment/generate-payment/", dataForm)
+      .then((res) => {
+        if (get(res, "data.url", "")) {
+          window.location.href = get(res, "data.url", "");
+        } else {
+          setClickErr("Click xizmati hozirda ishlamayapti");
+        }
+        if (!get(res, "data.url", "")) {
+          setPayCom("Payme xizmati hozirda ishlamayapti");
+        } else {
+          
+        }
+      })
+      .catch((err) => {});
+  };
+  const getData = (e) => {
+    GetAuthInstance()
+      .get("api/v1/payment/")
+      .then((res) => {
+        setData(res.data);
+      });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const onCheck = (e) => {
+    e.preventDefault();
+
+    if (!check === 1 || inputVal === "") {
+      setIsOpenedModal(true);
+    } else {
+      setIsOpenedModal(false);
+      postData();
     }
   };
 
@@ -47,68 +88,58 @@ const PaymeComp = () => {
       </AppHeader>
       <AppMAIN>
         <PayDiv>
-          <div class="container">
-            <div class="row">
+          <div className="container">
+            <div className="row">
               <div className="colInput">
                 <label>
                   <p>Cумма пополения </p>
-                  <input value={state} type="number" className="inputPayme" />
-                  <p>{error}</p>
-                </label>
-              </div>
-              <div class="col-md-4 col-lg-4 col-sm-4">
-                <p style={{ marginTop: "30px" }}>Выберите спосб </p>
-                <label>
                   <input
-                    type="radio"
-                    name="radio1"
-                    class="card-input-element"
+                    value={inputVal}
+                    onChange={(e) => setInputVal(e.target.value)}
+                    type="number"
+                    className="inputPayme"
                   />
-                  <div class="panel panel-default card-input">
-                    <img src={PaymeImg} alt="" />
-                    <div class="panel-body">Оплата через PayMe</div>
-                  </div>
                 </label>
               </div>
-              <div class="col-md-4 col-lg-4 col-sm-4">
-                <label>
-                  <div className="chechDiv">
+              <div className="col-md-4 col-lg-4 col-sm-4">
+                <p style={{ marginTop: "30px" }}>Выберите спосб </p>
+                {data.map((item, index) => (
+                  <label key={index}>
                     <input
                       type="radio"
                       name="radio1"
-                      class="card-input-element"
+                      value={payCom}
+                      className="card-input-element"
+                      onChange={() => {
+                        setCheck(1);
+                        setPayCom(item.id);
+                      }}
                     />
-
-                    <div class="panel panel-default card-input">
-                      <img src={ClickImg} alt="" />
-                      <div class="panel-body">Оплата через Click</div>
+                    <div className="panel panel-default card-input">
+                      <img src={item.image} alt="" />
+                      <div className="panel-body">{item.name}</div>
                     </div>
-                  </div>
-                </label>
-                <label>
-                  <div className="chechDiv">
-                    <input
-                      type="radio"
-                      name="radio1"
-                      class="card-input-element"
-                    />
-
-                    <div class="panel panel-default card-input">
-                      <img src={PaynetImg} alt="" />
-                      <div class="panel-body">Оплата через PayNet</div>
-                    </div>
-                  </div>
-                </label>
+                  </label>
+                ))}
+                { <p className="errorClick">{clickErr}</p>}
+                { <p className="errorClick">{PayMeErr}</p>}
               </div>
-              <div class="col-md-4 col-lg-4 col-sm-4"></div>
+
+              <div className="col-md-4 col-lg-4 col-sm-4"></div>
             </div>
             <ModalPay
               isOpenedProps={isOpenedModal}
               onRequestCloseProps={() => setIsOpenedModal(false)}
               setIsOpenModalProps={() => setIsOpenedModal(false)}
-              errorText="введиту сумму"
+              errorText={
+                inputVal > 999
+                  ? "паймент типе отсутствует"
+                  : !check
+                  ? "введиту сумму "
+                  : "введиту сумму"
+              }
             ></ModalPay>
-            <div className="payment">
+            {/* <div className="payment">
               <div className="summa">
                 <p>Сумма к оплате:</p>
               </div>
@@ -116,16 +147,18 @@ const PaymeComp = () => {
               <div className="summaValue">
                 <p>24 990 сум</p>
               </div>
-            </div>
+            </div> */}
           </div>
         </PayDiv>
       </AppMAIN>
       <AppFooter>
         <div
           className="appBtnGreen"
-          onClick={() => setIsOpenedModal(true)}
-          // onClick={() => handleSubmit()}
+          onClick={(e) => {
+            onCheck(e);
+          }}
         >
+          {console.log(postData)}
           Продолжить
         </div>
       </AppFooter>

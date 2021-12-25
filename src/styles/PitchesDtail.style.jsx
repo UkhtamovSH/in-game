@@ -1,4 +1,4 @@
-import styled from "styled-components"; 
+import styled from "styled-components";
 
 export const StadionPage = styled.div`
   margin: 60px 0;
@@ -13,9 +13,9 @@ export const StadionPage = styled.div`
       width: 450px;
       z-index: 4;
       box-sizing: border-box;
-      a{
-        color:#fff;
-        text-decoration:none;
+      a {
+        color: #fff;
+        text-decoration: none;
       }
     }
   }

@@ -10,7 +10,7 @@ import Chart from "../../assets/svg/Chart.svg";
 import Charts from "../../assets/svg/Charts.svg";
 import { Link, NavLink } from "react-router-dom";
 import { LogRegFooterLinkFlex2 } from "../../styles/LogIn.styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Navigation = () => {
   const links = [
@@ -35,6 +35,10 @@ const Navigation = () => {
       to: "/rating-players",
     },
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <LogRegFooterLinkFlex2>

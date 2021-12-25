@@ -18,11 +18,8 @@ const PitchDetail = () => {
       .get("api/v1/pitch/" + params.id)
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   useEffect(() => {
     getData();
@@ -40,6 +37,9 @@ const PitchDetail = () => {
     speed: 2000,
     autoplaySpeed: 2000,
   };
+
+  const tel = _.get(data.Contact, "0", {});
+
   return (
     <StadionPage>
       <div className="backIcon">
@@ -59,11 +59,13 @@ const PitchDetail = () => {
         <div className="aboutStadion">
           <div className="polyaNumber">
             <div className="btnPozvonit">
-              <div className="appBtnGreen"><a href="tel: +998 71 267 00 67">Позвонить</a></div>
+              <a href={`tel: ${tel.phone}`} className="appBtnGreen">
+                Позвонить
+              </a>
             </div>
             <h3>Контактные данные</h3>
             {_.get(data, "Contact", []).map((item, index) => (
-              <p>{item.phone}</p>
+              <p key={index}>{item.phone}</p>
             ))}
             <p className="polyaGmail">{data.email}</p>
           </div>
@@ -79,13 +81,32 @@ const PitchDetail = () => {
             <h3>Средняя оценка поля</h3>
             <div className="priceMark">
               <div className="priceStar">
-                <img src={priceStar} alt="" />
-                <img src={priceStar} alt="" />
-                <img src={priceStar} alt="" />
-                <img src={priceStar} alt="" />
-                <img src={priceStar} alt="" />
+                {data.review_avg === 5 ? (
+                  <>
+                    <img src={priceStar} alt="" />
+                    <img src={priceStar} alt="" />
+                    <img src={priceStar} alt="" />
+                    <img src={priceStar} alt="" />
+                    <img src={priceStar} alt="" />
+                  </>
+                ) : data.review_avg === 4 ? (
+                  <>
+                    <img src={priceStar} alt="" />
+                    <img src={priceStar} alt="" />
+                    <img src={priceStar} alt="" />
+                    <img src={priceStar} alt="" />
+                  </>
+                ) : data.review_avg === 3 ? (
+                  <>
+                    <img src={priceStar} alt="" />
+                    <img src={priceStar} alt="" />
+                    <img src={priceStar} alt="" />
+                  </>
+                ) : (
+                  ""
+                )}
               </div>
-              <p>(4.6)</p>
+              <p>{data.review_avg}</p>
             </div>
           </div>
           <div className="polyaMap">

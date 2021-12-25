@@ -1,7 +1,7 @@
 import { get } from "lodash";
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ArrowRight from "../../assets/svg/Arrow - Right.svg";
 import { GetAuthInstance } from "../../helpers/httpClient";
 import {
@@ -17,7 +17,6 @@ import {
   RatingTextArea,
   StarDiv,
 } from "../../styles/Rate.style";
-// import commentIcon from "../../assets/Img/Profile.png";
 
 const Rate = () => {
   const [rate, setRate] = useState(0);
@@ -29,12 +28,15 @@ const Rate = () => {
   const [select, setSelect] = useState(0);
   const [content, setContent] = useState("");
   const [updatedLists, setUpdatedLists] = useState([]);
+  const params = useParams();
 
   const handleSubmit = (e) => {
+    // console.log(game);
+    // console.log(game_user);
     e.preventDefault();
     const formData = new FormData();
-    // formData.append("game", "3");
-    // formData.append("game-user", "20");
+    formData.append("game", params.id);
+    formData.append("game-user", params.user_id);
     formData.append("speed", rate);
     formData.append("dribbling", drib);
     formData.append("pass", pass);
@@ -44,7 +46,7 @@ const Rate = () => {
     formData.append("selection", select);
     formData.append("content", content);
     GetAuthInstance()
-      .post("api/v1/game/review/", formData)
+      .post(`api/v1/game/review/`, formData)
       .then((res) => {
         const status = get(res, "data.status");
         if (status === 1) {

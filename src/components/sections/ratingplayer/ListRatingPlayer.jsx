@@ -1,5 +1,4 @@
 import { PlayersRatingMain } from "../../../styles/PlayersRatingStyle";
-import DefaultImg from "../../../assets/Img/default.png";
 import { Link } from "react-router-dom";
 
 const ListRatingPlayer = (props) => {

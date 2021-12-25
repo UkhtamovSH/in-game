@@ -21,11 +21,8 @@ const Pitches = () => {
       .get("api/v1/pitch/")
       .then((res) => {
         setData(res.data.results);
-        console.log(res.data.results);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   useEffect(() => {
     getData();
@@ -47,7 +44,9 @@ const Pitches = () => {
       </AppHeader>
       <AppMainWrapp>
         {data.map((item, index) => (
-          <AppMAIN key={index}>
+          <AppMAIN  key={index} 
+          style={{marginTop:"0px",marginBottom:"0px"}}
+          >
             <AppMainContain>
               <Polya style={{ backgroundImage: `url(${item.Image})` }}>
                 <Link to={"/pitches/" + item.id}>

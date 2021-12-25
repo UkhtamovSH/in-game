@@ -4,7 +4,7 @@ import ModalImg from "../../assets/Img/Group 4356.png";
 import CloceIcon from "../../assets/Img/closeIcon.png";
 import { ModalWrapDiv, ModalDiv, ModalNav } from "../../styles/ModalApp.styled";
 const ModalPay = (props) => {
-  const { isOpenedProps, onRequestCloseProps, setIsOpenModalProps,errorText } = props;
+  const { isOpenedProps, onRequestCloseProps, setIsOpenModalProps,errorText,errorPay } = props;
 
   return (
     <ModalDiv>
@@ -17,6 +17,7 @@ const ModalPay = (props) => {
           <h2>ошибка </h2>
           <span>
           {errorText}
+          {errorPay}
           </span>
           <div className="modalBtn" onClick={setIsOpenModalProps}>Ok</div>
         </ModalWrapDiv>

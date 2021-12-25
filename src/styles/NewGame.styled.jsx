@@ -131,3 +131,40 @@ export const NewGamePositionCard = styled.div`
     }
   }
 `;
+
+export const PossibleModal = styled.div`
+  position: fixed;
+  top: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  z-index: 999990;
+  transform: translate(-50.09%, 0);
+  left: 50%;
+  width: 100%;
+  .possibleModalSub {
+    width: 300px;
+    text-align: center;
+    background-color: #333333;
+    box-shadow: 0px 0px 27px 0px rgb(0 0 0);
+    border-radius: 12px;
+    margin: 5px;
+    .sub1 {
+      padding: 12px;
+      p {
+        padding: 8px 0;
+        &:nth-child(1) {
+          color: red;
+        }
+      }
+    }
+    .sub2 {
+      border-top: 1px solid rgba(189, 189, 189, 0.4);
+      padding: 12px;
+      cursor: pointer;
+      color: #1787e7;
+    }
+  }
+`;

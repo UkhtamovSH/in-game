@@ -8,7 +8,7 @@ import InGameLogo from "../assets/Img/Ball.png";
 import WatchImg from "../assets/Img/Endurance.png";
 import WatchImg2 from "../assets/Img/Vector1.png";
 import More from "../assets/Img/More.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import { useParams } from "react-router";
 import _ from "lodash";
@@ -20,23 +20,17 @@ import {
   HomeTimeStyle,
   PlayerAvatarDiv,
 } from "../styles/PlayerPage.styled";
-import CommentSwiper from "./sections/CommentSwiper";
-import HomeSwiper from "./sections/HomeSwiper";
 import { useEffect, useState } from "react";
 import { GetAuthInstance } from "../helpers/httpClient";
 import { get } from "lodash";
-import { useDispatch } from "react-redux";
-import { loading } from "../redux/actions";
 
 const PlayersPage = () => {
   const [data, setData] = useState([]);
   const [status, setStatus] = useState([]);
   const params = useParams();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const getData = () => {
-    dispatch(loading(true));
     GetAuthInstance()
       .get(`/api/v1/get-other-user/?lan=ru&other-user=${params.id}`)
       .then((res) => {
@@ -45,7 +39,6 @@ const PlayersPage = () => {
         console.log(res.data.data);
       })
       .catch((err) => {})
-      .finally(() => dispatch(loading(false)));
   };
   useEffect(() => {
     getData();

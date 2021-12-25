@@ -137,6 +137,15 @@ export const GlobalStyle = createGlobalStyle`
   padding: 10px 20px;
   display: inline-block!important;
 }
+.newNameGamer{
+  color: #F6CE42;
+  font-family: "Manrope-SemiBold",sans-serif;
+  font-style: normal;
+  font-weight: 600; 
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+}
 `;
 
 export const StylesHidden = createGlobalStyle`

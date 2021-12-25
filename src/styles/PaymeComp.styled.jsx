@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 export const PayDiv = styled.div`
   padding: 0 15px;
-  /**
-  Default Markup
-**/
-
+  .col-md-4  {
+    .errorClick{
+      color:red;
+    }
+  }
   body {
     background: #f0e5e1;
   }
@@ -29,6 +30,11 @@ export const PayDiv = styled.div`
   }
   label {
     width: 100%;
+    img {
+      width:48px;
+      height:48px;
+      border-radius: 10.4727px;
+    }
   }
 
   .card-input-element {
