@@ -6,3 +6,11 @@ export const setMinutes = (minute) => {
     });
   };
 };
+export const setGameTime = (gameTime) => {
+  return (dispatch) => {
+    dispatch({
+      type: "SET_GAME_TIME",
+      payload: gameTime,
+    });
+  };
+};

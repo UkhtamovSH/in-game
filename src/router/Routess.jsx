@@ -18,7 +18,7 @@ import AllGames from "../components/AllGames";
 import Photos from "../components/sections/Photos";
 import Rate from "../components/sections/Rate";
 import Setting from "../components/sections/Setting";
-import PaymeComp from "../components/PaymeComp"
+import PaymeComp from "../components/PaymeComp";
 import PlayerMap from "../components/PlayerMap";
 import PaymeHistory from "../components/PaymeHistory";
 import PlayersPage from "../components/PlayersPage";
@@ -36,7 +36,7 @@ const Routess = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/players" element={<Players />} />
       <Route path="/newgame" element={<NewGame />} />
-      <Route path="/game" element={<Game />} />
+      <Route path="/game/:id" element={<Game />} />
       <Route path="/pitches" element={<Pitches />} />
       <Route path="/pitches/:id" element={<PitchDetail />} />
       <Route path="/rating-players" element={<RatingPlayers />} />

@@ -86,11 +86,11 @@ export const GlobalStyle = createGlobalStyle`
   100% { transform: rotate(360deg); }
 }
 
-
 .appBtnGreen,
 .appBtnGreen2,
 .appBtnGray,
 .appBtnTransparent,
+.appBtnYellow,
 .appBtnWhite{
   font-family: "Manrope-Bold",sans-serif;
   font-weight: bold;
@@ -124,6 +124,10 @@ export const GlobalStyle = createGlobalStyle`
 .appBtnTransparent{
   margin: 16px;
   background: transparent;
+  color: ${({ theme }) => theme.appColors.white};
+}
+.appBtnYellow{
+  background: #F6CE42;
   color: ${({ theme }) => theme.appColors.white};
 }
 .appBtnGreen2,

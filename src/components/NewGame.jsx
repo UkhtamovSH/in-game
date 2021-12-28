@@ -194,11 +194,18 @@ const NewGame = () => {
       setPossibleModal3(false);
       GetAuthInstance()
         .post("/api/v1/game/", dataGame)
-        .then((res) => {
+        .then(async (res) => {
           const status = get(res, "data.status");
+          const date = get(res, "data.game.date");
+          const id = get(res, "data.game.id");
+          const referee = get(res, "data.game.referee");
+          console.log({ ...dataGame, date, id, referee }, res);
           if (status === 1) {
-            window.sessionStorage.setItem("datagame", JSON.stringify(dataGame));
-            history("/game");
+            await window.sessionStorage.setItem(
+              "datagame",
+              JSON.stringify({ ...dataGame, date, id, referee })
+            );
+            history(`/game/${id}`);
             setPossibleModal2(false);
           } else {
             setPossibleModal2(true);
