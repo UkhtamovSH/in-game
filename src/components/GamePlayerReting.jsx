@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useNavigate } from "react-router-dom";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import ArrowRight2 from "../assets/Img/Arrow - Right 2.png";
 import {
@@ -29,6 +29,7 @@ const GamePlayerReting = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
 
   useEffect(() => {
     getData();
@@ -73,9 +74,9 @@ const GamePlayerReting = () => {
       <AppHeader>
         <AppHeaderFlex>
           <div className="">
-            <Link to="/" className="">
+            <span onClick={() => navigate(-1)} style={{cursor:"pointer"}}>
               <img src={ArrowRight} alt="" />
-            </Link>
+            </span>
           </div>
           <div>
             {goal.map((item, index) => (

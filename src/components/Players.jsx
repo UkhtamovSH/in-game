@@ -112,7 +112,6 @@ const Players = () => {
 
   const getWorldPlayers = (
     page = 1,
-    // next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10&user=${params.id}`
     next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`
   ) => {
     if (page === 1) {

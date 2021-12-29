@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ArrowRight from "../../assets/svg/Arrow - Right.svg";
 import Arrow from "../../assets/Img/Arrow - Right 2.png";
 import {
@@ -25,13 +25,14 @@ const Setting = () => {
   const [notif, setNotif] = useState(0);
   const [autopadbor, setAutopadbor] = useState(0);
   const [auto_roll, setAuto_roll] = useState(0);
-  const [updatedLists, setUpdatedLists] = useState([]);
+  // const [updatedLists, setUpdatedLists] = useState([]);
 
   isOpenModal
     ? (document.body.style.overflow = "hidden")
     : (document.body.style.overflow = "unset");
 
   const [data, setData] = useState([]);
+  const history = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,7 +46,7 @@ const Setting = () => {
     GetAuthInstance()
       .post("api/v1/user-settings/", dataForm)
       .then((res) => {
-        setUpdatedLists([...updatedLists, res.dataForm]);
+        history("/");
       })
       .catch((err) => {});
   };

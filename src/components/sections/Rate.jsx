@@ -1,7 +1,7 @@
 import { get } from "lodash";
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { FaStar } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ArrowRight from "../../assets/svg/Arrow - Right.svg";
 import { GetAuthInstance } from "../../helpers/httpClient";
 import {
@@ -29,10 +29,9 @@ const Rate = () => {
   const [content, setContent] = useState("");
   const [updatedLists, setUpdatedLists] = useState([]);
   const params = useParams();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    // console.log(game);
-    // console.log(game_user);
     e.preventDefault();
     const formData = new FormData();
     formData.append("game", params.id);
@@ -48,6 +47,7 @@ const Rate = () => {
     GetAuthInstance()
       .post(`api/v1/game/review/`, formData)
       .then((res) => {
+        navigate(-1);
         const status = get(res, "data.status");
         if (status === 1) {
           setUpdatedLists([...updatedLists, res.formData]);
@@ -56,14 +56,26 @@ const Rate = () => {
       .catch((err) => {});
   };
 
+  const getData = () => {
+    GetAuthInstance()
+      .get("/api/v1/game/review/")
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <>
       <AppHeader>
         <AppHeaderFlex>
           <div className="">
-            <Link to="/" className="">
+            <span onClick={() => navigate(-1)} style={{ cursor: "pointer" }}>
               <img src={ArrowRight} alt="" />
-            </Link>
+            </span>
           </div>
           <div className="">
             <span>Рейтинг игроков</span>

@@ -2,14 +2,14 @@ import _ from "lodash";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { GetAuthInstance } from "../../helpers/httpClient";
 import { CommentsWrapper, SliderDiv } from "../../styles/CommentsRating";
 import { AppHeader, AppHeaderFlex, AppMAIN } from "../../styles/ContainerFluid.styled";
-import Filter from "../../assets/svg/Filter.svg"
 import ArrowRight from "../../assets/svg/Arrow - Right.svg"
 const CommentsRating = () => {
   const [data, setData] = useState([]);
+  const navigate = useNavigate()
 
   const getData = () => {
     GetAuthInstance()
@@ -31,17 +31,15 @@ const CommentsRating = () => {
       <AppHeader>
         <AppHeaderFlex>
           <div className="">
-            <Link to="/home" className="">
+            <span onClick={() => navigate(-1)} style={{cursor:"pointer"}}>
               <img src={ArrowRight} alt="" />
-            </Link>
+            </span>
           </div>
           <div className="">
             <span>Все отзывы</span>
           </div>
           <div className="">
-            <Link to="/" className="">
-              <img src={Filter} alt="" />
-            </Link>
+           
           </div>
         </AppHeaderFlex>
       </AppHeader>

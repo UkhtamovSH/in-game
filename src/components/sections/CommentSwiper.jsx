@@ -20,7 +20,6 @@ const CommentSwiper = (props) => {
       .get("/api/v1/game/review/")
       .then((res) => {
         setData(res.data.results);
-        // setData(res.data.results.slice(1,9))
       })
       .catch((err) => {});
   };

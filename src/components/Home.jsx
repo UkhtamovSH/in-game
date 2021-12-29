@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 import { GetAuthInstance } from "../helpers/httpClient";
 import { get } from "lodash";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -30,6 +29,7 @@ const Home = () => {
   };
   useEffect(() => {
     getData();
+    // window.document.title = "sdgsfdgdffg";
   }, []);
 
   return (

@@ -36,11 +36,6 @@ const PaymeComp = () => {
         } else {
           setClickErr("Click xizmati hozirda ishlamayapti");
         }
-        if (!get(res, "data.url", "")) {
-          setPayCom("Payme xizmati hozirda ishlamayapti");
-        } else {
-          
-        }
       })
       .catch((err) => {});
   };
@@ -121,8 +116,8 @@ const PaymeComp = () => {
                     </div>
                   </label>
                 ))}
-                { <p className="errorClick">{clickErr}</p>}
-                { <p className="errorClick">{PayMeErr}</p>}
+                {<p className="errorClick">{clickErr}</p>}
+                {<p className="errorClick">{PayMeErr}</p>}
               </div>
 
               <div className="col-md-4 col-lg-4 col-sm-4"></div>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const CommentsWrapper = styled.div`
-  padding: 65px 20px;
+  padding: 10px 15px;
 `;
 
 export const SliderDiv = styled.div`

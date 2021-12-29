@@ -7,13 +7,7 @@ import {
   AppFooter,
 } from "../styles/ContainerFluid.styled";
 import {
-  GamePlayerRatingMarkWrapp,
-  GamerAppBtn,
-  RatingIconsStar,
-  StarRating,
-  RatingMarks,
   RatingTextArea,
-  // StarRating,
 } from "../styles/GamePlayerRatingMark.style";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import commentIcon from "../assets/Img/Profile.png";

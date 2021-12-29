@@ -49,7 +49,7 @@ const PlayersPage = () => {
       <AppHeader>
         <AppHeaderFlex>
           <div className="">
-            <span onClick={() => navigate(-1)}>
+            <span onClick={() => navigate(-1)} style={{cursor:"pointer"}}>
               <img src={ArrowRight} alt="" />
             </span>
           </div>
