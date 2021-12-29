@@ -57,10 +57,12 @@ const NewGame = () => {
   const [possibleModal2, setPossibleModal2] = useState(false);
   const [possibleModal3, setPossibleModal3] = useState(false);
   const [possibleModal4, setPossibleModal4] = useState(false);
+  const [possibleModal5, setPossibleModal5] = useState(false);
   const togglePossibleModal = () => setPossibleModal(!possibleModal);
   const togglePossibleModal2 = () => setPossibleModal2(!possibleModal2);
   const togglePossibleModal3 = () => setPossibleModal3(!possibleModal3);
   const togglePossibleModal4 = () => setPossibleModal4(!possibleModal4);
+  const togglePossibleModal5 = () => setPossibleModal5(!possibleModal5);
 
   const addUsers = (target, type, user, name, img, ball) => {
     getPlayers(2, nextUrlPlayers);
@@ -104,7 +106,7 @@ const NewGame = () => {
     }
   };
 
-  const findPossiblePlayerPos = (target = 1, type = 0) => {
+  const findPossiblePlayerPos = (target = 1, type = 0, user) => {
     setActiveTarget(target);
     setActiveType(type);
     if (target === 1) {
@@ -112,10 +114,37 @@ const NewGame = () => {
         setPossibleModal(true);
         setModal(false);
       }
+      if (type === 2) {
+        if (user) {
+          console.log(`target1 2chi type tanlandi => id si ${user} `);
+        }
+      } else if (type === 3) {
+        if (user) {
+          console.log(`target1 3chi type tanlandi => id si ${user} `);
+        }
+      } else if (type === 4) {
+        if (user) {
+          console.log(`target1 4chi type tanlandi => id si ${user} `);
+        }
+      }
     } else if (target === 2) {
       if (teamTwo?.id === undefined) {
         setPossibleModal(true);
         setModal(false);
+      }
+
+      if (type === 2) {
+        if (user) {
+          console.log(`target2 2chi type tanlandi => id si ${user} `);
+        }
+      } else if (type === 3) {
+        if (user) {
+          console.log(`target2 3chi type tanlandi => id si ${user} `);
+        }
+      } else if (type === 4) {
+        if (user) {
+          console.log(`target2 4chi type tanlandi => id si ${user} `);
+        }
       }
     }
   };
@@ -459,9 +488,16 @@ const NewGame = () => {
                         </div>
                         {onUsersPos2.length
                           ? onUsersPos2.map((oUser, index) => {
-                              const { name, img } = oUser;
+                              const { name, img, user } = oUser;
                               return (
-                                <div className="" key={index}>
+                                <div
+                                  className=""
+                                  key={index}
+                                  onClick={() => {
+                                    togglePossibleModal5();
+                                    findPossiblePlayerPos(1, 2, user);
+                                  }}
+                                >
                                   <img src={img} className="divIMG" alt="" />
                                   <p>{name.split(" ")[0]}</p>
                                 </div>
@@ -474,9 +510,16 @@ const NewGame = () => {
                       <div className="div2">
                         {twoUsersPos2.length
                           ? twoUsersPos2.map((oUser, index) => {
-                              const { name, img } = oUser;
+                              const { name, img, user } = oUser;
                               return (
-                                <div className="" key={index}>
+                                <div
+                                  className=""
+                                  key={index}
+                                  onClick={() => {
+                                    togglePossibleModal5();
+                                    findPossiblePlayerPos(2, 2, user);
+                                  }}
+                                >
                                   <img src={img} className="divIMG" alt="" />
                                   <p>{name.split(" ")[0]}</p>
                                 </div>
@@ -517,9 +560,16 @@ const NewGame = () => {
                         </div>
                         {onUsersPos3.length
                           ? onUsersPos3.map((oUser, index) => {
-                              const { name, img } = oUser;
+                              const { name, img, user } = oUser;
                               return (
-                                <div className="" key={index}>
+                                <div
+                                  className=""
+                                  key={index}
+                                  onClick={() => {
+                                    togglePossibleModal5();
+                                    findPossiblePlayerPos(1, 3, user);
+                                  }}
+                                >
                                   <img src={img} className="divIMG" alt="" />
                                   <p>{name.split(" ")[0]}</p>
                                 </div>
@@ -532,9 +582,16 @@ const NewGame = () => {
                       <div className="div2">
                         {twoUsersPos3.length
                           ? twoUsersPos3.map((oUser, index) => {
-                              const { name, img } = oUser;
+                              const { name, img, user } = oUser;
                               return (
-                                <div className="" key={index}>
+                                <div
+                                  className=""
+                                  key={index}
+                                  onClick={() => {
+                                    togglePossibleModal5();
+                                    findPossiblePlayerPos(2, 3, user);
+                                  }}
+                                >
                                   <img src={img} className="divIMG" alt="" />
                                   <p>{name.split(" ")[0]}</p>
                                 </div>
@@ -575,9 +632,16 @@ const NewGame = () => {
                         </div>
                         {onUsersPos4.length
                           ? onUsersPos4.map((oUser, index) => {
-                              const { name, img } = oUser;
+                              const { name, img, user } = oUser;
                               return (
-                                <div className="" key={index}>
+                                <div
+                                  className=""
+                                  key={index}
+                                  onClick={() => {
+                                    togglePossibleModal5();
+                                    findPossiblePlayerPos(1, 4, user);
+                                  }}
+                                >
                                   <img src={img} className="divIMG" alt="" />
                                   <p>{name.split(" ")[0]}</p>
                                 </div>
@@ -590,9 +654,16 @@ const NewGame = () => {
                       <div className="div2">
                         {twoUsersPos4.length
                           ? twoUsersPos4.map((oUser, index) => {
-                              const { name, img } = oUser;
+                              const { name, img, user } = oUser;
                               return (
-                                <div className="" key={index}>
+                                <div
+                                  className=""
+                                  key={index}
+                                  onClick={() => {
+                                    togglePossibleModal5();
+                                    findPossiblePlayerPos(2, 4, user);
+                                  }}
+                                >
                                   <img src={img} className="divIMG" alt="" />
                                   <p>{name.split(" ")[0]}</p>
                                 </div>
@@ -709,6 +780,33 @@ const NewGame = () => {
                   </div>
                   <div className="sub2" onClick={togglePossibleModal4}>
                     OK
+                  </div>
+                </div>
+              </div>
+              <StylesHidden />
+            </PossibleModal>
+          ) : null}
+
+          {possibleModal5 ? (
+            <PossibleModal>
+              <div className="">
+                <div className="possibleModalSub">
+                  <div className="sub1">
+                    <p>Что делать?</p>
+                  </div>
+                  <div className="sub3">
+                    <div className="sub2BtnGroup">
+                      <div
+                        onClick={() => {
+                          toggleCountModal(4);
+                          toggleModal();
+                        }}
+                      >
+                        Изменить
+                      </div>
+                      <div>Удалить</div>
+                      <div onClick={togglePossibleModal5}>Отменить</div>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -172,5 +172,25 @@ export const PossibleModal = styled.div`
       cursor: pointer;
       color: #1787e7;
     }
+
+    .sub3 {
+      border-top: 1px solid rgba(189, 189, 189, 0.4);
+      color: #1787e7;
+      .sub2BtnGroup {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        div {
+          width: 100%;
+          padding: 12px;
+          cursor: pointer;
+          font-size: 12px;
+          &:nth-child(2) {
+            border-left: 1px solid rgba(189, 189, 189, 0.4);
+            border-right: 1px solid rgba(189, 189, 189, 0.4);
+          }
+        }
+      }
+    }
   }
 `;

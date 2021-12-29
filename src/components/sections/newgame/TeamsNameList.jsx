@@ -266,6 +266,7 @@ const TeamsNameList = (props) => {
         <AppFooter>
           {modalCount === 2 ? (
             <button
+              type="button"
               className="appBtnGreen"
               onClick={() => {
                 HandleGetTeamOne();
@@ -276,6 +277,7 @@ const TeamsNameList = (props) => {
             </button>
           ) : modalCount === 3 ? (
             <button
+              type="button"
               className="appBtnGreen"
               onClick={() => {
                 HandleGetTeamTwo();
