@@ -3,7 +3,7 @@ import {
   OnBoardingLogoStyle,
 } from "../../styles/OnBoarding.styled";
 import InGameLogo from "../../assets/svg/inGameLogo.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { issetToken } from "../../helpers/tokenStorage";
 
@@ -20,6 +20,7 @@ const OnBoarding = () => {
       navigate("/onBoardingFirst");
     }, 2000);
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

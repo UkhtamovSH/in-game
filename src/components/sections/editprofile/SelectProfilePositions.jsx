@@ -28,6 +28,7 @@ const SelectProfilePositions = (props) => {
 
   useEffect(() => {
     getPosition();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

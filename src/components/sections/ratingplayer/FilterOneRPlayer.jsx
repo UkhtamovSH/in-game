@@ -6,7 +6,7 @@ import {
 } from "../../../styles/ContainerFluid.styled";
 import { InputFormFlex } from "../../../styles/Global.styled";
 import FilterBall from "./FilterBall";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import FilterDivision from "./FilterDivision";
 import FilterPosition from "./FilterPosition";
 import FilterCity from "./FilterCity";
@@ -23,7 +23,7 @@ const FilterOneRPlayer = (props) => {
   } = props;
 
   const [cities, setCities] = useState([]);
-  const [citiesAnother, setCitiesAnother] = useState([]);
+  const [citiesAnother] = useState([]);
   const [nextUrlCities, setNextUrlCities] = useState("");
   const [searchCities, setSearchCities] = useState("");
 
@@ -63,7 +63,7 @@ const FilterOneRPlayer = (props) => {
               >
                 {citiesAnother.length > 0
                   ? citiesAnother.map((cA, index) => {
-                      const { id, name } = cA;
+                      const { name } = cA;
                       return (
                         <span key={index}>
                           <span style={{ marginRight: "10px" }}>{name}</span>

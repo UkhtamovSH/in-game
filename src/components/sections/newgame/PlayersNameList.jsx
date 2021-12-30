@@ -7,8 +7,6 @@ import {
 import ArrowRight from "../../../assets/svg/Arrow - Right.svg";
 import { InputFormFlex, StylesHidden } from "../../../styles/Global.styled";
 import SearchLine from "../../../assets/svg/SearchLine.svg";
-import { GetAuthInstance } from "../../../helpers/httpClient";
-import { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import styled from "styled-components";
 import { get } from "lodash";
@@ -90,29 +88,28 @@ const SRatingPlayerContainer = styled.div`
 const PlayersNameList = (props) => {
   const {
     toggleModal,
-    typingTimeOut,
-    setTypingTimeOut,
-    setPreLoading,
+    // typingTimeOut,
+    // setTypingTimeOut,
+    // setPreLoading,
     preLoading,
     nextUrlPlayers,
-    setNextUrlPlayers,
-    setPlayers,
+    // setNextUrlPlayers,
+    // setPlayers,
     players,
-    setSearchPlayers,
+    // setSearchPlayers,
     searchPlayers,
     addUsers,
     activeType,
     activeTarget,
     oneUsers,
     twoUsers,
-
     getPlayers,
     handleSearch,
   } = props;
 
-  const addNewPLAYERS = () => {
-    setPlayers([...players, { name: searchPlayers }]);
-  };
+  // const addNewPLAYERS = () => {
+  //   setPlayers([...players, { name: searchPlayers }]);
+  // };
 
   return (
     <>

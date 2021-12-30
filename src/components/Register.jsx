@@ -44,7 +44,7 @@ const Register = () => {
   const [same_password, setSame_Password] = useState(false);
   const [count, setCount] = useState(false);
   const [code, setCode] = useState("");
-  const [resetSms, setResetSms] = useState(false);
+  const [setResetSms] = useState(false);
 
   const history = useNavigate();
 
@@ -174,12 +174,6 @@ const Register = () => {
       .catch((err) => {});
   };
 
-  useEffect(() => {
-    if (issetToken()) {
-      history("/home");
-    }
-  }, []);
-
   const timer = (
     <Timer
       initialTime={90000}
@@ -206,6 +200,13 @@ const Register = () => {
   var numX = phoneNumber.toString().substr(5, 5);
 
   var numY = phoneNumber.replace(numX, "*****");
+
+  useEffect(() => {
+    if (issetToken()) {
+      history("/home");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

@@ -69,6 +69,7 @@ const SelectProfileClubs = (props) => {
 
   useEffect(() => {
     getClubs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

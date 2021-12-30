@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   AppFooter2,
   AppHeader,
@@ -44,8 +44,9 @@ const Pitches = () => {
       </AppHeader>
       <AppMainWrapp>
         {data.map((item, index) => (
-          <AppMAIN  key={index} 
-          style={{marginTop:"0px",marginBottom:"0px"}}
+          <AppMAIN
+            key={index}
+            style={{ marginTop: "0px", marginBottom: "0px" }}
           >
             <AppMainContain>
               <Polya style={{ backgroundImage: `url(${item.Image})` }}>

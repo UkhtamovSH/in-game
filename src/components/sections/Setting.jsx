@@ -31,7 +31,7 @@ const Setting = () => {
     ? (document.body.style.overflow = "hidden")
     : (document.body.style.overflow = "unset");
 
-  const [data, setData] = useState([]);
+  const [setData] = useState([]);
   const history = useNavigate();
 
   const handleSubmit = (e) => {
@@ -73,6 +73,7 @@ const Setting = () => {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>

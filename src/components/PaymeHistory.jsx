@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  AppFooter,
   AppHeader,
   AppHeaderFlex,
   AppMAIN,

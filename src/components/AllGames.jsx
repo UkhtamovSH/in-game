@@ -16,7 +16,6 @@ const AllGames = () => {
       .get("/api/v1/game-end/?")
       .then((res) => {
         setData(res.data.results);
-        console.log(res.data.results);
       })
       .catch((err) => {});
   };

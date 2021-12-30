@@ -1,12 +1,10 @@
 import { get } from "lodash";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Filter from "../assets/svg/Filter.svg";
 import { GetAuthInstance } from "../helpers/httpClient";
 import {
-  AppFooter,
   AppFooter2,
   AppHeader,
   AppHeaderFlex,
@@ -109,6 +107,7 @@ const RatingPlayers = () => {
     getWorldPlayers();
     getRegionPlayers();
     window.scrollTo(0, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
   const getWorldPlayers = (
     page = 1,

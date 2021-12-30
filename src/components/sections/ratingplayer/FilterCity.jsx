@@ -23,11 +23,11 @@ const FilterCity = (props) => {
     setNextUrlCities,
     searchCities,
     setSearchCities,
-    handleRemoveItem,
+    // handleRemoveItem,
   } = props;
 
   const [selectedItems, setSelectedItems] = useState([]);
-  const [active, setActive] = useState();
+  const [setActive] = useState();
 
   const handleClick = (id) => {
     if (selectedItems.includes(id)) {
@@ -94,6 +94,7 @@ const FilterCity = (props) => {
 
   useEffect(() => {
     getCities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

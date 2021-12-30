@@ -1,10 +1,16 @@
 import React from "react";
 import Modal from "react-modal";
-import ModalImg from "../../assets/Img/Group 4356.png";
-import CloceIcon from "../../assets/Img/closeIcon.png";
-import { ModalWrapDiv, ModalDiv, ModalNav } from "../../styles/ModalApp.styled";
+// import ModalImg from "../../assets/Img/Group 4356.png";
+// import CloceIcon from "../../assets/Img/closeIcon.png";
+import { ModalWrapDiv, ModalDiv } from "../../styles/ModalApp.styled";
 const ModalPay = (props) => {
-  const { isOpenedProps, onRequestCloseProps, setIsOpenModalProps,errorText,errorPay } = props;
+  const {
+    isOpenedProps,
+    onRequestCloseProps,
+    setIsOpenModalProps,
+    errorText,
+    errorPay,
+  } = props;
 
   return (
     <ModalDiv>
@@ -16,10 +22,12 @@ const ModalPay = (props) => {
         <ModalWrapDiv>
           <h2>ошибка </h2>
           <span>
-          {errorText}
-          {errorPay}
+            {errorText}
+            {errorPay}
           </span>
-          <div className="modalBtn" onClick={setIsOpenModalProps}>Ok</div>
+          <div className="modalBtn" onClick={setIsOpenModalProps}>
+            Ok
+          </div>
         </ModalWrapDiv>
       </Modal>
     </ModalDiv>

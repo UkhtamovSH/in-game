@@ -228,7 +228,6 @@ const NewGame = () => {
           const date = get(res, "data.game.date");
           const id = get(res, "data.game.id");
           const referee = get(res, "data.game.referee");
-          console.log({ ...dataGame, date, id, referee }, res);
           if (status === 1) {
             await window.sessionStorage.setItem(
               "datagame",
@@ -296,12 +295,14 @@ const NewGame = () => {
 
   useEffect(() => {
     let ballSum = 0;
+    // eslint-disable-next-line array-callback-return
     oneUsers.map((i) => {
       ballSum += i.ball;
       setTotalPrice(ballSum);
     });
 
     let ballSum2 = 0;
+    // eslint-disable-next-line array-callback-return
     twoUsers.map((i) => {
       ballSum2 += i.ball;
       setTotalPrice2(ballSum2);
@@ -309,6 +310,7 @@ const NewGame = () => {
   });
   useEffect(() => {
     getPlayers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

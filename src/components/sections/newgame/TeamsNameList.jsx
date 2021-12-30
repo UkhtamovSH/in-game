@@ -57,12 +57,14 @@ const TeamsNameList = (props) => {
 
   let newClubs = [];
   if (modalCount === 2) {
+    // eslint-disable-next-line array-callback-return
     newClubs = clubs.filter((club) => {
       if (club?.id !== teamTwo?.id) {
         return club;
       }
     });
   } else if (modalCount === 3) {
+    // eslint-disable-next-line array-callback-return
     newClubs = clubs.filter((club) => {
       if (club?.id !== teamOne?.id) {
         return club;
@@ -141,6 +143,7 @@ const TeamsNameList = (props) => {
 
   useEffect(() => {
     getClubs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

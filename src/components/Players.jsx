@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   AppFooter2,
   AppHeader,
@@ -6,7 +6,7 @@ import {
   AppHeaderFlex2PRating,
   AppMAIN,
 } from "../styles/ContainerFluid.styled";
-import { LogRegFooterLinkFlex2 } from "../styles/LogIn.styled";
+// import { LogRegFooterLinkFlex2 } from "../styles/LogIn.styled";
 import Filter from "../assets/svg/Filter.svg";
 import Navigation from "../components/sections/Navigation";
 import { useState } from "react";
@@ -96,7 +96,7 @@ const Players = () => {
   const [worldPlayerLists, setWorldPlayerLists] = useState([]);
   const [nextUrlWPlayers, setNextUrlWPlayers] = useState("");
   const [preLoading, setPreLoading] = useState(false);
-  const params = useParams();
+  // const params = useParams();
 
   const [countTab, setCountTab] = useState(1);
 
@@ -108,6 +108,7 @@ const Players = () => {
     if (countTab === 2) {
       getWorldPlayers();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countTab]);
 
   const getWorldPlayers = (

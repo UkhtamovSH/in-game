@@ -9,7 +9,6 @@ import styled from "styled-components";
 import { InputFormFlex } from "../../../styles/Global.styled";
 import SearchLine from "../../../assets/svg/SearchLine.svg";
 import { useState } from "react";
-import { get } from "lodash";
 
 const MList = styled.div`
   margin: 0;
@@ -27,7 +26,7 @@ const MList = styled.div`
 
 const MinutesList = (props) => {
   const { toggleModal, munitesList, takeMinute } = props;
-  const [anotherFilterMinute, setAnotherFilterMinute] = useState([]);
+  // const [anotherFilterMinute, setAnotherFilterMinute] = useState([]);
   const [filterMinutes, setFilterMinutes] = useState("");
 
   const sFilterMinutes = (e) => {

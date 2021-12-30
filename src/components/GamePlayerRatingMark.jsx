@@ -6,14 +6,12 @@ import {
   AppHeaderFlex,
   AppFooter,
 } from "../styles/ContainerFluid.styled";
-import {
-  RatingTextArea,
-} from "../styles/GamePlayerRatingMark.style";
+import { RatingTextArea } from "../styles/GamePlayerRatingMark.style";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import commentIcon from "../assets/Img/Profile.png";
 import { GetAuthInstance } from "../helpers/httpClient";
 import { get } from "lodash";
-import { setToken } from "../helpers/tokenStorage";
+// import { setToken } from "../helpers/tokenStorage";
 const GamePlayerRatingMark = () => {
   const [updatedLists, setUpdatedLists] = useState([]);
 

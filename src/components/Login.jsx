@@ -43,7 +43,7 @@ const Login = () => {
     password_error,
     login_error,
     registerError,
-    networkError,
+    // networkError,
   } = errors;
   const onFocus = (name) => setErrors({ ...errors, [name]: false });
   const handlePswShowHide = () => setPswShowHide(!pswShowHide);
@@ -61,7 +61,7 @@ const Login = () => {
         .post("/api/v1/login/", formData)
         .then((result) => {
           const status = get(result, "data.status");
-            if (status === 1) {
+          if (status === 1) {
             const token = get(result, "data.token");
             setToken(token, remember);
             setLists([...lists, result.formData]);
@@ -119,6 +119,7 @@ const Login = () => {
     if (issetToken()) {
       history("/home");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

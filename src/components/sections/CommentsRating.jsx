@@ -5,22 +5,23 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GetAuthInstance } from "../../helpers/httpClient";
 import { CommentsWrapper, SliderDiv } from "../../styles/CommentsRating";
-import { AppHeader, AppHeaderFlex, AppMAIN } from "../../styles/ContainerFluid.styled";
-import ArrowRight from "../../assets/svg/Arrow - Right.svg"
+import {
+  AppHeader,
+  AppHeaderFlex,
+  AppMAIN,
+} from "../../styles/ContainerFluid.styled";
+import ArrowRight from "../../assets/svg/Arrow - Right.svg";
 const CommentsRating = () => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const getData = () => {
     GetAuthInstance()
       .get("/api/v1/game/review/")
       .then((res) => {
         setData(res.data.results);
-        console.log(res.data.results);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   useEffect(() => {
     getData();
@@ -31,16 +32,14 @@ const CommentsRating = () => {
       <AppHeader>
         <AppHeaderFlex>
           <div className="">
-            <span onClick={() => navigate(-1)} style={{cursor:"pointer"}}>
+            <span onClick={() => navigate(-1)} style={{ cursor: "pointer" }}>
               <img src={ArrowRight} alt="" />
             </span>
           </div>
           <div className="">
             <span>Все отзывы</span>
           </div>
-          <div className="">
-           
-          </div>
+          <div className=""></div>
         </AppHeaderFlex>
       </AppHeader>
       <AppMAIN>

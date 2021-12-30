@@ -1,5 +1,5 @@
 import Slider from "react-slick";
-import sliderImg from "../../assets/Img/Rectangle 1531.png";
+// import sliderImg from "../../assets/Img/Rectangle 1531.png";
 import { HomeSwiperStyle } from "../../styles/HomeSwiperStyle";
 import strokeIcon from "../../assets/Img/Stroke 1.png";
 
@@ -19,15 +19,12 @@ const HomeSwiper = (props) => {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    speed: 500,
     autoplay: true,
     speed: 2000,
     autoplaySpeed: 2000,
   };
 
   const { label } = props;
-
-  console.log(label);
 
   const [data, setData] = useState([]);
   const getData = () => {

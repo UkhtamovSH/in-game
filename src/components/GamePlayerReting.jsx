@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams,useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import ArrowRight2 from "../assets/Img/Arrow - Right 2.png";
 import {
@@ -25,15 +25,16 @@ const GamePlayerReting = () => {
   const [data, setData] = useState([]);
   const [goal, setGoal] = useState([]);
   const params = useParams();
-  const [nextUrl, setNextUrl] = useState("");
+  const [setNextUrl] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     getData();
     getGoal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
 
   const getData = () => {
@@ -67,21 +68,21 @@ const GamePlayerReting = () => {
       .catch((err) => {});
   };
 
-  const goalID = _.find(goal, "id");
+  // const goalID = _.find(goal, "id");
 
   return (
     <>
       <AppHeader>
         <AppHeaderFlex>
           <div className="">
-            <span onClick={() => navigate(-1)} style={{cursor:"pointer"}}>
+            <span onClick={() => navigate(-1)} style={{ cursor: "pointer" }}>
               <img src={ArrowRight} alt="" />
             </span>
           </div>
           <div>
             {goal.map((item, index) => (
               <div key={index}>
-                {params.id == item.id ? (
+                {params.id === item.id ? (
                   <>
                     {_.get(item.GameClub[0], "football_club.name", 0)}{" "}
                     {_.get(item.GameClub[0], "goal")}:

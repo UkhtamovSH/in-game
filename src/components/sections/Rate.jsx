@@ -1,5 +1,5 @@
 import { get } from "lodash";
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import ArrowRight from "../../assets/svg/Arrow - Right.svg";
@@ -59,9 +59,7 @@ const Rate = () => {
   const getData = () => {
     GetAuthInstance()
       .get("/api/v1/game/review/")
-      .then((res) => {
-        console.log(res);
-      });
+      .then((res) => {});
   };
 
   useEffect(() => {
@@ -99,7 +97,6 @@ const Rate = () => {
                           value={givenRating}
                           onClick={() => {
                             setRate(givenRating);
-                            console.log(`${givenRating}`);
                           }}
                         />
                         <Rating>
@@ -128,7 +125,6 @@ const Rate = () => {
                           value={givenRating}
                           onClick={() => {
                             setDrib(givenRating);
-                            console.log(`${givenRating}`);
                           }}
                         />
                         <Rating>
@@ -157,7 +153,6 @@ const Rate = () => {
                           value={givenRating}
                           onClick={() => {
                             setPass(givenRating);
-                            console.log(`${givenRating}`);
                           }}
                         />
                         <Rating>
@@ -186,7 +181,6 @@ const Rate = () => {
                           value={givenRating}
                           onClick={() => {
                             setHit(givenRating);
-                            console.log(`${givenRating}`);
                           }}
                         />
                         <Rating>
@@ -215,7 +209,6 @@ const Rate = () => {
                           value={givenRating}
                           onClick={() => {
                             setForce(givenRating);
-                            console.log(`${givenRating}`);
                           }}
                         />
                         <Rating>
@@ -244,7 +237,6 @@ const Rate = () => {
                           value={givenRating}
                           onClick={() => {
                             setHeadbutt(givenRating);
-                            console.log(`${givenRating}`);
                           }}
                         />
                         <Rating>
@@ -273,7 +265,6 @@ const Rate = () => {
                           value={givenRating}
                           onClick={() => {
                             setSelect(givenRating);
-                            console.log(`${givenRating}`);
                           }}
                         />
                         <Rating>

@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import Timer from "react-compound-timer/build";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+// import { useDispatch, useSelector } from "react-redux";
+// import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { setMinutes } from "../redux/actions";
+// import { setMinutes } from "../redux/actions";
 import {
   AppFooter,
   AppHeader,
@@ -105,8 +106,8 @@ const GameHeader = styled.div`
 
 const Game = () => {
   const [clubs, setClubs] = useState([]);
-  const [nextUrlClubs, setNextUrlClubs] = useState("");
-  const { minutes, gameActive } = useSelector((state) => state);
+  // const [nextUrlClubs, setNextUrlClubs] = useState("");
+  // const { minutes, gameActive } = useSelector((state) => state);
   const [modalCount, setModalCount] = useState(null);
   const [modal, setModal] = useState(false);
 
@@ -116,7 +117,7 @@ const Game = () => {
   const toggleModalCount = (i) => setModalCount(i);
   const toggleModal = () => setModal(!modal);
 
-  let history = useNavigate();
+  // let history = useNavigate();
 
   // useEffect(() => {
   //   if (!gameActive) {
@@ -194,13 +195,6 @@ const Game = () => {
     }
   };
 
-  useEffect(() => {});
-
-  useEffect(() => {
-    getClubs();
-    countClubsShot();
-  }, []);
-
   const getClub1 = get(resultDataGame?.game_club, "0", []);
   const getClub2 = get(resultDataGame?.game_club, "1", []);
 
@@ -209,6 +203,11 @@ const Game = () => {
 
   const fClub2 = clubs.filter((item) => item.id === getClub2.club);
   const getFclub2 = get(fClub2, "0", []);
+
+  useEffect(() => {
+    getClubs();
+    countClubsShot();
+  }, []);
 
   return (
     <>

@@ -21,7 +21,7 @@ const PaymeComp = () => {
   const [check, setCheck] = useState(0);
   const [payCom, setPayCom] = useState(0);
   const [clickErr, setClickErr] = useState("");
-  const [PayMeErr, setPayMeErr] = useState("");
+  const [PayMeErr] = useState("");
 
   const postData = () => {
     const dataForm = new FormData();
@@ -153,7 +153,6 @@ const PaymeComp = () => {
             onCheck(e);
           }}
         >
-          {console.log(postData)}
           Продолжить
         </div>
       </AppFooter>

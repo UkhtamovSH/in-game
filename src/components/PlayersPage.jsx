@@ -11,7 +11,6 @@ import More from "../assets/Img/More.png";
 import { useNavigate } from "react-router-dom";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import { useParams } from "react-router";
-import _ from "lodash";
 import {
   AvatarImgDiv,
   AvatarWrapDiv,
@@ -36,12 +35,12 @@ const PlayersPage = () => {
       .then((res) => {
         setData(res.data.data);
         setStatus(res.data.status);
-        console.log(res.data.data);
       })
-      .catch((err) => {})
+      .catch((err) => {});
   };
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
 
   return (
@@ -49,7 +48,7 @@ const PlayersPage = () => {
       <AppHeader>
         <AppHeaderFlex>
           <div className="">
-            <span onClick={() => navigate(-1)} style={{cursor:"pointer"}}>
+            <span onClick={() => navigate(-1)} style={{ cursor: "pointer" }}>
               <img src={ArrowRight} alt="" />
             </span>
           </div>

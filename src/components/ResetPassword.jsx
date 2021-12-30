@@ -1,18 +1,23 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import { AppFooter, AppHeader, AppHeaderFlex, AppMAIN } from "../styles/ContainerFluid.styled"
-import { LoginSection, LoginSectionSub, LogRegFooterLinkFlex } from "../styles/LogIn.styled"
-import ArrowRight from '../assets/svg/Arrow - Right.svg'
-import TitleSubTitle from "./sections/TitleSubTitle"
-import { FormUpperDiv, InputFormFlex } from "../styles/Global.styled"
-import Hide from '../assets/svg/Hide.svg'
-import Lock from '../assets/svg/Lock.svg'
-import BgS from "../assets/Img/Bg's.png"
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  AppFooter,
+  AppHeader,
+  AppHeaderFlex,
+  AppMAIN,
+} from "../styles/ContainerFluid.styled";
+import { LoginSection, LoginSectionSub } from "../styles/LogIn.styled";
+import ArrowRight from "../assets/svg/Arrow - Right.svg";
+import TitleSubTitle from "./sections/TitleSubTitle";
+import { FormUpperDiv, InputFormFlex } from "../styles/Global.styled";
+import Hide from "../assets/svg/Hide.svg";
+import Lock from "../assets/svg/Lock.svg";
+import BgS from "../assets/Img/Bg's.png";
 
 const ResetPassword = () => {
-  const [pswShowHide, setPswShowHide] = useState(false)
+  const [pswShowHide, setPswShowHide] = useState(false);
 
-  const handlePswShowHide = () => setPswShowHide(!pswShowHide)
+  const handlePswShowHide = () => setPswShowHide(!pswShowHide);
   return (
     <>
       <form>
@@ -29,9 +34,7 @@ const ResetPassword = () => {
           <LoginSection>
             <img src={BgS} className="bgImgLogin" alt="" />
             <LoginSectionSub>
-              <TitleSubTitle
-                title={'Сброс пароля'}
-              />
+              <TitleSubTitle title={"Сброс пароля"} />
               <FormUpperDiv>
                 <InputFormFlex>
                   <span className="span1">
@@ -39,7 +42,11 @@ const ResetPassword = () => {
                       <img src={Lock} alt="" />
                     </span>
                   </span>
-                  <input type={!pswShowHide ? 'password' : 'text'} name="password" placeholder="Введите новый пароль" />
+                  <input
+                    type={!pswShowHide ? "password" : "text"}
+                    name="password"
+                    placeholder="Введите новый пароль"
+                  />
                   <span className="span2" onClick={() => handlePswShowHide()}>
                     <span>
                       <img src={Hide} alt="" />
@@ -52,7 +59,11 @@ const ResetPassword = () => {
                       <img src={Lock} alt="" />
                     </span>
                   </span>
-                  <input type={!pswShowHide ? 'password' : 'text'} name="repeatpassword" placeholder="Повторите новый пароль" />
+                  <input
+                    type={!pswShowHide ? "password" : "text"}
+                    name="repeatpassword"
+                    placeholder="Повторите новый пароль"
+                  />
                   <span className="span2" onClick={() => handlePswShowHide()}>
                     <span>
                       <img src={Hide} alt="" />
@@ -70,7 +81,7 @@ const ResetPassword = () => {
         </AppFooter>
       </form>
     </>
-  )
-}
+  );
+};
 
-export default ResetPassword
+export default ResetPassword;

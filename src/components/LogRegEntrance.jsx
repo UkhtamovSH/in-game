@@ -1,16 +1,21 @@
-import { Link,useNavigate } from "react-router-dom"
-import { AppLogo, FlexBottom, LogRegEntranceStyle } from "../styles/LogRegEntrance.styled"
-import InGameLogo from '../assets/svg/inGameLogo.svg'
-import { issetToken } from "../helpers/tokenStorage"
-import {useEffect} from "react"
+import { Link, useNavigate } from "react-router-dom";
+import {
+  AppLogo,
+  FlexBottom,
+  LogRegEntranceStyle,
+} from "../styles/LogRegEntrance.styled";
+import InGameLogo from "../assets/svg/inGameLogo.svg";
+import { issetToken } from "../helpers/tokenStorage";
+import { useEffect } from "react";
 
 const LogRegEntrance = () => {
-  const history = useNavigate()
+  const history = useNavigate();
   useEffect(() => {
-    if(issetToken() ){
-      history("/home")
+    if (issetToken()) {
+      history("/home");
     }
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <LogRegEntranceStyle>
@@ -24,13 +29,17 @@ const LogRegEntrance = () => {
         </AppLogo>
         <FlexBottom>
           <div className="">
-            <Link to="/login" className="appBtnGreen2">Войти</Link>
-            <Link to="/register" className="appBtnTransparent">Быстрая регистрация</Link>
+            <Link to="/login" className="appBtnGreen2">
+              Войти
+            </Link>
+            <Link to="/register" className="appBtnTransparent">
+              Быстрая регистрация
+            </Link>
           </div>
         </FlexBottom>
       </LogRegEntranceStyle>
     </>
-  )
-}
+  );
+};
 
-export default LogRegEntrance
+export default LogRegEntrance;

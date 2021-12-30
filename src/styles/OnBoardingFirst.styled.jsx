@@ -53,7 +53,7 @@ export const OnBoardingFirst = styled.div`
     bottom: 30px;
   }
   h1 {
-    font-family: "Manrope", sans-serif;
+    font-family: "Manrope-Bold", sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
@@ -61,8 +61,7 @@ export const OnBoardingFirst = styled.div`
     text-align: center;
   }
   p {
-    font-family: "Manrope", sans-serif;
-    font-style: normal;
+    font-family: "Manrope-Regular", sans-serif;
     font-weight: normal;
     font-size: 16px;
     line-height: 150%;
@@ -80,8 +79,7 @@ export const OnBoardingFirst = styled.div`
     cursor: pointer;
     cursor: pointer;
     span {
-      font-family: "Manrope", sans-serif;
-      font-style: normal;
+      font-family: "Manrope-Bold", sans-serif;
       font-weight: bold;
       font-size: 16px;
       line-height: 22px;

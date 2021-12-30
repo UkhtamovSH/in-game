@@ -20,7 +20,7 @@ import VerificationInput from "react-verification-input";
 import Timer from "react-compound-timer/build";
 
 const Verification = () => {
-  const [resetSms, setResetSms] = useState(false);
+  const [setResetSms] = useState(false);
 
   const history = useNavigate();
 
@@ -28,6 +28,7 @@ const Verification = () => {
     if (issetToken()) {
       history("/home");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const timer = (

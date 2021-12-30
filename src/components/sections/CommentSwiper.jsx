@@ -11,8 +11,7 @@ import _ from "lodash";
 import { Link } from "react-router-dom";
 
 const CommentSwiper = (props) => {
-
-  const {comment} = props
+  const { comment } = props;
   const [data, setData] = useState([]);
 
   const getData = () => {
@@ -34,7 +33,6 @@ const CommentSwiper = (props) => {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    speed: 500,
     autoplay: true,
     speed: 2000,
     autoplaySpeed: 2000,
@@ -44,11 +42,15 @@ const CommentSwiper = (props) => {
     <HomeSwiperStyle>
       <div className="lastPlays">
         <label>Отзывы о вас</label>
-       { comment && (<label>
-          {<Link to="/comments-rating">
-            Все отзывы <img src={strokeIcon} alt="" />{" "}
-          </Link>}
-        </label>)}
+        {comment && (
+          <label>
+            {
+              <Link to="/comments-rating">
+                Все отзывы <img src={strokeIcon} alt="" />{" "}
+              </Link>
+            }
+          </label>
+        )}
       </div>
       <Slider {...settings}>
         {data.map((item, index) => (
@@ -94,13 +96,13 @@ const CommentSwiper = (props) => {
                         (item.user.age > 94 && item.user.age <= 100) ||
                         (item.user.age > 104 && item.user.age <= 110) ||
                         (item.user.age > 114 && item.user.age <= 120)
-                        ? `${item.user.age} лет`
-                        : item.user.age === 0
-                        ? ""
-                        : "" }
+                      ? `${item.user.age} лет`
+                      : item.user.age === 0
+                      ? ""
+                      : ""}
                   </p>
                   <div className="text22Flex">
-                   <p className="text22">{item.user.city.split(" ", 1)}</p>
+                    <p className="text22">{item.user.city.split(" ", 1)}</p>
                   </div>
                 </div>
               </div>
