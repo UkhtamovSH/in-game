@@ -23,6 +23,7 @@ import PlayerMap from "../components/PlayerMap";
 import PaymeHistory from "../components/PaymeHistory";
 import PlayersPage from "../components/PlayersPage";
 import Game from "../components/Game";
+import GameOver from "../components/GameOver";
 
 const Routess = () => {
   return (
@@ -37,6 +38,7 @@ const Routess = () => {
       <Route path="/players" element={<Players />} />
       <Route path="/newgame" element={<NewGame />} />
       <Route path="/game/:id" element={<Game />} />
+      <Route path="/gameover/:id" element={<GameOver />} />
       <Route path="/pitches" element={<Pitches />} />
       <Route path="/pitches/:id" element={<PitchDetail />} />
       <Route path="/rating-players" element={<RatingPlayers />} />

@@ -121,6 +121,14 @@ export const PlayersRatingMain = styled.div`
     margin: 0 8px 0 0;
   }
 
+  .nameDivFlex {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+
   @media only screen and (max-width: 576px) and (min-width: 320px) {
     .text22Flex {
       flex-direction: column;

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Timer from "react-compound-timer/build";
 // import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from "react-router";
@@ -16,6 +16,12 @@ import ClubImg1 from "../assets/svg/clubImg1.svg";
 import ClubImg2 from "../assets/svg/clubImg2.svg";
 import { GetAuthInstance } from "../helpers/httpClient";
 import { get } from "lodash";
+import { useDispatch } from "react-redux";
+import { setMinutes } from "../redux/actions";
+import { PlayersRatingMain } from "../styles/PlayersRatingStyle";
+import { StylesHidden } from "../styles/Global.styled";
+import { PossibleModal } from "../styles/NewGame.styled";
+import { useNavigate } from "react-router";
 
 const TimerDiv = styled.div`
   background: #333333;
@@ -76,36 +82,9 @@ const GameHeader = styled.div`
   }
 `;
 
-// const TimerComptest = ({
-//   start,
-//   resume,
-//   pause,
-//   stop,
-//   reset,
-//   timerState,
-//   getTime,
-// }) => {
-//   const isHour = parseInt(getTime() / (1000 * 60 * 60));
-//   const isMinute = parseInt(getTime() / (1000 * 60));
-//   const isSecond = parseInt(getTime() / 1000);
-//   const time = getTime();
-//   console.log(time, "gg");
-//   const dispatch = useDispatch();
-//   // const [state, setState] = useState('start')
-//   useEffect(() => {
-//     dispatch(setMinutes(time));
-//   }, [time]);
-//   return (
-//     <div>
-//       {isHour ? <Timer.Hours /> + " : " : null}
-//       {isMinute ? <Timer.Minutes /> : null} :{" "}
-//       {isSecond ? <Timer.Seconds /> : null}
-//     </div>
-//   );
-// };
-
 const Game = () => {
   const [clubs, setClubs] = useState([]);
+  const [countPlayers, setCountPlayers] = useState([]);
   // const [nextUrlClubs, setNextUrlClubs] = useState("");
   // const { minutes, gameActive } = useSelector((state) => state);
   const [modalCount, setModalCount] = useState(null);
@@ -117,7 +96,12 @@ const Game = () => {
   const toggleModalCount = (i) => setModalCount(i);
   const toggleModal = () => setModal(!modal);
 
-  // let history = useNavigate();
+  const [possibleModal, setPossibleModal] = useState(false);
+
+  const togglePossibleModal = () => setPossibleModal(!possibleModal);
+
+  const dispatch = useDispatch();
+  let history = useNavigate();
 
   // useEffect(() => {
   //   if (!gameActive) {
@@ -127,12 +111,11 @@ const Game = () => {
 
   const resultDataGame = JSON.parse(sessionStorage.getItem("datagame"));
 
-  let time = resultDataGame?.game_time;
-
+  let time = resultDataGame?.game_time * 60000;
+  const gameRef = useRef(time);
   const TimerComp = () => (
     <Timer
-      // initialTime={1 * 60000}
-      initialTime={time ? time * 60000 : null}
+      initialTime={gameRef.current ? gameRef.current : null}
       direction="backward"
       checkpoints={[
         {
@@ -145,6 +128,8 @@ const Game = () => {
         const isHour = parseInt(getTime() / (1000 * 60 * 60));
         const isMinute = parseInt(getTime() / (1000 * 60));
         const isSecond = parseInt(getTime() / 1000);
+        const time = getTime();
+        gameRef.current = time;
         return (
           <div>
             {isHour ? (
@@ -179,18 +164,43 @@ const Game = () => {
 
   const countClubsShot = (user) => {
     let getClub1 = get(resultDataGame?.game_club, "0", []);
-    let findIDFilter1 = getClub1.users.filter((item) => item.user === user);
-    let findID1 = get(findIDFilter1, "0.user", []);
+    const fClub1 = clubs.filter((item) => item.id === getClub1.club);
+    const getFclub1 = get(fClub1, "0", []);
+
+    let findIDFilter1 = {};
+    get(getClub1, "users", []).forEach((item) => {
+      if (item.user === user) {
+        findIDFilter1 = {
+          ...item,
+          time: gameRef.current,
+          club: getFclub1.name,
+        };
+      }
+    });
+    let findID1 = get(findIDFilter1, "user", 0);
 
     let getClub2 = get(resultDataGame?.game_club, "1", []);
-    let findIDFilter2 = getClub2.users.filter((item) => item.user === user);
-    let findID2 = get(findIDFilter2, "0.user", []);
+    const fClub2 = clubs.filter((item) => item.id === getClub2.club);
+    const getFclub2 = get(fClub2, "0", []);
+    let findIDFilter2 = {};
+    get(getClub2, "users", []).forEach((item) => {
+      if (item.user === user) {
+        findIDFilter2 = {
+          ...item,
+          time: gameRef.current,
+          club: getFclub2.name,
+        };
+      }
+    });
+    let findID2 = get(findIDFilter2, "user", 0);
 
     if (findID1 === user) {
       setShotClub1(shotClub1 + 1);
+      setCountPlayers([...countPlayers, findIDFilter1]);
       toggleModal();
     } else if (findID2 === user) {
       setShotClub2(shotClub2 + 1);
+      setCountPlayers([...countPlayers, findIDFilter2]);
       toggleModal();
     }
   };
@@ -204,9 +214,50 @@ const Game = () => {
   const fClub2 = clubs.filter((item) => item.id === getClub2.club);
   const getFclub2 = get(fClub2, "0", []);
 
+  const handleFinish = () => {
+    const getClub1 = get(resultDataGame?.game_club, "0", []);
+    const fClub1 = clubs.filter((item) => item.id === getClub1.club);
+    const getFclub1 = get(fClub1, "0", []);
+    // let uID1 = [];
+    // get(resultDataGame?.game_club, "0.users", []).forEach((item) => {
+    //   uID1 = [...uID1, item.user];
+    // });
+
+    const getClub2 = get(resultDataGame?.game_club, "1", []);
+    const fClub2 = clubs.filter((item) => item.id === getClub2.club);
+    const getFclub2 = get(fClub2, "0", []);
+    // let uID2 = [];
+    // get(resultDataGame?.game_club, "1.users", []).forEach((item) => {
+    //   uID2 = [...uID2, item.user];
+    // });
+
+    const finishGame = {
+      game: resultDataGame?.id,
+      time: parseInt(gameRef.current),
+      game_club1: {
+        "game-club": getFclub1.id,
+        score: shotClub1,
+        ball: resultDataGame?.totalPrice,
+        users: get(resultDataGame?.game_club, "0.users", []),
+      },
+      game_club2: {
+        "game-club": getFclub2.id,
+        score: shotClub2,
+        ball: resultDataGame?.totalPrice2,
+        users: get(resultDataGame?.game_club, "1.users", []),
+      },
+    };
+
+    const date = resultDataGame.date;
+    window.sessionStorage.setItem(
+      "finishGame",
+      JSON.stringify({ ...finishGame, countPlayers, date })
+    );
+    history(`/gameover/${resultDataGame?.id}`);
+  };
+
   useEffect(() => {
     getClubs();
-    countClubsShot();
   }, []);
 
   return (
@@ -222,7 +273,7 @@ const Game = () => {
               <div />
             </AppHeaderFlex>
           </AppHeader>
-          <AppMAIN style={{ padding: "0 15px" }}>
+          <AppMAIN style={{ padding: "15px" }}>
             <GameHeader>
               <div className="">
                 <img
@@ -253,20 +304,95 @@ const Game = () => {
               </div>
             </TimerDiv>
 
+            {countPlayers.length > 0
+              ? countPlayers.map((countPlayer, index) => {
+                  const { img, position, name, time, club } = countPlayer;
+
+                  var hours = parseInt(time / (1000 * 60 * 60));
+                  var minutes = parseInt(time / (1000 * 60)) % 60;
+                  var seconds = ((time % 60000) / 1000).toFixed(0) - 1;
+
+                  return (
+                    <PlayersRatingMain key={index}>
+                      <div className="">
+                        <div className="playersRatingSubFlex">
+                          <div className="userImg">
+                            <img src={img} alt="" />
+                            {position === 1 ? (
+                              <p className="posName">G</p>
+                            ) : position === 2 ? (
+                              <p className="posName">D</p>
+                            ) : position === 4 ? (
+                              <p className="posName">F</p>
+                            ) : position === 3 ? (
+                              <p className="posName">M</p>
+                            ) : null}
+                          </div>
+                          <div className="nameDiv">
+                            <p className="text1">{name}</p>
+                            <div className="text22Flex">
+                              <p className="text22">Команда: {club}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="">
+                        <div className="countFlex">
+                          <div className="">
+                            <p className="text1">Время</p>
+                            <p className="text2">
+                              {hours > 0 ? `${hours} :` : null} {minutes} :{" "}
+                              {seconds}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </PlayersRatingMain>
+                  );
+                })
+              : null}
+
             <button
               className="appBtnYellow"
               onClick={() => {
                 toggleModal();
                 toggleModalCount(1);
               }}
-              style={{ marginTop: "43px" }}
+              style={{ marginTop: "23px" }}
             >
               Гол!
             </button>
           </AppMAIN>
           <AppFooter>
-            <button className="appBtnGreen">Завершить матч</button>
+            <button className="appBtnGreen" onClick={togglePossibleModal}>
+              Завершить матч
+            </button>
           </AppFooter>
+          {possibleModal ? (
+            <PossibleModal>
+              <div className="">
+                <div className="possibleModalSub">
+                  <div className="sub1">
+                    <p>Вы действительно хотите завершить данный матч?</p>
+                  </div>
+                  <div className="sub3">
+                    <div className="sub2BtnGroup">
+                      <div
+                        onClick={() => {
+                          handleFinish();
+                        }}
+                      >
+                        Завершить
+                      </div>
+                      <div style={{ width: "0px", padding: "0" }} />
+                      <div onClick={togglePossibleModal}>Отменить</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <StylesHidden />
+            </PossibleModal>
+          ) : null}
         </>
       ) : (
         <>

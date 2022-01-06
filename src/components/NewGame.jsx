@@ -132,7 +132,6 @@ const NewGame = () => {
         setPossibleModal(true);
         setModal(false);
       }
-
       if (type === 2) {
         if (user) {
           console.log(`target2 2chi type tanlandi => id si ${user} `);
@@ -231,7 +230,14 @@ const NewGame = () => {
           if (status === 1) {
             await window.sessionStorage.setItem(
               "datagame",
-              JSON.stringify({ ...dataGame, date, id, referee })
+              JSON.stringify({
+                ...dataGame,
+                date,
+                id,
+                referee,
+                totalPrice,
+                totalPrice2,
+              })
             );
             history(`/game/${id}`);
             setPossibleModal2(false);

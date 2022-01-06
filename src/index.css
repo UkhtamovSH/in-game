@@ -78,3 +78,14 @@
 .activeList {
   background-color: red;
 }
+
+.newGame__Title {
+  font-family: "Manrope-Bold", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  color: #ffffff;
+  margin: 24px 0 14px 0;
+}

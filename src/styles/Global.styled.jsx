@@ -150,6 +150,24 @@ export const GlobalStyle = createGlobalStyle`
   text-align: center;
   cursor: pointer;
 }
+
+.ImgDownloaderFileBtn{
+  padding: 17.5px 20px;
+  border-radius: 12px;
+  background-color: #333333;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-family: "Manrope-Bold",sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border: 1px solid #000;
+  margin-top: 24px;
+}
 `;
 
 export const StylesHidden = createGlobalStyle`
