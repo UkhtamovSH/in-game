@@ -10,6 +10,7 @@ import {
 } from "../styles/ContainerFluid.styled";
 import ClubImg1 from "../assets/svg/clubImg1.svg";
 import ClubImg2 from "../assets/svg/clubImg2.svg";
+import CloseLine from "../assets/svg/close-line.svg";
 import ImgDownloaderFile from "../assets/svg/imgDownloaderFile.svg";
 import { PlayersRatingMain } from "../styles/PlayersRatingStyle";
 import ChoosenPlayersTwo from "./sections/newgame/ChoosenPlayersTwo";
@@ -18,6 +19,7 @@ import Player2 from "../assets/svg/player2.svg";
 import { NewGamePositionCard } from "../styles/NewGame.styled";
 import TeamOnePlayers from "./sections/newgame/TeamOnePlayers";
 import TeamTwoPlayers from "./sections/newgame/TeamTwoPlayers";
+import { useNavigate } from "react-router";
 
 const GameHeader = styled.div`
   display: flex;
@@ -64,7 +66,28 @@ const PhotoMatch = styled.div`
   padding: 16px;
   border-radius: 16px;
   margin-top: 24px;
-
+  .photoMatchMap {
+    margin: 20px 0 0 0;
+    .CloseLineDiv {
+      position: relative;
+      display: inline-block;
+      margin-right: 14px;
+      margin: 14px 15px 0 0;
+      .CloseLineDivSub {
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        width: 25px;
+        height: 25px;
+        background-color: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    }
+  }
   .title {
     font-family: "Manrope-Bold", sans-serif;
     font-style: normal;
@@ -78,9 +101,10 @@ const PhotoMatch = styled.div`
 
 const GameOver = () => {
   // states start
-  const [listImages, setListImages] = useState({
-    gallery: [],
-  });
+  const [listImages, setListImages] = useState([]);
+  const [listImagesFile, setListImagesFile] = useState([]);
+
+  const [gameOverList, setGameOverList] = useState([]);
   const [clubs, setClubs] = useState([]);
   const [modalCount, setModalCount] = useState(null);
   const [modal, setModal] = useState(false);
@@ -89,8 +113,12 @@ const GameOver = () => {
 
   const [teamOneMatchPlayer, setTeamOneMatchPlayer] = useState({});
   const [teamTwoMatchPlayer, setTeamTwoMatchPlayer] = useState({});
+  const [best_user, setBest_user] = useState([]);
 
   //////////////////////////////////////////////
+
+  let history = useNavigate();
+
   const getFinishGame = JSON.parse(sessionStorage.getItem("finishGame"));
 
   const game_club1 = get(getFinishGame?.game_club1, "game-club");
@@ -216,22 +244,81 @@ const GameOver = () => {
   //###############get clubs function end##################
 
   //###############Post fucntion start##################
-  const handleSelectImg = (e) => {
-    setListImages({ ...listImages, gallery: e.target.files[0] });
-    var formData = new FormData();
-    formData.append("gallery[]", listImages.gallery);
-    formData.append("game", getFinishGame.game);
-    console.log(formData, "formData");
-    GetAuthInstance()
-      .post("/api/v1/gallery/", formData)
-      .then((res) => {
-        setListImages({ ...listImages, formData });
-      })
-      .catch((err) => {});
+
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setListImages([
+        ...listImages,
+        URL.createObjectURL(event.target.files[0]),
+        // rasmni keshga olib block url yaratadi
+      ]);
+      setListImagesFile([...listImagesFile, event.target.files[0]]); // rasmni uzini object ko`rinishida olib turadi
+    }
   };
+
+  const deleteImg = (index) => {
+    const dImg = listImages.filter((_, i) => i !== index);
+    const dImgF = listImagesFile.filter((_, i) => i !== index);
+    setListImages(dImg);
+    setListImagesFile(dImgF);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
+    var formData = new FormData();
+    listImagesFile.forEach((item) => {
+      formData.append("gallery[]", item);
+    });
+
+    formData.append("game", getFinishGame.game);
+    GetAuthInstance().post("/api/v1/gallery/", formData);
+
+    const gameClub1ID = get(getFinishGame?.game_club1, "game-club");
+    const gameClub1Ball = get(getFinishGame?.game_club2, "ball");
+
+    let uID1 = [];
+    get(getFinishGame?.game_club1, "users", []).forEach((item) => {
+      uID1 = [...uID1, item.user];
+    });
+
+    const gameClub2ID = get(getFinishGame?.game_club2, "game-club");
+    const gameClub2Ball = get(getFinishGame?.game_club2, "ball");
+    let uID2 = [];
+    get(getFinishGame?.game_club2, "users", []).forEach((item) => {
+      uID2 = [...uID2, item.user];
+    });
+
+    const gameOver = {
+      game: getFinishGame?.game,
+      time: getFinishGame?.time,
+      best_user: [
+        teamOneMatchPlayer?.fBestPlayer.user,
+        teamTwoMatchPlayer?.fBestPlayer.user,
+      ],
+      game_club1: {
+        "game-club": gameClub1ID,
+        score: shotClub1,
+        ball: gameClub1Ball,
+        users: uID1,
+      },
+      game_club2: {
+        "game-club": gameClub2ID,
+        score: shotClub2,
+        ball: gameClub2Ball,
+        users: uID2,
+      },
+    };
+
+    GetAuthInstance()
+      .post("/api/v1/game-end/", gameOver)
+      .then((res) => {
+        const status = get(res, "data.status");
+        if (status === 1) {
+          setGameOverList([...gameOverList, res.gameOver]);
+          history("/home");
+        }
+      })
+      .catch((err) => {});
   };
   //###############Post fucntion end##################
 
@@ -375,17 +462,42 @@ const GameOver = () => {
               >
                 Добавить Гол!
               </button>
-
               <PhotoMatch>
                 <p className="title">Фотоотчет матча</p>
-                <>
+
+                <div className="photoMatchMap">
+                  {listImages.length > 0
+                    ? listImages.map((listImage, index) => {
+                        return (
+                          <div className="CloseLineDiv" key={index}>
+                            <div
+                              className="CloseLineDivSub"
+                              onClick={() => deleteImg(index)}
+                            >
+                              <img src={CloseLine} alt="" />
+                            </div>
+                            <img
+                              src={listImage}
+                              alt=""
+                              style={{
+                                width: "60px",
+                                height: "60px",
+                                objectFit: "cover",
+                              }}
+                            />
+                          </div>
+                        );
+                      })
+                    : null}
+                </div>
+
+                <div>
                   <label htmlFor="files" className="ImgDownloaderFileBtn">
-                    {" "}
                     <img
                       src={ImgDownloaderFile}
                       style={{ marginRight: "18px" }}
                       alt=""
-                    />{" "}
+                    />
                     Загрузить еще изображения
                   </label>
                   <input
@@ -393,9 +505,9 @@ const GameOver = () => {
                     style={{ visibility: "hidden" }}
                     type="file"
                     accept=".png, .jpg, .jpeg"
-                    onChange={(e) => handleSelectImg(e)}
+                    onChange={onImageChange}
                   />
-                </>
+                </div>
               </PhotoMatch>
 
               <p className="newGame__Title">Лучшие игроки матча</p>

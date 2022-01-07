@@ -8,6 +8,7 @@ import {
 } from "../styles/ContainerFluid.styled";
 import Navigation from "./sections/Navigation";
 import Endurance from "../assets/svg/Endurance.svg";
+import DefaultImg from "../assets/Img/default.png";
 import Player1 from "../assets/svg/player1.svg";
 import Player2 from "../assets/svg/player2.svg";
 import {
@@ -223,6 +224,8 @@ const NewGame = () => {
       GetAuthInstance()
         .post("/api/v1/game/", dataGame)
         .then(async (res) => {
+          const gameClub1ID = get(res.data.game.GameClub, "0.id");
+          const gameClub2ID = get(res.data.game.GameClub, "1.id");
           const status = get(res, "data.status");
           const date = get(res, "data.game.date");
           const id = get(res, "data.game.id");
@@ -237,6 +240,8 @@ const NewGame = () => {
                 referee,
                 totalPrice,
                 totalPrice2,
+                gameClub1ID,
+                gameClub2ID,
               })
             );
             history(`/game/${id}`);
@@ -420,8 +425,20 @@ const NewGame = () => {
                                   findPossiblePlayerPos(1, 1);
                                 }}
                               >
-                                <img src={img} className="divIMG" alt="" />
-                                <p>{name.split(" ")[0]}</p>
+                                <img
+                                  src={img ? img : DefaultImg}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = DefaultImg;
+                                  }}
+                                  className="divIMG"
+                                  alt=""
+                                />
+                                <p>
+                                  {name !== null
+                                    ? name.split(" ")[0]
+                                    : "Анонимный игрок"}
+                                </p>
                               </div>
                             );
                           })

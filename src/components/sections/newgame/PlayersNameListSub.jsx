@@ -1,4 +1,5 @@
 import { PlayersRatingMain } from "../../../styles/PlayersRatingStyle";
+import DefaultImg from "../../../assets/Img/default.png";
 
 const PlayersNameListSub = (props) => {
   const {
@@ -23,7 +24,14 @@ const PlayersNameListSub = (props) => {
         <div className="">
           <div className="playersRatingSubFlex">
             <div className="userImg">
-              <img src={avatar} alt="" />
+              <img
+                src={avatar ? avatar : DefaultImg}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = DefaultImg;
+                }}
+                alt=""
+              />
               {position === 1 ? (
                 <p className="posName">G</p>
               ) : position === 2 ? (
@@ -35,7 +43,11 @@ const PlayersNameListSub = (props) => {
               ) : null}
             </div>
             <div className="nameDiv">
-              <p className="text1">{full_name}</p>
+              <p className="text1">
+                {full_name !== null
+                  ? full_name.split(" ")[0]
+                  : "Анонимный игрок"}
+              </p>
               <div className="text22Flex">
                 <p className="text22">
                   {age === 1 ||

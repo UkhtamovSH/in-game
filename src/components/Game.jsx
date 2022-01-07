@@ -100,7 +100,6 @@ const Game = () => {
 
   const togglePossibleModal = () => setPossibleModal(!possibleModal);
 
-  const dispatch = useDispatch();
   let history = useNavigate();
 
   // useEffect(() => {
@@ -124,7 +123,7 @@ const Game = () => {
         },
       ]}
     >
-      {({ start, resume, pause, stop, reset, timerState, getTime }) => {
+      {({ getTime }) => {
         const isHour = parseInt(getTime() / (1000 * 60 * 60));
         const isMinute = parseInt(getTime() / (1000 * 60));
         const isSecond = parseInt(getTime() / 1000);
@@ -235,13 +234,13 @@ const Game = () => {
       game: resultDataGame?.id,
       time: parseInt(gameRef.current),
       game_club1: {
-        "game-club": getFclub1.id,
+        "game-club": resultDataGame?.gameClub1ID,
         score: shotClub1,
         ball: resultDataGame?.totalPrice,
         users: get(resultDataGame?.game_club, "0.users", []),
       },
       game_club2: {
-        "game-club": getFclub2.id,
+        "game-club": resultDataGame?.gameClub2ID,
         score: shotClub2,
         ball: resultDataGame?.totalPrice2,
         users: get(resultDataGame?.game_club, "1.users", []),
