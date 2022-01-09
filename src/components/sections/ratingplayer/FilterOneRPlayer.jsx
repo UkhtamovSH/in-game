@@ -9,7 +9,7 @@ import FilterBall from "./FilterBall";
 import { useState } from "react";
 import FilterDivision from "./FilterDivision";
 import FilterPosition from "./FilterPosition";
-import FilterCity from "./FilterCity";
+// import FilterCity from "./FilterCity";
 
 const FilterOneRPlayer = (props) => {
   const {
@@ -20,12 +20,13 @@ const FilterOneRPlayer = (props) => {
     setFilterBall,
     filterBall,
     filter,
+    countTab,
   } = props;
 
-  const [cities, setCities] = useState([]);
-  const [citiesAnother] = useState([]);
-  const [nextUrlCities, setNextUrlCities] = useState("");
-  const [searchCities, setSearchCities] = useState("");
+  // const [cities, setCities] = useState([]);
+  // const [citiesAnother] = useState([]);
+  // const [nextUrlCities, setNextUrlCities] = useState("");
+  // const [searchCities, setSearchCities] = useState("");
 
   const [modal, setModal] = useState(false);
   const [modalCount, setModalCount] = useState(null);
@@ -53,7 +54,7 @@ const FilterOneRPlayer = (props) => {
       {!modal ? (
         <>
           <AppMAIN>
-            <InputFormFlex>
+            {/* <InputFormFlex>
               <span
                 onClick={() => {
                   toggleModalCount(1);
@@ -67,13 +68,12 @@ const FilterOneRPlayer = (props) => {
                       return (
                         <span key={index}>
                           <span style={{ marginRight: "10px" }}>{name}</span>
-                          {/* <span onClick={() => backCityItem(id)}>x</span> */}
                         </span>
                       );
                     })
                   : "Город"}
               </span>
-            </InputFormFlex>
+            </InputFormFlex> */}
             <InputFormFlex>
               <span
                 onClick={() => {
@@ -100,6 +100,7 @@ const FilterOneRPlayer = (props) => {
               setTypingTimeOut={setTypingTimeOut}
               typingTimeOut={typingTimeOut}
               filter={filter}
+              countTab={countTab}
             />
             <InputFormFlex>
               <span
@@ -141,20 +142,25 @@ const FilterOneRPlayer = (props) => {
                 </AppHeaderFlex>
               </AppHeader>
               {modalCount === 1 ? (
-                <FilterCity
-                  toggleModalFilter={toggleModalFilter}
-                  setTypingTimeOut={setTypingTimeOut}
-                  getWorldPlayers={getWorldPlayers}
-                  typingTimeOut={typingTimeOut}
-                  filter={filter}
-                  cities={cities}
-                  setCities={setCities}
-                  nextUrlCities={nextUrlCities}
-                  setNextUrlCities={setNextUrlCities}
-                  searchCities={searchCities}
-                  setSearchCities={setSearchCities}
-                  // handleRemoveItem={handleRemoveItem}
-                />
+                <>
+                  {
+                    // <FilterCity
+                    //   toggleModalFilter={toggleModalFilter}
+                    //   setTypingTimeOut={setTypingTimeOut}
+                    //   getWorldPlayers={getWorldPlayers}
+                    //   typingTimeOut={typingTimeOut}
+                    //   filter={filter}
+                    //   cities={cities}
+                    //   setCities={setCities}
+                    //   nextUrlCities={nextUrlCities}
+                    //   setNextUrlCities={setNextUrlCities}
+                    //   searchCities={searchCities}
+                    //   setSearchCities={setSearchCities}
+                    //   countTab={countTab}
+                    //   // handleRemoveItem={handleRemoveItem}
+                    // />
+                  }
+                </>
               ) : modalCount === 2 ? (
                 ""
               ) : modalCount === 3 ? (
@@ -164,6 +170,7 @@ const FilterOneRPlayer = (props) => {
                   getWorldPlayers={getWorldPlayers}
                   typingTimeOut={typingTimeOut}
                   filter={filter}
+                  countTab={countTab}
                 />
               ) : modalCount === 4 ? (
                 <FilterPosition
@@ -172,6 +179,7 @@ const FilterOneRPlayer = (props) => {
                   getWorldPlayers={getWorldPlayers}
                   typingTimeOut={typingTimeOut}
                   filter={filter}
+                  countTab={countTab}
                 />
               ) : null}
             </>

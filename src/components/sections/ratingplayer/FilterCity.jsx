@@ -23,6 +23,8 @@ const FilterCity = (props) => {
     setNextUrlCities,
     searchCities,
     setSearchCities,
+    countTab,
+    getRegionPlayers,
     // handleRemoveItem,
   } = props;
 
@@ -87,6 +89,15 @@ const FilterCity = (props) => {
     let page = 1;
     let next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`;
     getWorldPlayers(page, next_url, {
+      ...filter,
+      cityy: [..._.get(filter, "cityy", selectedItems), id],
+    });
+  };
+
+  const handleFilterCity2 = (id) => {
+    let page = 1;
+    let next_url = `/api/v1/user-filter-list/?page=${page}&per_page=10`;
+    getRegionPlayers(page, next_url, {
       ...filter,
       cityy: [..._.get(filter, "cityy", selectedItems), id],
     });
@@ -160,7 +171,11 @@ const FilterCity = (props) => {
       <AppFooter>
         <button
           onClick={() => {
-            handleFilterCity();
+            countTab === 1
+              ? handleFilterCity()
+              : countTab === 2
+              ? handleFilterCity2()
+              : handleFilterCity();
             toggleModalFilter();
           }}
           className="appBtnGreen"

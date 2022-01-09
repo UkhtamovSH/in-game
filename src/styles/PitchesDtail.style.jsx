@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const StadionPage = styled.div`
   margin: 60px 0;
   .btnPozvonit {
+    z-index: 1;
     padding: 10px 10px;
     transform: translate(-50.09%, 0);
     position: fixed;

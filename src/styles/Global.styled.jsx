@@ -87,10 +87,6 @@ export const GlobalStyle = createGlobalStyle`
     
   .beforeAnimation22 {
     position: relative;
-    
-    /* background: linear-gradient( 
-      90deg, #000 0px, rgba(134,130,130,0.8) 67px, #000 121px );  */
-    
     &:before {
       content: "";
       width: 50px;
@@ -106,6 +102,24 @@ export const GlobalStyle = createGlobalStyle`
       );
       animation: ${animation22} .7s infinite ease-in-out;
     }}
+    
+    .beforeAnimation33 {
+      position: relative;
+      &:before {
+        content: "";
+        width: 50px;
+        height: 500px;
+        position: absolute;
+        left: -30px;
+        top: -100px;
+        transform: rotate(45deg);
+        background: linear-gradient(
+          90deg,
+          #000 -122px,
+          rgba(134, 130, 130, 0.8)
+        );
+        animation: ${animation22} .7s infinite ease-in-out;
+      }}
   
 /* Safari */
 @-webkit-keyframes spin {

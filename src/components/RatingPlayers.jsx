@@ -101,17 +101,10 @@ const RatingPlayers = () => {
   const [typingTimeOut, setTypingTimeOut] = useState(0);
   const [filter, setFilter] = useState({});
   const [countTab, setCountTab] = useState(1);
-  const params = useParams();
 
-  useEffect(() => {
-    getWorldPlayers();
-    getRegionPlayers();
-    window.scrollTo(0, 0);
-  }, [params.id]);
   const getWorldPlayers = (
     page = 1,
-    next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10` +
-      params.id,
+    next_url = `/api/v1/user-filter-list-mir/?page=${page}&per_page=10`,
     filters = {}
   ) => {
     if (page === 1) {
@@ -158,13 +151,35 @@ const RatingPlayers = () => {
 
   const getRegionPlayers = (
     page = 1,
-    next_url = `/api/v1/user-filter-list/?page=${page}&per_page=10`
+    next_url = `/api/v1/user-filter-list/?page=${page}&per_page=10`,
+    filters = {}
   ) => {
     if (page === 1) {
       setPreLoading(true);
     }
+
+    let c = "";
+    let b = "";
+    let p = "";
+    let d = "";
+    if (get(filters, "cityy", []).length) {
+      c = "";
+      get(filters, "cityy", []).forEach((item) => {
+        c += "&city[]=" + item;
+      });
+    }
+    if (filters.ball) {
+      b = "&ball=" + filters.ball;
+    }
+    if (filters.pos) {
+      p = "&position=" + filters.pos;
+    }
+    if (filters.divisionn) {
+      d = "&division=" + filters.divisionn;
+    }
+    setFilter(filters);
     GetAuthInstance()
-      .get(next_url)
+      .get(next_url + b + p + d + c)
       .then((res) => {
         if (res.status === 200) {
           const result =
@@ -183,13 +198,19 @@ const RatingPlayers = () => {
 
   const clickCountTab = (i) => {
     setCountTab(i);
-    getRegionPlayers();
-    getWorldPlayers();
+    // getRegionPlayers();
+    // getWorldPlayers();
   };
 
   const toggleModal = () => {
     setModal(!modal);
   };
+
+  useEffect(() => {
+    getWorldPlayers();
+    getRegionPlayers();
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -389,9 +410,17 @@ const RatingPlayers = () => {
                   setTypingTimeOut={setTypingTimeOut}
                   typingTimeOut={typingTimeOut}
                   filter={filter}
+                  countTab={countTab}
                 />
               ) : countTab === 2 ? (
-                <FilterTwoRPlayer />
+                <FilterTwoRPlayer
+                  getRegionPlayers={getRegionPlayers}
+                  toggleModal={toggleModal}
+                  setTypingTimeOut={setTypingTimeOut}
+                  typingTimeOut={typingTimeOut}
+                  filter={filter}
+                  countTab={countTab}
+                />
               ) : null}
             </>
           ) : null}

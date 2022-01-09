@@ -13,6 +13,8 @@ const FilterPosition = (props) => {
     getWorldPlayers,
     typingTimeOut,
     filter,
+    getRegionPlayers,
+    countTab,
   } = props;
 
   const [playerPosition, setPlayerPosition] = useState([]);
@@ -45,6 +47,21 @@ const FilterPosition = (props) => {
       clearTimeout(typingTimeOut);
     }
   };
+
+  const handleFilterPosition2 = (id) => {
+    let page = 1;
+    let next_url = `/api/v1/user-filter-list/?page=${page}&per_page=10`;
+    setTypingTimeOut(
+      setTimeout(() => {
+        getRegionPlayers(page, next_url, { ...filter, pos: id });
+      }, 500)
+    );
+
+    if (typingTimeOut) {
+      clearTimeout(typingTimeOut);
+    }
+  };
+
   return (
     <>
       <AppMAIN>
@@ -56,7 +73,11 @@ const FilterPosition = (props) => {
                   <RadioInputFlex
                     key={index}
                     onClick={() => {
-                      handleFilterPosition(id);
+                      countTab === 1
+                        ? handleFilterPosition(id)
+                        : countTab === 2
+                        ? handleFilterPosition2(id)
+                        : handleFilterPosition(id);
                       toggleModalFilter();
                     }}
                   >

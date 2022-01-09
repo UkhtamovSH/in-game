@@ -12,6 +12,8 @@ const FilterDivision = (props) => {
     typingTimeOut,
     setTypingTimeOut,
     getWorldPlayers,
+    getRegionPlayers,
+    countTab,
   } = props;
 
   const [divisions, setDivisions] = useState([]);
@@ -41,6 +43,20 @@ const FilterDivision = (props) => {
     }
   };
 
+  const handleFilterDivision2 = (id) => {
+    let page = 1;
+    let next_url = `/api/v1/user-filter-list/?page=${page}&per_page=10`;
+    setTypingTimeOut(
+      setTimeout(() => {
+        getRegionPlayers(page, next_url, { ...filter, divisionn: id });
+      }, 500)
+    );
+
+    if (typingTimeOut) {
+      clearTimeout(typingTimeOut);
+    }
+  };
+
   useEffect(() => {
     getDivision();
   }, []);
@@ -56,7 +72,11 @@ const FilterDivision = (props) => {
                   <RadioInputFlex
                     key={index}
                     onClick={() => {
-                      handleFilterDivision(id);
+                      countTab === 1
+                        ? handleFilterDivision(id)
+                        : countTab === 2
+                        ? handleFilterDivision2(id)
+                        : handleFilterDivision(id);
                       toggleModalFilter();
                     }}
                   >
