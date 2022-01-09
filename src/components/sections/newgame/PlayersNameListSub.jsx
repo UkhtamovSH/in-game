@@ -44,9 +44,7 @@ const PlayersNameListSub = (props) => {
             </div>
             <div className="nameDiv">
               <p className="text1">
-                {full_name !== null
-                  ? full_name.split(" ")[0]
-                  : "Анонимный игрок"}
+                {full_name !== null ? full_name : "Анонимный игрок"}
               </p>
               <div className="text22Flex">
                 <p className="text22">

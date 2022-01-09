@@ -60,7 +60,7 @@ const FilterPosition = (props) => {
                       toggleModalFilter();
                     }}
                   >
-                    <div className="gg" htmlFor={id}>
+                    <div className="" htmlFor={id}>
                       <span>{name}</span>
                     </div>
                     {id === filter.pos ? (

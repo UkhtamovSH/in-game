@@ -97,19 +97,11 @@ const Players = () => {
   const [nextUrlWPlayers, setNextUrlWPlayers] = useState("");
   const [preLoading, setPreLoading] = useState(false);
   // const params = useParams();
-
   const [countTab, setCountTab] = useState(1);
 
   const clickCountTab = (i) => {
     setCountTab(i);
   };
-
-  useEffect(() => {
-    if (countTab === 2) {
-      getWorldPlayers();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [countTab]);
 
   const getWorldPlayers = (
     page = 1,
@@ -136,6 +128,10 @@ const Players = () => {
       })
       .finally(() => setPreLoading(false));
   };
+
+  useEffect(() => {
+    getWorldPlayers();
+  }, []);
   return (
     <>
       <AppHeader>
@@ -176,90 +172,92 @@ const Players = () => {
           padding: "0 15px",
         }}
       >
-        {preLoading ? (
-          <SRatingPlayerContainer>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => {
-              return (
-                <div className="sRPayerFlexMain" key={index}>
-                  <div className="sRPayerFlexSub1">
-                    <div className="sRPayerFlexSub1Flex">
-                      <div className="Sub1Round beforeAnimation" />
-                      <div className="Sub1Round2 beforeAnimation" />
-                      <div className="">
-                        <div className="Sub1Round2Right1 beforeAnimation" />
-                        <div className="Sub1Round2Right2 beforeAnimation" />
-                        <div className="Sub1Round2Right2 beforeAnimation" />
+        <div>
+          {countTab === 1 ? (
+            <>
+              <PlayerMap />
+            </>
+          ) : countTab === 2 ? (
+            <>
+              {preLoading ? (
+                <SRatingPlayerContainer>
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => {
+                    return (
+                      <div className="sRPayerFlexMain" key={index}>
+                        <div className="sRPayerFlexSub1">
+                          <div className="sRPayerFlexSub1Flex">
+                            <div className="Sub1Round beforeAnimation" />
+                            <div className="Sub1Round2 beforeAnimation" />
+                            <div className="">
+                              <div className="Sub1Round2Right1 beforeAnimation" />
+                              <div className="Sub1Round2Right2 beforeAnimation" />
+                              <div className="Sub1Round2Right2 beforeAnimation" />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="sRPayerFlexSub2">
+                          <div className="sRPayerFlexSub2Flex">
+                            <div className="Sub2Main">
+                              <div className="Sub2 beforeAnimation" />
+                              <div className="Sub2 beforeAnimation" />
+                            </div>
+                            <div className="Sub22Main">
+                              <div className="Sub2 beforeAnimation" />
+                              <div className="Sub2 beforeAnimation" />
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="sRPayerFlexSub2">
-                    <div className="sRPayerFlexSub2Flex">
-                      <div className="Sub2Main">
-                        <div className="Sub2 beforeAnimation" />
-                        <div className="Sub2 beforeAnimation" />
-                      </div>
-                      <div className="Sub22Main">
-                        <div className="Sub2 beforeAnimation" />
-                        <div className="Sub2 beforeAnimation" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-            <StylesHidden />
-          </SRatingPlayerContainer>
-        ) : (
-          <div>
-            {countTab === 1 ? (
-              <>
-                <PlayerMap />
-              </>
-            ) : countTab === 2 ? (
-              <InfiniteScroll
-                dataLength={worldPlayerLists.length}
-                next={() => {
-                  getWorldPlayers(2, nextUrlWPlayers);
-                }}
-                hasMore={nextUrlWPlayers ? true : false}
-                loader={
-                  <p
-                    style={{
-                      textAlign: "center",
-                      transform: "translate(0,10px)",
-                    }}
-                  >
-                    Loading...
-                  </p>
-                }
-              >
-                <>
-                  {worldPlayerLists
-                    ? worldPlayerLists.map((wpList, index) => {
-                        let cityN = get(wpList, "city.name", "");
-                        return (
-                          <ListRatingPlayer
-                            position={wpList.position}
-                            full_name={wpList.full_name}
-                            user_id={wpList.id}
-                            id={index + 1}
-                            key={index}
-                            age={wpList.age}
-                            avatar={wpList.avatar}
-                            ball={wpList.ball}
-                            city={cityN.split(" ")[0]}
-                            victory={wpList.victory}
-                          />
-                        );
-                      })
-                    : null}
-                </>
-              </InfiniteScroll>
-            ) : (
-              ""
-            )}
-          </div>
-        )}
+                    );
+                  })}
+                  <StylesHidden />
+                </SRatingPlayerContainer>
+              ) : (
+                <InfiniteScroll
+                  dataLength={worldPlayerLists.length}
+                  next={() => {
+                    getWorldPlayers(2, nextUrlWPlayers);
+                  }}
+                  hasMore={nextUrlWPlayers ? true : false}
+                  loader={
+                    <p
+                      style={{
+                        textAlign: "center",
+                        transform: "translate(0,10px)",
+                      }}
+                    >
+                      Loading...
+                    </p>
+                  }
+                >
+                  <>
+                    {worldPlayerLists
+                      ? worldPlayerLists.map((wpList, index) => {
+                          let cityN = get(wpList, "city.name", "");
+                          return (
+                            <ListRatingPlayer
+                              position={wpList.position}
+                              full_name={wpList.full_name}
+                              user_id={wpList.id}
+                              id={index + 1}
+                              key={index}
+                              age={wpList.age}
+                              avatar={wpList.avatar}
+                              ball={wpList.ball}
+                              city={cityN.split(" ")[0]}
+                              victory={wpList.victory}
+                            />
+                          );
+                        })
+                      : null}
+                  </>
+                </InfiniteScroll>
+              )}
+            </>
+          ) : (
+            ""
+          )}
+        </div>
       </AppMAIN>
       <AppFooter2>
         <Navigation />

@@ -8,34 +8,21 @@ import {
   AppMAIN,
 } from "../styles/ContainerFluid.styled";
 import { GetAuthInstance } from "../helpers/httpClient";
-import {
-  GamePlayer,
-  GamePlayerCont,
-  GamePlayerContain,
-  GamePlayerIcon,
-  GamePlayerImg,
-  GamePlayerName,
-  GamePlayerRating,
-  GamePlayerRegion,
-} from "../styles/GamePlayerRating";
+import { GamePlayerRating } from "../styles/GamePlayerRating";
 import _, { get } from "lodash";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { PlayersRatingMain } from "../styles/PlayersRatingStyle";
+import DefaultImg from "../assets/Img/default.png";
 
 const GamePlayerReting = () => {
   const [data, setData] = useState([]);
   const [goal, setGoal] = useState([]);
   const params = useParams();
-  const [setNextUrl] = useState("");
+  const [nextUrl, setNextUrl] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getData();
-    getGoal();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.id]);
 
   const getData = () => {
     if (page === 1) {
@@ -68,7 +55,10 @@ const GamePlayerReting = () => {
       .catch((err) => {});
   };
 
-  // const goalID = _.find(goal, "id");
+  useEffect(() => {
+    getData();
+    getGoal();
+  }, [params.id]);
 
   return (
     <>
@@ -82,7 +72,7 @@ const GamePlayerReting = () => {
           <div>
             {goal.map((item, index) => (
               <div key={index}>
-                {params.id === item.id ? (
+                {params.id == item.id ? (
                   <>
                     {_.get(item.GameClub[0], "football_club.name", 0)}{" "}
                     {_.get(item.GameClub[0], "goal")}:
@@ -106,35 +96,55 @@ const GamePlayerReting = () => {
           <h3>Loading......</h3>
         ) : (
           <InfiniteScroll
-            dataLength={data.length} //This is important field to render the next data
-            next={getData}
+            dataLength={data.length}
+            next={() => {
+              getData(2, nextUrl);
+            }}
             hasMore={hasMore}
             loader={<h4>Loading...</h4>}
           >
             {data.map((item, index) => (
-              <GamePlayerContain key={index}>
-                <Link to={`/rating/${params.id}/${get(item, "user.id")}`}>
-                  <GamePlayer>
-                    <GamePlayerCont>
-                      <GamePlayerImg>
-                        <img src={_.get(item, "user.avatar")} alt="" />
-                        <p>
-                          {item.position === 1
-                            ? "G"
-                            : item.position === 2
-                            ? "D"
-                            : item.position === 3
-                            ? "M"
-                            : item.position === 4
-                            ? "F"
-                            : ""}
+              <Link
+                to={`/rating/${params.id}/${get(item, "user.id")}`}
+                key={index}
+                style={{
+                  textDecoration: "none",
+                }}
+              >
+                <PlayersRatingMain>
+                  <div className="">
+                    <div className="playersRatingSubFlex">
+                      <div className="userImg">
+                        <img
+                          src={
+                            _.get(item, "user.avatar")
+                              ? _.get(item, "user.avatar")
+                              : DefaultImg
+                          }
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = DefaultImg;
+                          }}
+                          alt=""
+                        />
+                        {item.position === 1 ? (
+                          <p className="posName">G</p>
+                        ) : item.position === 2 ? (
+                          <p className="posName">D</p>
+                        ) : item.position === 4 ? (
+                          <p className="posName">F</p>
+                        ) : item.position === 3 ? (
+                          <p className="posName">M</p>
+                        ) : null}
+                      </div>
+                      <div className="nameDiv">
+                        <p className="text1">
+                          {_.get(item, "user.full_name") !== null
+                            ? _.get(item, "user.full_name")
+                            : "Анонимный игрок"}
                         </p>
-                      </GamePlayerImg>
-                      <GamePlayerName>
-                        <h3>{_.get(item, "user.full_name")}</h3>
-                        <GamePlayerRegion>
-                          <p>
-                            {" "}
+                        <div className="text22Flex">
+                          <p className="text22">
                             {item.user.age === 1 ||
                             item.user.age === 21 ||
                             item.user.age === 31 ||
@@ -175,17 +185,26 @@ const GamePlayerReting = () => {
                               ? ""
                               : ""}
                           </p>
-                          {/* <span></span> */}
-                          <p>{_.get(item, "user.city")}</p>
-                        </GamePlayerRegion>
-                      </GamePlayerName>
-                    </GamePlayerCont>
-                    <GamePlayerIcon>
-                      <img src={ArrowRight2} alt="" />
-                    </GamePlayerIcon>
-                  </GamePlayer>
-                </Link>
-              </GamePlayerContain>
+                          {item.user.age === 0 ||
+                          _.get(item, "user.city") === "" ? (
+                            ""
+                          ) : (
+                            <span className="dot" />
+                          )}
+                          <p className="text22">{_.get(item, "user.city")}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="">
+                    <div className="countFlex">
+                      <div className="">
+                        <img src={ArrowRight2} alt="" />
+                      </div>
+                    </div>
+                  </div>
+                </PlayersRatingMain>
+              </Link>
             ))}
           </InfiniteScroll>
         )}

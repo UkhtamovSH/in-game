@@ -17,7 +17,7 @@ const Modal = (props) => {
           <div className="" />
         </AppHeaderFlex>
       </AppHeader>
-      <AppMAIN>{props.children}</AppMAIN>
+      <AppMAIN style={{ marginBottom: "0" }}>{props.children}</AppMAIN>
     </>
   );
 };

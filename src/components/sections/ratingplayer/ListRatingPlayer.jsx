@@ -1,48 +1,57 @@
 import { PlayersRatingMain } from "../../../styles/PlayersRatingStyle";
 import { Link } from "react-router-dom";
+import DefaultImg from "../../../assets/Img/default.png";
 
 const ListRatingPlayer = (props) => {
   const { id, user_id, age, avatar, ball, city, victory, position, full_name } =
     props;
   return (
     <>
-      <PlayersRatingMain>
-        <div className="">
-          <div className="playersRatingSubFlex">
-            <p
-              className={
-                id === 1
-                  ? "listID1"
-                  : id === 2
-                  ? "listID2"
-                  : id === 3
-                  ? "listID3"
-                  : "listID4"
-              }
-            >
-              {id}
-            </p>
-            <div className="userImg">
-              <img src={avatar} alt="" />
-              {position === 1 ? (
-                <p className="posName">G</p>
-              ) : position === 2 ? (
-                <p className="posName">D</p>
-              ) : position === 4 ? (
-                <p className="posName">F</p>
-              ) : position === 3 ? (
-                <p className="posName">M</p>
-              ) : null}
-            </div>
-            <div className="nameDiv">
-              <Link
-                to={"/player-page/" + user_id}
-                style={{
-                  textDecoration: "none",
-                  color: "#fff",
-                }}
+      <Link
+        to={"/player-page/" + user_id}
+        style={{
+          textDecoration: "none",
+        }}
+      >
+        <PlayersRatingMain>
+          <div className="">
+            <div className="playersRatingSubFlex">
+              <p
+                className={
+                  id === 1
+                    ? "listID1"
+                    : id === 2
+                    ? "listID2"
+                    : id === 3
+                    ? "listID3"
+                    : "listID4"
+                }
               >
-                <p className="text1">{full_name}</p>
+                {id}
+              </p>
+              <div className="userImg">
+                <img
+                  src={avatar ? avatar : DefaultImg}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = DefaultImg;
+                  }}
+                  alt=""
+                />
+                {position === 1 ? (
+                  <p className="posName">G</p>
+                ) : position === 2 ? (
+                  <p className="posName">D</p>
+                ) : position === 4 ? (
+                  <p className="posName">F</p>
+                ) : position === 3 ? (
+                  <p className="posName">M</p>
+                ) : null}
+              </div>
+              <div className="nameDiv">
+                <p className="text1">
+                  {full_name !== null ? full_name : "Анонимный игрок"}
+                </p>
                 <div className="text22Flex">
                   <p className="text22">
                     {age === 1 ||
@@ -88,23 +97,23 @@ const ListRatingPlayer = (props) => {
                   {age === 0 ? "" : <span className="dot" />}
                   <p className="text22">{city}</p>
                 </div>
-              </Link>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="">
-          <div className="countFlex">
-            <div className="">
-              <p className="text1">{victory}%</p>
-              <p className="text2">Побед</p>
-            </div>
-            <div className="">
-              <p className="text1">{ball}</p>
-              <p className="text2">Очков</p>
+          <div className="">
+            <div className="countFlex">
+              <div className="">
+                <p className="text1">{victory}%</p>
+                <p className="text2">Побед</p>
+              </div>
+              <div className="">
+                <p className="text1">{ball}</p>
+                <p className="text2">Очков</p>
+              </div>
             </div>
           </div>
-        </div>
-      </PlayersRatingMain>
+        </PlayersRatingMain>
+      </Link>
     </>
   );
 };

@@ -8,6 +8,7 @@ import {
 import SearchLine from "../../../assets/svg/SearchLine.svg";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { map } from "lodash";
 
 const SelectProfileCities = (props) => {
   const {
@@ -70,7 +71,6 @@ const SelectProfileCities = (props) => {
 
   useEffect(() => {
     getCities();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -108,27 +108,29 @@ const SelectProfileCities = (props) => {
         }
       >
         <RadioInputFlexTop>
-          {cities
-            ? cities.map((c, index) => {
+          {cities.length > 0
+            ? map(cities, (c, index) => {
                 const { id, name } = c;
                 return (
-                  <RadioInputFlex key={index}>
-                    <label className="gg" htmlFor={id}>
-                      <span>{name}</span>
-                    </label>
-                    <input
-                      type="radio"
-                      id={id}
-                      name="city"
-                      onChange={() => {
-                        setUserProfile({
-                          ...userProfile,
-                          city: c,
-                        });
-                        toggleModal();
-                      }}
-                      checked={id === city?.id ? "checked" : ""}
-                    />
+                  <RadioInputFlex
+                    key={index}
+                    onClick={() => {
+                      setUserProfile({
+                        ...userProfile,
+                        city: c,
+                      });
+                      toggleModal();
+                    }}
+                  >
+                    <div className="" htmlFor={id}>
+                      <div>{name}</div>
+                    </div>
+
+                    {id === city?.id ? (
+                      <div className="divRadioInput2" />
+                    ) : (
+                      <div className="divRadioInput" />
+                    )}
                   </RadioInputFlex>
                 );
               })

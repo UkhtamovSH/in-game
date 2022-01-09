@@ -4,6 +4,7 @@ import {
   RadioInputFlexTop,
 } from "../../../styles/Modal.styled";
 import { useEffect } from "react";
+import { map } from "lodash";
 
 const SelectProfilePositions = (props) => {
   const {
@@ -28,33 +29,34 @@ const SelectProfilePositions = (props) => {
 
   useEffect(() => {
     getPosition();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <RadioInputFlexTop>
-        {playerPosition
-          ? playerPosition.map((playerPos, index) => {
+        {playerPosition.length > 0
+          ? map(playerPosition, (playerPos, index) => {
               const { id, name } = playerPos;
               return (
-                <RadioInputFlex key={index}>
-                  <label className="gg" htmlFor={id}>
-                    <span>{name}</span>
-                  </label>
-                  <input
-                    type="radio"
-                    id={id}
-                    name="position"
-                    onChange={() => {
-                      setUserProfile({
-                        ...userProfile,
-                        position: id,
-                      });
-                      toggleModal();
-                    }}
-                    checked={id === position ? "checked" : ""}
-                  />
+                <RadioInputFlex
+                  key={index}
+                  onClick={() => {
+                    setUserProfile({
+                      ...userProfile,
+                      position: id,
+                    });
+                    toggleModal();
+                  }}
+                >
+                  <div className="" htmlFor={id}>
+                    <div>{name}</div>
+                  </div>
+
+                  {id === position ? (
+                    <div className="divRadioInput2" />
+                  ) : (
+                    <div className="divRadioInput" />
+                  )}
                 </RadioInputFlex>
               );
             })

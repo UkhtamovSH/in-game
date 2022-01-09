@@ -1,14 +1,13 @@
 import {
   AppHeader,
   AppHeaderFlex,
-  AppHeaderFlex2PRating,
+  // AppHeaderFlex2PRating,
   AppMAIN,
 } from "../../../styles/ContainerFluid.styled";
 import ArrowRight from "../../../assets/svg/Arrow - Right.svg";
 import styled from "styled-components";
-import { InputFormFlex } from "../../../styles/Global.styled";
-import SearchLine from "../../../assets/svg/SearchLine.svg";
-import { useState } from "react";
+// import { InputFormFlex } from "../../../styles/Global.styled";
+// import SearchLine from "../../../assets/svg/SearchLine.svg";
 
 const MList = styled.div`
   margin: 0;
@@ -27,15 +26,15 @@ const MList = styled.div`
 const MinutesList = (props) => {
   const { toggleModal, munitesList, takeMinute } = props;
   // const [anotherFilterMinute, setAnotherFilterMinute] = useState([]);
-  const [filterMinutes, setFilterMinutes] = useState("");
+  // const [filterMinutes, setFilterMinutes] = useState("");
 
-  const sFilterMinutes = (e) => {
-    setFilterMinutes(e.target.value);
-  };
+  // const sFilterMinutes = (e) => {
+  //   setFilterMinutes(e.target.value);
+  // };
 
-  const filtered = !filterMinutes
-    ? munitesList
-    : munitesList.filter((minute) => minute.includes(filterMinutes));
+  // const filtered = !filterMinutes
+  //   ? munitesList
+  //   : munitesList.filter((minute) => minute.includes(filterMinutes));
 
   return (
     <>
@@ -52,7 +51,7 @@ const MinutesList = (props) => {
           </div>
           <div className="" />
         </AppHeaderFlex>
-        <AppHeaderFlex2PRating>
+        {/* <AppHeaderFlex2PRating>
           <InputFormFlex
             style={{ marginBottom: "5px!important", height: "20px" }}
           >
@@ -69,14 +68,14 @@ const MinutesList = (props) => {
             />
             <span className="span2"></span>
           </InputFormFlex>
-        </AppHeaderFlex2PRating>
+        </AppHeaderFlex2PRating> */}
       </AppHeader>
       <AppMAIN
         style={{
-          marginTop: "120px",
+          marginBottom: "0",
         }}
       >
-        {filtered.map((mL, index) => {
+        {munitesList.map((mL, index) => {
           const { name } = mL;
           return (
             <div key={index}>

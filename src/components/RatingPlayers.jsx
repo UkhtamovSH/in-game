@@ -107,7 +107,6 @@ const RatingPlayers = () => {
     getWorldPlayers();
     getRegionPlayers();
     window.scrollTo(0, 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
   const getWorldPlayers = (
     page = 1,

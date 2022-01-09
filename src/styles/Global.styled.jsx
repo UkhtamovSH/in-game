@@ -8,6 +8,15 @@ const animation = keyframes`
 		left: calc(100% + 150px);
 	}
 `;
+
+const animation22 = keyframes`
+	0% {
+		left: -350px;
+	}
+	100% {
+		left: calc(100% + 350px);
+	}
+`;
 export const GlobalStyle = createGlobalStyle`
   body{
     background: ${({ theme }) => theme.appColors.gray};    
@@ -73,6 +82,29 @@ export const GlobalStyle = createGlobalStyle`
         #000 150px
       );
       animation: ${animation} 0.7s infinite ease-in-out;
+    }}
+    
+    
+  .beforeAnimation22 {
+    position: relative;
+    
+    /* background: linear-gradient( 
+      90deg, #000 0px, rgba(134,130,130,0.8) 67px, #000 121px );  */
+    
+    &:before {
+      content: "";
+      width: 50px;
+      height: 300px;
+      position: absolute;
+      left: -30px;
+      top: -100px;
+      transform: rotate(45deg);
+      background: linear-gradient(
+        90deg,
+        #000 -122px,
+        rgba(134, 130, 130, 0.8)
+      );
+      animation: ${animation22} .7s infinite ease-in-out;
     }}
   
 /* Safari */

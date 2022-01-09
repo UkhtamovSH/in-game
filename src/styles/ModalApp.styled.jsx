@@ -41,17 +41,51 @@ export const ModalWrapDiv = styled.div`
   .modalBtn {
     color: #1787e7;
     cursor: pointer;
-    border-top:0.5px solid #474747;
-    padding:15px 0px;
+    border-top: 0.5px solid #474747;
+    padding: 15px 0px;
   }
 `;
 export const ModalWrapper = styled.div`
   z-index: 999 !important;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
 `;
 
 export const ModalContainer = styled.div`
   width: 330px;
   height: 140px;
+  background-color: #fff;
+  border-radius: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  & p {
+    padding: 20px 20px 16px 20px;
+    font-size: 16px;
+    line-height: 150%;
+    text-align: center;
+    color: #121212;
+    border-bottom: 1px solid#DADADE;
+  }
+  & span {
+    color: #eb5757;
+    width: 100%;
+    /* margin-top:15px; */
+    cursor: pointer;
+    padding: 15px 0px;
+  }
+  img {
+    width: 114px;
+    margin: 0 auto;
+  }
+`;
+
+export const ModalContainer2 = styled.div`
+  width: 330px;
+  height: auto;
   background-color: #fff;
   border-radius: 16px;
   text-align: center;

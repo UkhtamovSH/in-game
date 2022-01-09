@@ -448,6 +448,8 @@ const ProfileEdit = () => {
                       userProfile={userProfile}
                       toggleModal={toggleModal}
                       football_club={football_club}
+                      preLoading={preLoading}
+                      setPreLoading={setPreLoading}
                     />
                   ) : modalCount === 2 ? (
                     <SelectProfilePositions
@@ -457,6 +459,8 @@ const ProfileEdit = () => {
                       toggleModal={toggleModal}
                       position={position}
                       setPlayerPosition={setPlayerPosition}
+                      preLoading={preLoading}
+                      setPreLoading={setPreLoading}
                     />
                   ) : modalCount === 3 ? (
                     <SelectProfileCities
@@ -472,6 +476,8 @@ const ProfileEdit = () => {
                       userProfile={userProfile}
                       toggleModal={toggleModal}
                       city={city}
+                      preLoading={preLoading}
+                      setPreLoading={setPreLoading}
                     />
                   ) : modalCount === 4 ? (
                     <SelectProfileRegions
@@ -488,6 +494,8 @@ const ProfileEdit = () => {
                       userProfile={userProfile}
                       toggleModal={toggleModal}
                       region={region}
+                      preLoading={preLoading}
+                      setPreLoading={setPreLoading}
                     />
                   ) : null}
                 </Modal>

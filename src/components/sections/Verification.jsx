@@ -28,7 +28,6 @@ const Verification = () => {
     if (issetToken()) {
       history("/home");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const timer = (

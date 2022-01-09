@@ -113,7 +113,7 @@ const GameOver = () => {
 
   const [teamOneMatchPlayer, setTeamOneMatchPlayer] = useState({});
   const [teamTwoMatchPlayer, setTeamTwoMatchPlayer] = useState({});
-  const [best_user, setBest_user] = useState([]);
+  // const [best_user, setBest_user] = useState([]);
 
   //////////////////////////////////////////////
 
@@ -290,7 +290,7 @@ const GameOver = () => {
 
     const gameOver = {
       game: getFinishGame?.game,
-      time: getFinishGame?.time,
+      time: Math.ceil(getFinishGame?.time / 60 / 1000),
       best_user: [
         teamOneMatchPlayer?.fBestPlayer.user,
         teamTwoMatchPlayer?.fBestPlayer.user,

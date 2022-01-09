@@ -23,7 +23,7 @@ export const HomeSwiperStyle = styled.div`
           }
         }
       }
-      width: 390px;
+      width: 320px;
     }
     .slick-list {
       margin: 0 0 0 -45px;
@@ -34,6 +34,10 @@ export const HomeSwiperStyle = styled.div`
             background-color: #252525;
             border-radius: 16px;
             margin: 0 20px;
+
+            @media only screen and (max-width: 576px) and (min-width: 320px) {
+              margin: 0 10px;
+            }
           }
         }
       }
@@ -49,9 +53,16 @@ export const HomeSwiperStyle = styled.div`
     padding: 10px;
     a {
       img {
+        margin: 0 4px;
         width: 90px;
         height: 60px;
         border: none !important;
+        object-fit: cover;
+
+        @media only screen and (max-width: 576px) and (min-width: 320px) {
+          width: 70px;
+          height: 70px;
+        }
       }
     }
   }
@@ -91,6 +102,13 @@ export const HomeSwiperStyle = styled.div`
     justify-content: center;
     align-items: center;
     margin: 0 10px !important;
+    @media only screen and (max-width: 576px) and (min-width: 320px) {
+      p {
+        font-weight: normal;
+        font-size: 10px !important;
+        text-align: center;
+      }
+    }
     img {
       width: 42px;
       height: 42px;
@@ -144,7 +162,6 @@ export const HomeSwiperStyle = styled.div`
           border: 1px solid;
           display: flex;
           align-items: center;
-          margin: 20px 8px 0 8px;
         }
       }
     }

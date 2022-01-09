@@ -6,13 +6,11 @@ export const PlayerAvatarDiv = styled.div`
   flex-direction: column;
   gap: 8px;
 `;
-export const AvatarImgDiv = styled.div`
- 
-`;
+export const AvatarImgDiv = styled.div``;
 export const AvatarWrapDiv = styled.div`
   display: flex;
   /* justify-content: space-between; */
-  gap:20px;
+  gap: 20px;
   align-items: center;
 `;
 
@@ -167,7 +165,7 @@ export const HomeTimeStyle = styled.div`
   display: flex;
   justify-content: space-between;
 
-    .firstTime {
+  .firstTime {
     width: 104px;
     height: 158px;
     background-color: ${({ theme }) => theme.appColors.whiteGray};

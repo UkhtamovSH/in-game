@@ -15,9 +15,10 @@ import {
   AutoSelectSave,
 } from "../../styles/Setting.styled";
 import { SwitchDiv } from "./Switch.styled";
-import ModalApp from "./ModalApp";
 import { GetAuthInstance } from "../../helpers/httpClient";
 import { get } from "lodash";
+import { PossibleModal } from "../../styles/NewGame.styled";
+import { StylesHidden } from "../../styles/Global.styled";
 
 const Setting = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -27,11 +28,11 @@ const Setting = () => {
   const [auto_roll, setAuto_roll] = useState(0);
   // const [updatedLists, setUpdatedLists] = useState([]);
 
-  isOpenModal
-    ? (document.body.style.overflow = "hidden")
-    : (document.body.style.overflow = "unset");
+  // isOpenModal
+  //   ? (document.body.style.overflow = "hidden")
+  //   : (document.body.style.overflow = "unset");
 
-  const [setData] = useState([]);
+  const [data, setData] = useState([]);
   const history = useNavigate();
 
   const handleSubmit = (e) => {
@@ -71,10 +72,16 @@ const Setting = () => {
       .catch((err) => {});
   };
 
+  const clickModal = () => setIsOpenModal(!isOpenModal);
+  const logOut = () => {
+    window.localStorage.clear();
+    history("/");
+  };
+
   useEffect(() => {
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <div>
       <AppHeader>
@@ -153,28 +160,8 @@ const Setting = () => {
               </AutoSelectPlayer>
             </Link>
             <AutoSelectPlayerAccount>
-              <span onClick={() => setIsOpenModal(true)}>Выйти с аккаунта</span>
+              <span onClick={clickModal}>Выйти с аккаунта</span>
             </AutoSelectPlayerAccount>
-
-            <ModalApp
-              style={{
-                position: "absolute",
-                bottom: "20px",
-                left: "50%",
-                transform: "translate(-50%,-50%)",
-              }}
-              isOpenProps={isOpenModal}
-              onRequestCloseProps={() => setIsOpenModal(false)}
-              setIsOpenModalProps={() => setIsOpenModal(false)}
-              closeTimeoutMS={500}
-              spanText="Вы действительно хотите выйти со своего аккаунта?"
-              leaveApp="Да, выйти"
-              cancle="Отмена"
-              cancel
-              ModalImg
-
-              // spanText
-            ></ModalApp>
           </AutoSelectPlayerWrapp>
         </AppMAIN>
         <AppFooter>
@@ -184,6 +171,25 @@ const Setting = () => {
             </button>
           </AutoSelectSave>
         </AppFooter>
+        {isOpenModal ? (
+          <PossibleModal>
+            <div className="">
+              <div className="possibleModalSub">
+                <div className="sub1">
+                  <p>Вы действительно хотите выйти со своего аккаунта?</p>
+                </div>
+                <div className="sub3">
+                  <div className="sub2BtnGroup">
+                    <div onClick={logOut}>Да, выйти</div>
+                    <div style={{ width: "0px", padding: "0" }} />
+                    <div onClick={clickModal}>Отменить</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <StylesHidden />
+          </PossibleModal>
+        ) : null}
       </form>
     </div>
   );

@@ -16,7 +16,6 @@ const OnBoardingFirstStyle = () => {
     if (issetToken()) {
       history("/home");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

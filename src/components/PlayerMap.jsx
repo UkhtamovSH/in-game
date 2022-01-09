@@ -1,40 +1,61 @@
-import React from "react";
-import { YMaps, Map, Placemark } from "react-yandex-maps";
+import { map } from "lodash";
+import React, { useEffect, useState } from "react";
+import { YMaps, Map, Placemark, ZoomControl } from "react-yandex-maps";
+import { GetAuthInstance } from "../helpers/httpClient";
 import { GoogleMapDiv } from "../styles/PlayerMap.styled";
+import DefaultImg from "../assets/Img/default.png";
 
 const PlayerMap = () => {
+  const [latLonPlayers, setLatLonPlayers] = useState([]);
+
+  const getLanLon = () => {
+    GetAuthInstance()
+      .get("/api/v1/user-filter-list-mir/?per_page=10000")
+      .then((res) => {
+        if (res.status === 200) {
+          setLatLonPlayers([...latLonPlayers, ...res.data.results]);
+        }
+      })
+      .catch((err) => {
+        setLatLonPlayers([]);
+      });
+  };
+
+  useEffect(() => {
+    getLanLon();
+  }, []);
+
   return (
     <GoogleMapDiv>
       <YMaps className="Ymaps">
         <Map
           defaultState={{
             center: [41.329758, 69.259521],
-            zoom: 13,
+            zoom: 9,
           }}
           style={{ width: "100% !important", height: "100vh" }}
         >
-          <Placemark
-            onClick={() => alert("Hello!!!")}
-            geometry={[41.329758, 69.259521]}
-            properties={{
-              iconContent:
-                '<img src="http://img-fotki.yandex.ru/get/6114/82599242.2d6/0_88b97_ec425cf5_M" width="20px", border-radius="50px"/>',
-            }}
-            options={{
-              preset: "islands##yellowStretchyIcon",
-              iconColor: '#000000',
-              // Disabling the close balloon button.
-              balloonCloseButton: false,
-              // The balloon will open and close when the placemark icon is clicked.
-              hideIconOnBalloonOpen: false,
-            }}
-          />
-          {/* <Placemark geometry={[41.329758, 69.249581]} />
-          <Placemark geometry={[41.319758, 69.239581]} />
-          <Placemark geometry={[41.299758, 69.289581]} />
-          <Placemark geometry={[41.329758, 69.249581]} />
-          <Placemark geometry={[41.319758, 69.239581]} />
-          <Placemark geometry={[41.299758, 69.289581]} /> */}
+          {latLonPlayers.length > 0
+            ? map(latLonPlayers, (latLonPlayer, index) => {
+                const { latitude, longitude, avatar } = latLonPlayer;
+                return (
+                  <Placemark
+                    key={index}
+                    geometry={[latitude, longitude]}
+                    options={{
+                      iconLayout: "default#image",
+                      iconImageHref: avatar ? avatar : DefaultImg,
+                      iconImageSize: [30, 30],
+                      iconImageOffset: [-15, -15],
+                      iconImageRadius: [15, 15],
+                      draggable: false,
+                    }}
+                  />
+                );
+              })
+            : null}
+          <ZoomControl />
+          {/* <Placemark geometry={[41.299758, 69.289581]} />  */}
         </Map>
       </YMaps>
     </GoogleMapDiv>

@@ -9,6 +9,7 @@ import SearchLine from "../../../assets/svg/SearchLine.svg";
 import DefaultClub from "../../../assets/Img/defaultClub.png";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { map } from "lodash";
 
 const SelectProfileClubs = (props) => {
   const {
@@ -69,7 +70,6 @@ const SelectProfileClubs = (props) => {
 
   useEffect(() => {
     getClubs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -108,12 +108,21 @@ const SelectProfileClubs = (props) => {
         }
       >
         <RadioInputFlexTop>
-          {clubs
-            ? clubs.map((club, index) => {
+          {clubs.length > 0
+            ? map(clubs, (club, index) => {
                 const { id, name, image } = club;
                 return (
-                  <RadioInputFlex key={index}>
-                    <label className="gg" htmlFor={id}>
+                  <RadioInputFlex
+                    key={index}
+                    onClick={() => {
+                      setUserProfile({
+                        ...userProfile,
+                        football_club: club,
+                      });
+                      toggleModal();
+                    }}
+                  >
+                    <div className="" htmlFor={id}>
                       <img
                         src={
                           image
@@ -128,27 +137,22 @@ const SelectProfileClubs = (props) => {
                         }}
                         alt=""
                       />
-                      <span
+                      <div
                         style={{
                           marginLeft: "8px",
+                          transform: "translate(0,-10px)",
+                          display: "inline-block",
                         }}
                       >
                         {name}
-                      </span>
-                    </label>
-                    <input
-                      type="radio"
-                      id={id}
-                      name="football_club"
-                      onChange={() => {
-                        setUserProfile({
-                          ...userProfile,
-                          football_club: club,
-                        });
-                        toggleModal();
-                      }}
-                      checked={id === football_club?.id ? "checked" : ""}
-                    />
+                      </div>
+                    </div>
+
+                    {id === football_club?.id ? (
+                      <div className="divRadioInput2" />
+                    ) : (
+                      <div className="divRadioInput" />
+                    )}
                   </RadioInputFlex>
                 );
               })

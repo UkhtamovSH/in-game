@@ -16,8 +16,6 @@ import ClubImg1 from "../assets/svg/clubImg1.svg";
 import ClubImg2 from "../assets/svg/clubImg2.svg";
 import { GetAuthInstance } from "../helpers/httpClient";
 import { get } from "lodash";
-import { useDispatch } from "react-redux";
-import { setMinutes } from "../redux/actions";
 import { PlayersRatingMain } from "../styles/PlayersRatingStyle";
 import { StylesHidden } from "../styles/Global.styled";
 import { PossibleModal } from "../styles/NewGame.styled";
@@ -119,7 +117,7 @@ const Game = () => {
       checkpoints={[
         {
           time: 0,
-          callback: () => console.log("gg"),
+          callback: () => console.log(""),
         },
       ]}
     >
@@ -214,22 +212,6 @@ const Game = () => {
   const getFclub2 = get(fClub2, "0", []);
 
   const handleFinish = () => {
-    const getClub1 = get(resultDataGame?.game_club, "0", []);
-    const fClub1 = clubs.filter((item) => item.id === getClub1.club);
-    const getFclub1 = get(fClub1, "0", []);
-    // let uID1 = [];
-    // get(resultDataGame?.game_club, "0.users", []).forEach((item) => {
-    //   uID1 = [...uID1, item.user];
-    // });
-
-    const getClub2 = get(resultDataGame?.game_club, "1", []);
-    const fClub2 = clubs.filter((item) => item.id === getClub2.club);
-    const getFclub2 = get(fClub2, "0", []);
-    // let uID2 = [];
-    // get(resultDataGame?.game_club, "1.users", []).forEach((item) => {
-    //   uID2 = [...uID2, item.user];
-    // });
-
     const finishGame = {
       game: resultDataGame?.id,
       time: parseInt(gameRef.current),

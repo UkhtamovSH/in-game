@@ -143,7 +143,6 @@ const TeamsNameList = (props) => {
 
   useEffect(() => {
     getClubs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -224,7 +223,7 @@ const TeamsNameList = (props) => {
                           );
                         }}
                       >
-                        <div className="gg" htmlFor={id}>
+                        <div className="" htmlFor={id}>
                           <img
                             src={
                               image

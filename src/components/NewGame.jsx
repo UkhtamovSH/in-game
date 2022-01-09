@@ -306,14 +306,12 @@ const NewGame = () => {
 
   useEffect(() => {
     let ballSum = 0;
-    // eslint-disable-next-line array-callback-return
     oneUsers.map((i) => {
       ballSum += i.ball;
       setTotalPrice(ballSum);
     });
 
     let ballSum2 = 0;
-    // eslint-disable-next-line array-callback-return
     twoUsers.map((i) => {
       ballSum2 += i.ball;
       setTotalPrice2(ballSum2);
@@ -321,7 +319,6 @@ const NewGame = () => {
   });
   useEffect(() => {
     getPlayers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -472,8 +469,20 @@ const NewGame = () => {
                                   findPossiblePlayerPos(2, 1);
                                 }}
                               >
-                                <img src={img} className="divIMG" alt="" />
-                                <p>{name.split(" ")[0]}</p>
+                                <img
+                                  src={img ? img : DefaultImg}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = DefaultImg;
+                                  }}
+                                  className="divIMG"
+                                  alt=""
+                                />
+                                <p>
+                                  {name !== null
+                                    ? name.split(" ")[0]
+                                    : "Анонимный игрок"}
+                                </p>
                               </div>
                             );
                           })
@@ -523,8 +532,20 @@ const NewGame = () => {
                                     findPossiblePlayerPos(1, 2, user);
                                   }}
                                 >
-                                  <img src={img} className="divIMG" alt="" />
-                                  <p>{name.split(" ")[0]}</p>
+                                  <img
+                                    src={img ? img : DefaultImg}
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src = DefaultImg;
+                                    }}
+                                    className="divIMG"
+                                    alt=""
+                                  />
+                                  <p>
+                                    {name !== null
+                                      ? name.split(" ")[0]
+                                      : "Анонимный игрок"}
+                                  </p>
                                 </div>
                               );
                             })
@@ -545,8 +566,20 @@ const NewGame = () => {
                                     findPossiblePlayerPos(2, 2, user);
                                   }}
                                 >
-                                  <img src={img} className="divIMG" alt="" />
-                                  <p>{name.split(" ")[0]}</p>
+                                  <img
+                                    src={img ? img : DefaultImg}
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src = DefaultImg;
+                                    }}
+                                    className="divIMG"
+                                    alt=""
+                                  />
+                                  <p>
+                                    {name !== null
+                                      ? name.split(" ")[0]
+                                      : "Анонимный игрок"}
+                                  </p>
                                 </div>
                               );
                             })
@@ -595,8 +628,20 @@ const NewGame = () => {
                                     findPossiblePlayerPos(1, 3, user);
                                   }}
                                 >
-                                  <img src={img} className="divIMG" alt="" />
-                                  <p>{name.split(" ")[0]}</p>
+                                  <img
+                                    src={img ? img : DefaultImg}
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src = DefaultImg;
+                                    }}
+                                    className="divIMG"
+                                    alt=""
+                                  />
+                                  <p>
+                                    {name !== null
+                                      ? name.split(" ")[0]
+                                      : "Анонимный игрок"}
+                                  </p>
                                 </div>
                               );
                             })
@@ -617,8 +662,20 @@ const NewGame = () => {
                                     findPossiblePlayerPos(2, 3, user);
                                   }}
                                 >
-                                  <img src={img} className="divIMG" alt="" />
-                                  <p>{name.split(" ")[0]}</p>
+                                  <img
+                                    src={img ? img : DefaultImg}
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src = DefaultImg;
+                                    }}
+                                    className="divIMG"
+                                    alt=""
+                                  />
+                                  <p>
+                                    {name !== null
+                                      ? name.split(" ")[0]
+                                      : "Анонимный игрок"}
+                                  </p>
                                 </div>
                               );
                             })
@@ -667,8 +724,20 @@ const NewGame = () => {
                                     findPossiblePlayerPos(1, 4, user);
                                   }}
                                 >
-                                  <img src={img} className="divIMG" alt="" />
-                                  <p>{name.split(" ")[0]}</p>
+                                  <img
+                                    src={img ? img : DefaultImg}
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src = DefaultImg;
+                                    }}
+                                    className="divIMG"
+                                    alt=""
+                                  />
+                                  <p>
+                                    {name !== null
+                                      ? name.split(" ")[0]
+                                      : "Анонимный игрок"}
+                                  </p>
                                 </div>
                               );
                             })
@@ -689,8 +758,20 @@ const NewGame = () => {
                                     findPossiblePlayerPos(2, 4, user);
                                   }}
                                 >
-                                  <img src={img} className="divIMG" alt="" />
-                                  <p>{name.split(" ")[0]}</p>
+                                  <img
+                                    src={img ? img : DefaultImg}
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src = DefaultImg;
+                                    }}
+                                    className="divIMG"
+                                    alt=""
+                                  />
+                                  <p>
+                                    {name !== null
+                                      ? name.split(" ")[0]
+                                      : "Анонимный игрок"}
+                                  </p>
                                 </div>
                               );
                             })

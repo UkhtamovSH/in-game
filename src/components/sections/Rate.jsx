@@ -88,10 +88,10 @@ const Rate = () => {
               <div className="StarDivBorder">
                 <p>Скорость</p>
                 <Container>
-                  {[...Array(5)].map((item, index) => {
+                  {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
                     return (
-                      <label>
+                      <label key={index}>
                         <Radio
                           type="radio"
                           value={givenRating}
@@ -116,10 +116,10 @@ const Rate = () => {
               <div className="StarDivBorder">
                 <p>Дриблинг</p>
                 <Container>
-                  {[...Array(5)].map((item, index) => {
+                  {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
                     return (
-                      <label>
+                      <label key={index}>
                         <Radio
                           type="radio"
                           value={givenRating}
@@ -144,10 +144,10 @@ const Rate = () => {
               <div className="StarDivBorder">
                 <p>Пас</p>
                 <Container>
-                  {[...Array(5)].map((item, index) => {
+                  {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
                     return (
-                      <label>
+                      <label key={index}>
                         <Radio
                           type="radio"
                           value={givenRating}
@@ -172,10 +172,10 @@ const Rate = () => {
               <div className="StarDivBorder">
                 <p>Точность удара</p>
                 <Container>
-                  {[...Array(5)].map((item, index) => {
+                  {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
                     return (
-                      <label>
+                      <label key={index}>
                         <Radio
                           type="radio"
                           value={givenRating}
@@ -200,10 +200,10 @@ const Rate = () => {
               <div className="StarDivBorder">
                 <p>Сила удара</p>
                 <Container>
-                  {[...Array(5)].map((item, index) => {
+                  {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
                     return (
-                      <label>
+                      <label key={index}>
                         <Radio
                           type="radio"
                           value={givenRating}
@@ -228,10 +228,10 @@ const Rate = () => {
               <div className="StarDivBorder">
                 <p>Удар головой</p>
                 <Container>
-                  {[...Array(5)].map((item, index) => {
+                  {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
                     return (
-                      <label>
+                      <label key={index}>
                         <Radio
                           type="radio"
                           value={givenRating}
@@ -256,10 +256,10 @@ const Rate = () => {
               <div className="StarDivBorder">
                 <p>Отбор</p>
                 <Container>
-                  {[...Array(5)].map((item, index) => {
+                  {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
                     return (
-                      <label>
+                      <label key={index}>
                         <Radio
                           type="radio"
                           value={givenRating}
