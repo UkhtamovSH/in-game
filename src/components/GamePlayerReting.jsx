@@ -13,6 +13,81 @@ import _, { get } from "lodash";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { PlayersRatingMain } from "../styles/PlayersRatingStyle";
 import DefaultImg from "../assets/Img/default.png";
+import styled from "styled-components";
+import { StylesHidden } from "../styles/Global.styled";
+
+const SRatingPlayerContainer = styled.div`
+  padding: 15px 0;
+  .sRPayerFlexMain {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 15px;
+  }
+  .sRPayerFlexSub1Flex {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    .Sub1Round {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #484343;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .Sub1Round2 {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin: 0 12px;
+      background-color: #484343;
+      overflow: hidden;
+    }
+    .Sub1Round2Right1 {
+      width: 120px;
+      height: 20px;
+      background-color: #484343;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-right: 10px;
+      margin-bottom: 8px;
+      transform: translate(0, 3px);
+    }
+    .Sub1Round2Right2 {
+      display: inline-block;
+      width: 54px;
+      height: 17px;
+      background-color: #484343;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-right: 10px;
+      transform: translate(0, 3px);
+    }
+  }
+  .sRPayerFlexSub2Flex {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    .Sub2 {
+      width: 50px;
+      height: 20px;
+      background-color: #484343;
+      border-radius: 12px;
+      overflow: hidden;
+      &:nth-child(1) {
+        margin-bottom: 8px;
+      }
+    }
+    .Sub22Main {
+      margin-left: 15px;
+    }
+  }
+`;
 
 const GamePlayerReting = () => {
   const [data, setData] = useState([]);
@@ -93,15 +168,55 @@ const GamePlayerReting = () => {
           <p>Выберите игрока которого хотите оценить</p>
         </GamePlayerRating>
         {loading ? (
-          <h3>Loading......</h3>
+          <SRatingPlayerContainer>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => {
+              return (
+                <div className="sRPayerFlexMain" key={index}>
+                  <div className="sRPayerFlexSub1">
+                    <div className="sRPayerFlexSub1Flex">
+                      <div className="Sub1Round beforeAnimation" />
+                      <div className="Sub1Round2 beforeAnimation" />
+                      <div className="">
+                        <div className="Sub1Round2Right1 beforeAnimation" />
+                        <div className="Sub1Round2Right2 beforeAnimation" />
+                        <div className="Sub1Round2Right2 beforeAnimation" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="sRPayerFlexSub2">
+                    <div className="sRPayerFlexSub2Flex">
+                      <div className="Sub2Main">
+                        <div className="Sub2 beforeAnimation" />
+                        <div className="Sub2 beforeAnimation" />
+                      </div>
+                      <div className="Sub22Main">
+                        <div className="Sub2 beforeAnimation" />
+                        <div className="Sub2 beforeAnimation" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            <StylesHidden />
+          </SRatingPlayerContainer>
         ) : (
           <InfiniteScroll
             dataLength={data.length}
             next={() => {
               getData(2, nextUrl);
             }}
-            hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
+            hasMore={hasMore ? true : false}
+            loader={
+              <p
+                style={{
+                  textAlign: "center",
+                  transform: "translate(0,16px)",
+                }}
+              >
+                Loading...
+              </p>
+            }
           >
             {data.map((item, index) => (
               <Link

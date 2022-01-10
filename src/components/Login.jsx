@@ -205,7 +205,7 @@ const Login = () => {
                     <label htmlFor="remember">Запомнить вход</label>
                   </div>
                   <div>
-                    <Link to="/login">Забыли пароль?</Link>
+                    <Link to="/forgot-accept">Забыли пароль?</Link>
                   </div>
                 </FlexcheckBox>
                 {login_error ? (
@@ -216,8 +216,15 @@ const Login = () => {
                     Telefon no`mer yoki parol da xatolik
                   </span>
                 ) : null}
+
                 {loading ? (
-                  <p style={{ textAlign: "center" }}>Loading...</p>
+                  <div className="" style={{ width: "100%" }}>
+                    <button type="button" className="appBtnGreen2">
+                      <div className="AppLoader22Div">
+                        <div className="AppLoader22"></div>
+                      </div>
+                    </button>
+                  </div>
                 ) : (
                   <div className="" style={{ width: "100%" }}>
                     <button type="submit" className="appBtnGreen2">

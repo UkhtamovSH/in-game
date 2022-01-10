@@ -56,7 +56,7 @@ const HomeSwiper = ({ gameEnd, settings }) => {
                     <p>{_.get(item.GameClub[1], "football_club.name", 1)}</p>
                   </div>
                 </div>
-                <div className="sliderImg">
+                <div className="sliderImg" style={{ marginLeft: "0" }}>
                   {item.Gallery.length ? (
                     <Link to={"/photos/" + item.id}>
                       <img

@@ -24,6 +24,7 @@ import PaymeHistory from "../components/PaymeHistory";
 import PlayersPage from "../components/PlayersPage";
 import Game from "../components/Game";
 import GameOver from "../components/GameOver";
+import ForgotAcceptVerification from "../components/ForgotAcceptVerification";
 
 const Routess = () => {
   return (
@@ -34,6 +35,7 @@ const Routess = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/forgot-accept" element={<ForgotAcceptVerification />} />
       <Route path="/home" element={<Home />} />
       <Route path="/players" element={<Players />} />
       <Route path="/newgame" element={<NewGame />} />

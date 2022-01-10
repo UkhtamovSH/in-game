@@ -118,3 +118,26 @@
   border-radius: 50%;
   background: #bdbdbd;
 }
+
+.AppLoader22Div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.AppLoader22 {
+  height: 0;
+  width: 0;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-right-color: #888;
+  border-radius: 22px;
+  animation: rotate 1s infinite linear;
+
+}
+
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}

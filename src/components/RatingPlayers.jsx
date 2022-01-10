@@ -16,7 +16,7 @@ import Navigation from "./sections/Navigation";
 import ListRatingPlayer from "./sections/ratingplayer/ListRatingPlayer";
 import FilterOneRPlayer from "./sections/ratingplayer/FilterOneRPlayer";
 import FilterTwoRPlayer from "./sections/ratingplayer/FilterTwoRPlayer";
-import { useParams } from "react-router";
+// import { useParams } from "react-router";
 
 const SRatingPlayerContainer = styled.div`
   padding: 15px 0;
@@ -224,11 +224,17 @@ const RatingPlayers = () => {
               </div>
               <div className="">
                 {countTab === 1 ? (
-                  <span onClick={() => toggleModal()}>
+                  <span
+                    onClick={() => toggleModal()}
+                    style={{ cursor: "pointer" }}
+                  >
                     <img src={Filter} alt="" />
                   </span>
                 ) : countTab === 2 ? (
-                  <span onClick={() => toggleModal()}>
+                  <span
+                    onClick={() => toggleModal()}
+                    style={{ cursor: "pointer" }}
+                  >
                     <img src={Filter} alt="" />
                   </span>
                 ) : null}

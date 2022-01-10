@@ -271,6 +271,19 @@ export const SHomeContainer = styled.div`
       overflow: hidden;
     }
   }
+  .sHomeHeaderRound2 {
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    div {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: #484343;
+      overflow: hidden;
+    }
+  }
   .sHomeMain1Flex {
     display: flex;
     justify-content: center;

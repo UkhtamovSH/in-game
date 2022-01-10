@@ -7,12 +7,18 @@ export const AllGamesMain = styled.div`
   .sliderImg {
     display: flex;
     justify-content: space-between;
-    margin: 0 0 !important;
-    padding: 0px 20px;
-
+    padding: 10px;
     img {
-      /* width: 90px; */
+      margin: 0 4px;
+      width: 90px;
       height: 60px;
+      border: none !important;
+      object-fit: cover;
+      border-radius: 8px;
+      @media only screen and (max-width: 576px) and (min-width: 320px) {
+        width: 70px;
+        height: 70px;
+      }
     }
   }
 
@@ -23,7 +29,7 @@ export const AllGamesMain = styled.div`
     padding: 5px 5px;
   }
   .sliderDiv {
-    margin: 20px 0 !important;
+    margin: 20px 0;
     padding: 10px 0;
     background-color: #252525;
     border-radius: 16px;
@@ -51,6 +57,13 @@ export const AllGamesMain = styled.div`
     justify-content: center;
     align-items: center;
     margin: 0 10px !important;
+    @media only screen and (max-width: 576px) and (min-width: 320px) {
+      p {
+        font-weight: normal;
+        font-size: 10px !important;
+        text-align: center;
+      }
+    }
     img {
       width: 42px;
       height: 42px;
@@ -90,7 +103,6 @@ export const AllGamesMain = styled.div`
           font-size: 12px;
           line-height: 140%;
           color: #bdbdbd;
-
         }
         span {
           border-radius: 50%;

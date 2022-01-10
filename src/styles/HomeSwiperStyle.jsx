@@ -1,6 +1,17 @@
 import styled from "styled-components";
 
 export const HomeSwiperStyle = styled.div`
+  .sliderDivv {
+    background-color: #252525;
+    width: 100% !important;
+    border-radius: 16px;
+    .commenterImg {
+      img {
+        margin-left: 15px;
+        margin-right: 10px;
+      }
+    }
+  }
   .lastPlays {
     label a {
       text-decoration: none;
@@ -51,18 +62,16 @@ export const HomeSwiperStyle = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    a {
-      img {
-        margin: 0 4px;
-        width: 90px;
-        height: 60px;
-        border: none !important;
-        object-fit: cover;
-
-        @media only screen and (max-width: 576px) and (min-width: 320px) {
-          width: 70px;
-          height: 70px;
-        }
+    img {
+      margin: 0 4px;
+      width: 90px;
+      height: 60px;
+      border: none !important;
+      object-fit: cover;
+      border-radius: 8px;
+      @media only screen and (max-width: 576px) and (min-width: 320px) {
+        width: 70px;
+        height: 70px;
       }
     }
   }
@@ -74,7 +83,7 @@ export const HomeSwiperStyle = styled.div`
     padding: 5px 5px;
   }
   .sliderDiv {
-    margin: 0 0 !important;
+    margin: 0 0;
     width: 277px;
     margin-top: 20px;
     padding: 10px 0;
