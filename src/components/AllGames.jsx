@@ -153,7 +153,7 @@ const AllGames = () => {
                   ) : null}
                 </div>
                 <Link to={`/game-player-reting/${item.id}`}>
-                  <p>Оценить игроков</p>
+                  <p className="ratePlayerText">Оценить игроков</p>
                 </Link>
               </div>
             ))}

@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle, keyframes } from "styled-components";
+import Calendar from "../assets/svg/Calendar.svg";
 
 const animation = keyframes`
 	0% {
@@ -34,6 +35,27 @@ export const GlobalStyle = createGlobalStyle`
 
 .ReactModal__Overlay--after-open{
     opacity: 1;
+}
+
+input[type=date]::-webkit-calendar-picker-indicator{
+    position: absolute;
+    left: -5px;
+    width: 91%;
+    height: 39px; 
+    border-radius: 16px;
+    opacity: 0;
+}
+/* input[type=date]::-webkit-calendar-picker-indicator::after {
+    content: '';
+    display: block;
+    background-image: url(${Calendar}) !important;
+    background-size: 10%;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* transform: translateX(-2%); */
 }
 
 

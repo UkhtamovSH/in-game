@@ -16,19 +16,21 @@ const ListRatingPlayer = (props) => {
         <PlayersRatingMain>
           <div className="">
             <div className="playersRatingSubFlex">
-              <p
-                className={
-                  id === 1
-                    ? "listID1"
-                    : id === 2
-                    ? "listID2"
-                    : id === 3
-                    ? "listID3"
-                    : "listID4"
-                }
-              >
-                {id}
-              </p>
+              <div className="" style={{ width: "30px" }}>
+                <p
+                  className={
+                    id === 1
+                      ? "listID1"
+                      : id === 2
+                      ? "listID2"
+                      : id === 3
+                      ? "listID3"
+                      : "listID4"
+                  }
+                >
+                  {id}
+                </p>
+              </div>
               <div className="userImg">
                 <img
                   src={avatar ? avatar : DefaultImg}
@@ -50,7 +52,11 @@ const ListRatingPlayer = (props) => {
               </div>
               <div className="nameDiv">
                 <p className="text1">
-                  {full_name !== null ? full_name : "Анонимный игрок"}
+                  {full_name !== null
+                    ? full_name.length > 21
+                      ? full_name.substr(0, 20) + "..."
+                      : full_name
+                    : "Анонимный игрок"}
                 </p>
                 <div className="text22Flex">
                   <p className="text22">

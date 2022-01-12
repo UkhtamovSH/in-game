@@ -88,7 +88,9 @@ const ChangeProfileImg = (props) => {
           <p>Ваше изображение</p>
           <div className="text12Flex">
             <span className="text1" style={{ width: "100px" }}>
-              <label htmlFor="files">Изменить</label>
+              <label htmlFor="files" style={{ cursor: "pointer" }}>
+                Изменить
+              </label>
               <input
                 id="files"
                 style={{ visibility: "hidden" }}

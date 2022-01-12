@@ -7,7 +7,7 @@ export const AllGamesMain = styled.div`
   .sliderImg {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    /* padding: 10px; */
     img {
       margin: 0 4px;
       width: 90px;
@@ -27,6 +27,26 @@ export const AllGamesMain = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 5px 5px;
+    .comandaLogo {
+      text-align: center;
+      @media (max-width: 8000px) and (min-width: 576px) {
+        &:nth-child(1) {
+          width: 100px;
+        }
+        &:nth-child(3) {
+          width: 100px;
+        }
+      }
+
+      @media only screen and (max-width: 576px) and (min-width: 320px) {
+        &:nth-child(1) {
+          width: 70px;
+        }
+        &:nth-child(3) {
+          width: 70px;
+        }
+      }
+    }
   }
   .sliderDiv {
     margin: 20px 0;
@@ -60,7 +80,7 @@ export const AllGamesMain = styled.div`
     @media only screen and (max-width: 576px) and (min-width: 320px) {
       p {
         font-weight: normal;
-        font-size: 10px !important;
+        font-size: 12px !important;
         text-align: center;
       }
     }

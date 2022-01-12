@@ -148,12 +148,25 @@ const GamePlayerReting = () => {
             {goal.map((item, index) => (
               <div key={index}>
                 {params.id == item.id ? (
-                  <>
-                    {_.get(item.GameClub[0], "football_club.name", 0)}{" "}
-                    {_.get(item.GameClub[0], "goal")}:
-                    {_.get(item.GameClub[1], "goal")}{" "}
-                    {_.get(item.GameClub[1], "football_club.name", 1)}
-                  </>
+                  <div className="AppHeaderFlexSub">
+                    <div className="">
+                      {_.get(item.GameClub[0], "football_club.name", 0)}
+                    </div>
+                    <div className="">
+                      <div className="AppHeaderFlexSub">
+                        <div className="">
+                          {_.get(item.GameClub[0], "goal")}
+                        </div>
+                        <div className="">:</div>
+                        <div className="">
+                          {_.get(item.GameClub[1], "goal")}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="">
+                      {_.get(item.GameClub[1], "football_club.name", 1)}
+                    </div>
+                  </div>
                 ) : (
                   ""
                 )}
@@ -163,7 +176,9 @@ const GamePlayerReting = () => {
           <div />
         </AppHeaderFlex>
       </AppHeader>
-      <AppMAIN style={{ padding: "0 15px" }}>
+      <AppMAIN
+        style={{ marginTop: "68px", marginBottom: "0", padding: "0 15px" }}
+      >
         <GamePlayerRating>
           <p>Выберите игрока которого хотите оценить</p>
         </GamePlayerRating>

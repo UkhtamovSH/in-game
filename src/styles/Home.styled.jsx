@@ -12,8 +12,7 @@ export const HomeStyle = styled.div`
     }
   }
   label {
-    padding: 15px 20px;
-    cursor: pointer;
+    margin: 15px 20px;
   }
   & .topSetting {
     background-color: ${({ theme }) => theme.appColors.whiteGray};

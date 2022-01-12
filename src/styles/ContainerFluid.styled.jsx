@@ -28,7 +28,7 @@ export const ContainerFluid = styled.div`
 export const AppHeader = styled.div`
   padding: 12px 16px;
   box-sizing: border-box;
-  transform: translate(-50.09%, 0);
+  transform: translate(-50.04%, 0);
   position: fixed;
   left: 50%;
   top: 0;
@@ -46,7 +46,7 @@ export const AppHeader = styled.div`
 `;
 export const AppFooter = styled.div`
   padding: 12px;
-  transform: translate(-50.09%, 0);
+  transform: translate(-50.04%, 0);
   position: fixed;
   left: 50%;
   bottom: 0;
@@ -66,7 +66,7 @@ export const AppFooter = styled.div`
 `;
 export const AppFooter2 = styled.div`
   padding: 12px;
-  transform: translate(-50.09%, 0);
+  transform: translate(-50.04%, 0);
   position: fixed;
   left: 50%;
   bottom: 0;
@@ -103,6 +103,18 @@ export const AppHeaderFlex = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
+  div:nth-child(2) {
+    margin: 0 8px;
+    .AppHeaderFlexSub {
+      display: flex;
+      align-items: center;
+      font-size: 15px;
+      text-align: center;
+      div:nth-child(2) {
+        margin: 0 8px;
+      }
+    }
+  }
 `;
 
 export const AppHeaderFlex2PRating = styled.div`

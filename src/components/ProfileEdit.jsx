@@ -310,20 +310,24 @@ const ProfileEdit = () => {
                       </div>
                     </ProfileRadioDiv>
                   </CustomRadio>
-                  <InputFormFlex>
-                    <span className="span1">
-                      <span>
-                        <img src={Calendar} alt="" />
+                  <label htmlFor="bdate">
+                    <InputFormFlex>
+                      <span className="span1">
+                        <span>
+                          <img src={Calendar} alt="" />
+                        </span>
                       </span>
-                    </span>
-                    <input
-                      type="date"
-                      name="birth_date"
-                      value={birth_date}
-                      onChange={(e) => changeUserInfo(e)}
-                    />
-                    <span className="span2"></span>
-                  </InputFormFlex>
+                      <input
+                        id="bdate"
+                        type="date"
+                        name="birth_date"
+                        value={birth_date}
+                        onChange={(e) => changeUserInfo(e)}
+                      />
+                      <span className="span2"></span>
+                    </InputFormFlex>
+                  </label>
+
                   <InputFormFlex>
                     <span className="span1">
                       <span>

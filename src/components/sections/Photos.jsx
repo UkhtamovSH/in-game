@@ -60,12 +60,21 @@ const Photos = () => {
             {photos.map((item, index) => (
               <div key={index}>
                 {params.id == item.id ? (
-                  <>
-                    {get(item.GameClub[0], "football_club.name", 0)}{" "}
-                    {get(item.GameClub[0], "goal")}:
-                    {get(item.GameClub[1], "goal")}{" "}
-                    {get(item.GameClub[1], "football_club.name", 1)}
-                  </>
+                  <div className="AppHeaderFlexSub">
+                    <div className="">
+                      {get(item.GameClub[0], "football_club.name", 0)}
+                    </div>
+                    <div className="">
+                      <div className="AppHeaderFlexSub">
+                        <div className="">{get(item.GameClub[0], "goal")}</div>
+                        <div className="">:</div>
+                        <div className="">{get(item.GameClub[1], "goal")}</div>
+                      </div>
+                    </div>
+                    <div className="">
+                      {get(item.GameClub[1], "football_club.name", 1)}
+                    </div>
+                  </div>
                 ) : (
                   ""
                 )}
@@ -77,20 +86,22 @@ const Photos = () => {
       </AppHeader>
       <AppMAIN>
         {preLoader ? (
-          <SPitchesContainer>
+          <SPitchesContainer style={{ marginTop: "70px" }}>
             {map([1, 2, 3, 4, 5, 6, 7, 8], (_, index) => (
               <div key={index} className="SPitchesDiv beforeAnimation33" />
             ))}
           </SPitchesContainer>
         ) : (
           <GamerPhotos>
-            {photos.map((item, index) => (
-              <GalleryPhotos key={index}>
-                {item.Gallery.map((value, index) => (
-                  <img src={value} key={index} alt="" />
-                ))}
-              </GalleryPhotos>
-            ))}
+            {photos.map((item, index) => {
+              return params.id == item.id ? (
+                <GalleryPhotos key={index}>
+                  {item.Gallery.map((value, index) => {
+                    return <img src={value} key={index} alt="" />;
+                  })}
+                </GalleryPhotos>
+              ) : null;
+            })}
           </GamerPhotos>
         )}
       </AppMAIN>

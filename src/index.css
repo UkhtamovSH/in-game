@@ -145,3 +145,30 @@
 .cursorApp {
   cursor: pointer;
 }
+
+.ratePlayerText {
+  font-family: "Manrope-Medium", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  margin: 15px;
+}
+
+.infinite-scroll-component {
+  overflow: unset !important;
+}
+
+input[type=date]::-webkit-inner-spin-button {
+  /* -webkit-appearance: none;
+  display: none; */
+  /* background-color: red;
+  width: 100%; */
+}
+
+input[type=date]::-webkit-calendar-picker-indicator {
+  /* -webkit-appearance: none;
+  display: none; */
+  /* background-color: red; */
+  /* width: 100%; */
+}

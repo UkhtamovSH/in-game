@@ -3,11 +3,10 @@ import styled from "styled-components";
 export const GamePlayerContain = styled.div`
   a {
     text-decoration: none;
-    color:#fff;
+    color: #fff;
   }
 `;
 export const GamePlayerRating = styled.div`
-  margin: 20px 15px;
   color: #bdbdbd;
   text-align: center;
 `;
