@@ -29,7 +29,7 @@ const OnBoarding = () => {
           <div>
             <img src={InGameLogo} alt="" />
           </div>
-          <p>InGame</p>
+          <p>InGAME</p>
         </div>
       </OnBoardingLogoStyle>
     </OnBoardingStyle>

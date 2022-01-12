@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AppFooter,
@@ -12,6 +12,7 @@ import {
   LogRegFooterLinkFlex,
 } from "../styles/LogIn.styled";
 import {
+  FlexBoxBtn,
   FormUpperDiv,
   FormUpperDivSub,
   InputFormFlex,
@@ -25,10 +26,11 @@ import Lock from "../assets/svg/Lock.svg";
 import BgS from "../assets/Img/Bg's.png";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import { GetNotAuthInstance } from "../helpers/httpClient";
-import { issetToken, setToken } from "../helpers/tokenStorage";
+import { setToken } from "../helpers/tokenStorage";
 import VerificationInput from "react-verification-input";
 import Timer from "react-compound-timer/build";
 import { get } from "lodash";
+import ShowHide from "../assets/svg/Show.svg";
 
 const Register = () => {
   const [lists, setLists] = useState([]);
@@ -40,11 +42,11 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pswShowHide, setPswShowHide] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error_password, setError_Password] = useState(false);
-  const [same_password, setSame_Password] = useState(false);
+  // const [error_password, setError_Password] = useState(false);
+  // const [same_password, setSame_Password] = useState(false);
   const [count, setCount] = useState(false);
   const [code, setCode] = useState("");
-  const [setResetSms] = useState(false);
+  // const [setResetSms] = useState(false);
 
   const history = useNavigate();
 
@@ -53,9 +55,22 @@ const Register = () => {
     login_error: false,
     phone_error: false,
     code_error: false,
+    password_error: false,
+    confirmPassword_error: false,
+    samePassword_error: false,
+    user_error: false,
   });
 
-  const { fullName_error, login_error, phone_error, code_error } = errors;
+  const {
+    fullName_error,
+    login_error,
+    phone_error,
+    code_error,
+    password_error,
+    confirmPassword_error,
+    samePassword_error,
+    user_error,
+  } = errors;
 
   const handlePswShowHide = () => setPswShowHide(!pswShowHide);
   const onFocus = (name) => setErrors({ ...errors, [name]: false });
@@ -63,88 +78,91 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-
-    let v_password = false;
-    let s_password = false;
-    if (password.length < 8 && confirmPassword.length < 8) {
-      v_password = true;
-    }
-
-    if (password !== confirmPassword) {
-      s_password = true;
-    }
-
     if (
-      fullName.length >= 6 &&
-      login.length >= 8 &&
+      fullName.length >= 8 &&
+      login.length >= 4 &&
       phone.length === 12 &&
-      !s_password &&
-      !v_password
+      password.length >= 8 &&
+      confirmPassword.length >= 8
     ) {
-      const formData = new FormData();
-      formData.append("full_name", fullName);
-      formData.append("login", login);
-      formData.append("phone", phone);
-      formData.append("password", password);
-      formData.append("confirm_password", confirmPassword);
-      GetNotAuthInstance()
-        .post("/api/v1/register/", formData)
-        .then((result) => {
-          sessionStorage.setItem("phone", phone);
-          sessionStorage.setItem("password", password);
-          setLists([...lists, result.formData]);
-          setFullName("");
-          setLogin("");
-          setPhone("");
-          setPassword("");
-          setConfirmPassword("");
-          setLoading(false);
-          setCount(true);
-        })
-        .catch((err) => {});
-    } else if (
-      fullName.length < 6 &&
-      login.length < 8 &&
-      phone.length !== 12 &&
-      v_password &&
-      s_password
-    ) {
+      if (password !== confirmPassword) {
+        setErrors({
+          ...errors,
+          samePassword_error: true,
+        });
+        setLoading(false);
+      } else {
+        const formData = new FormData();
+        formData.append("full_name", fullName);
+        formData.append("login", login);
+        formData.append("phone", phone);
+        formData.append("password", password);
+        formData.append("confirm_password", confirmPassword);
+        GetNotAuthInstance()
+          .post("/api/v1/register/", formData)
+          .then((result) => {
+            const status = get(result, "data.status");
+            if (status === 1) {
+              sessionStorage.setItem("phone", phone);
+              sessionStorage.setItem("password", password);
+              setLists([...lists, result.formData]);
+              setFullName("");
+              setLogin("");
+              setPhone("");
+              setPassword("");
+              setConfirmPassword("");
+              setLoading(false);
+              setCount(true);
+              setErrors({
+                ...errors,
+                user_error: false,
+              });
+            } else {
+              setErrors({
+                ...errors,
+                user_error: true,
+                samePassword_error: false,
+              });
+              setLoading(false);
+            }
+          })
+          .catch((err) => {
+            setErrors({
+              ...errors,
+              user_error: false,
+            });
+          });
+      }
+    } else if (fullName.length < 8) {
       setErrors({
         ...errors,
         fullName_error: true,
-        login_error: true,
-        phone_error: true,
       });
       setLoading(false);
-    } else if (fullName.length < 6) {
-      setErrors({
-        ...errors,
-        fullName_error: true,
-      });
-      setLoading(false);
-    } else if (login.length < 8) {
+    } else if (login.length < 4) {
       setErrors({
         ...errors,
         login_error: true,
       });
+      setLoading(false);
     } else if (phone.length !== 12) {
       setErrors({
         ...errors,
         phone_error: true,
       });
       setLoading(false);
-    } else if (v_password && s_password) {
+    } else if (password.length < 8) {
       setErrors({
         ...errors,
         password_error: true,
       });
-      setError_Password(v_password);
-      setSame_Password(s_password);
       setLoading(false);
-    } else {
+    } else if (confirmPassword.length < 8) {
+      setErrors({
+        ...errors,
+        confirmPassword_error: true,
+      });
       setLoading(false);
-      setError_Password(v_password);
-      setSame_Password(s_password);
     }
   };
 
@@ -241,6 +259,7 @@ const Register = () => {
                         length={4}
                         onChange={(e) => setCode(e)}
                         value={code}
+                        validChars="0-9"
                         classNames={{
                           container: "containerValidation",
                           character: "character",
@@ -248,11 +267,21 @@ const Register = () => {
                           characterSelected: "character--selected",
                         }}
                       />
+
+                      {code_error ? (
+                        <div
+                          className="inputError"
+                          style={{ textAlign: "center", marginTop: "20px" }}
+                        >
+                          SMS kod xato
+                        </div>
+                      ) : null}
+
                       {code.length === 4 ? (
                         <button
                           type="submit"
                           className="appBtnGreen"
-                          style={{ marginTop: "40px" }}
+                          style={{ marginTop: "20px" }}
                         >
                           Отправить
                         </button>
@@ -261,11 +290,6 @@ const Register = () => {
                       )}
                     </form>
                   </FormUpperDivSub>
-                  {code_error ? (
-                    <div className="inputError" style={{ textAlign: "center" }}>
-                      Kod xato
-                    </div>
-                  ) : null}
                 </>
               ) : (
                 <form onSubmit={(e) => handleSubmit(e)}>
@@ -282,12 +306,13 @@ const Register = () => {
                       type="text"
                       name="full_name"
                       placeholder="Полное имя"
+                      maxLength="30"
                     />
                     <span className="span2"></span>
                   </InputFormFlex>
                   {fullName_error ? (
                     <span className="inputError">
-                      To`liq immingizni kiriting. Kamida 6 belgi
+                      To`liq ismda kamida 8 ta belgi bo'lishi kerak
                     </span>
                   ) : null}
                   <InputFormFlex>
@@ -303,12 +328,13 @@ const Register = () => {
                       type="text"
                       name="login"
                       placeholder="Логин"
+                      maxLength="30"
                     />
                     <span className="span2"></span>
                   </InputFormFlex>
                   {login_error ? (
                     <span className="inputError">
-                      Loginni kiriting. Kamida 8 belgi
+                      Loginda kamida 4 ta belgi bo'lishi kerak
                     </span>
                   ) : null}
                   <InputFormFlex>
@@ -348,22 +374,26 @@ const Register = () => {
                     <input
                       onChange={(e) => {
                         setPassword(e.target.value);
-                        setError_Password(false);
                       }}
+                      onFocus={() => onFocus("password_error")}
                       value={password}
-                      type={!pswShowHide ? "password" : "text"}
+                      type={pswShowHide ? "text" : "password"}
                       name="password"
                       placeholder="Пароль"
                     />
-                    <span className="span2" onClick={() => handlePswShowHide()}>
+                    <span className="span2" onClick={handlePswShowHide}>
                       <span>
-                        <img src={Hide} alt="" />
+                        <img
+                          src={pswShowHide ? ShowHide : Hide}
+                          className="cursorApp"
+                          alt=""
+                        />
                       </span>
                     </span>
                   </InputFormFlex>
-                  {error_password ? (
+                  {password_error ? (
                     <span className="inputError">
-                      Parolni kiriting. Kamida 8 belgi
+                      Parolda kamida 8 ta belgi bo'lishi kerak
                     </span>
                   ) : null}
                   <InputFormFlex>
@@ -375,44 +405,77 @@ const Register = () => {
                     <input
                       onChange={(e) => {
                         setConfirmPassword(e.target.value);
-                        setError_Password(false);
                       }}
+                      onFocus={() => onFocus("confirmPassword_error")}
                       value={confirmPassword}
-                      type={!pswShowHide ? "password" : "text"}
+                      type={pswShowHide ? "text" : "password"}
                       name="confirm_password"
                       placeholder="Повторите пароль"
                     />
-                    <span className="span2" onClick={() => handlePswShowHide()}>
+                    <span className="span2" onClick={handlePswShowHide}>
                       <span>
-                        <img src={Hide} alt="" />
+                        <img
+                          src={pswShowHide ? ShowHide : Hide}
+                          className="cursorApp"
+                          alt=""
+                        />
                       </span>
                     </span>
                   </InputFormFlex>
-                  {error_password ? (
+                  {confirmPassword_error ? (
                     <span className="inputError">
-                      Parolni kiriting. Kamida 8 belgi
+                      Parolda kamida 8 ta belgi bo'lishi kerak
                     </span>
                   ) : null}
-                  {same_password ? (
+                  {samePassword_error ? (
                     <span className="inputError">Parol bir xil emas</span>
-                  ) : (
-                    ""
-                  )}
-
-                  {loading ? (
-                    <div className="" style={{ width: "100%" }}>
-                      <button type="button" className="appBtnGreen2">
-                        <div className="AppLoader22Div">
-                          <div className="AppLoader22"></div>
-                        </div>
-                      </button>
+                  ) : null}
+                  {user_error ? (
+                    <div className="inputError" style={{ textAlign: "center" }}>
+                      Bu telefon raqami allaqachon mavjud
                     </div>
-                  ) : (
-                    <div className="" style={{ width: "100%" }}>
-                      <button type="submit" className="appBtnGreen2">
+                  ) : null}
+
+                  {fullName.length < 8 &&
+                  phone.length !== 12 &&
+                  login.length < 4 &&
+                  password.length < 8 &&
+                  confirmPassword.length < 8 ? (
+                    <FlexBoxBtn>
+                      <button
+                        type="submit"
+                        className="appBtnGreen2"
+                        style={{ marginTop: "15px" }}
+                      >
                         Зарегистрироваться
                       </button>
-                    </div>
+                    </FlexBoxBtn>
+                  ) : (
+                    <>
+                      {loading ? (
+                        <FlexBoxBtn>
+                          <button
+                            type="button"
+                            className="appBtnGreen2"
+                            style={{ marginTop: "15px" }}
+                          >
+                            <div className="AppLoader22Div">
+                              <div className="AppLoader22"></div>
+                            </div>
+                          </button>
+                        </FlexBoxBtn>
+                      ) : (
+                        <FlexBoxBtn>
+                          <button
+                            type="submit"
+                            className="appBtnGreen2"
+                            style={{ marginTop: "15px" }}
+                          >
+                            Зарегистрироваться
+                          </button>
+                        </FlexBoxBtn>
+                      )}
+                    </>
                   )}
                 </form>
               )}

@@ -89,7 +89,6 @@ export const HomeContainer = styled.div`
       border-radius: 50%;
       width: 120px;
       height: 120px;
-      margin:0 auto;
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -99,6 +98,7 @@ export const HomeContainer = styled.div`
       @media only screen and (max-width: 576px) and (min-width: 320px) {
         width: 100px;
         height: 100px;
+       margin:0 auto;
       }
       & p:nth-child(1) {
         font-style: normal;
@@ -196,10 +196,18 @@ export const HomeTimeStyle = styled.div`
   justify-content: space-between;
   padding: 0 15px;
   .firstTime {
+    .firstTimeSub {
+      img {
+        width: 64px;
+        height: 64px;
+      }
+    }
     width: 104px;
-    height: 158px;
+    min-height: 158px;
+    /* padding: 20px; */
+    border-radius: 52px;
     background-color: ${({ theme }) => theme.appColors.whiteGray};
-    border-radius: 100px;
+    /* border-radius: 100px; */
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -219,6 +227,7 @@ export const HomeTimeStyle = styled.div`
     }
 
     & .watchTitle {
+      margin-top: 5px;
       text-align: center;
       h1 {
         font-style: normal;

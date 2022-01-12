@@ -93,6 +93,7 @@ const PaymeComp = () => {
                     onChange={(e) => setInputVal(e.target.value)}
                     type="number"
                     className="inputPayme"
+                    pattern="^-?[0-9]\d*\.?\d*$"
                   />
                 </label>
               </div>

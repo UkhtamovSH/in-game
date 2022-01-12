@@ -7,11 +7,16 @@ import {
   LogRegFooterLinkFlex,
 } from "../styles/LogIn.styled";
 import TitleSubTitle from "../components/sections/TitleSubTitle";
-import { FormUpperDiv, InputFormFlex } from "../styles/Global.styled";
+import {
+  FlexBoxBtn,
+  FormUpperDiv,
+  InputFormFlex,
+} from "../styles/Global.styled";
 import { get, isFunction } from "lodash";
 import PhoneInput from "react-phone-input-2";
 import Call from "../assets/svg/Call.svg";
 import Hide from "../assets/svg/Hide.svg";
+import ShowHide from "../assets/svg/Show.svg";
 import Lock from "../assets/svg/Lock.svg";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import BgS from "../assets/Img/Bg's.png";
@@ -74,6 +79,7 @@ const Login = () => {
               ...errors,
               login_error: true,
             });
+            setLoading(false);
           }
         })
         .catch((err) => {
@@ -100,7 +106,7 @@ const Login = () => {
         password_error: true,
       });
       setLoading(false);
-    } else if (phone.length < 6) {
+    } else if (phone.length !== 12) {
       setErrors({
         ...errors,
         phone_error: true,
@@ -183,13 +189,17 @@ const Login = () => {
                   />
                   <span className="span2" onClick={() => handlePswShowHide()}>
                     <span>
-                      <img src={Hide} alt="" />
+                      <img
+                        src={!pswShowHide ? Hide : ShowHide}
+                        className="cursorApp"
+                        alt=""
+                      />
                     </span>
                   </span>
                 </InputFormFlex>
                 {password_error ? (
                   <span className="inputError">
-                    Parolni kiriting. Kamida 8 belgi
+                    Parolda kamida 8 ta belgi bo'lishi kerak
                   </span>
                 ) : null}
                 <FlexcheckBox>
@@ -209,28 +219,52 @@ const Login = () => {
                   </div>
                 </FlexcheckBox>
                 {login_error ? (
-                  <span className="inputError">Tizimga kirishda xatolik</span>
+                  <div className="inputError" style={{ textAlign: "center" }}>
+                    Tizimga kirishda xatolik
+                  </div>
                 ) : null}
                 {registerError ? (
-                  <span className="inputError">
-                    Telefon no`mer yoki parol da xatolik
-                  </span>
+                  <div className="inputError" style={{ textAlign: "center" }}>
+                    Telefon raqam yoki parol da xatolik
+                  </div>
                 ) : null}
 
-                {loading ? (
-                  <div className="" style={{ width: "100%" }}>
-                    <button type="button" className="appBtnGreen2">
-                      <div className="AppLoader22Div">
-                        <div className="AppLoader22"></div>
-                      </div>
-                    </button>
-                  </div>
-                ) : (
-                  <div className="" style={{ width: "100%" }}>
-                    <button type="submit" className="appBtnGreen2">
+                {phone.length !== 12 && password.length < 8 ? (
+                  <FlexBoxBtn>
+                    <button
+                      type="submit"
+                      className="appBtnGreen2"
+                      style={{ marginTop: "15px" }}
+                    >
                       Войти
                     </button>
-                  </div>
+                  </FlexBoxBtn>
+                ) : (
+                  <>
+                    {loading ? (
+                      <FlexBoxBtn>
+                        <button
+                          type="button"
+                          className="appBtnGreen2"
+                          style={{ marginTop: "15px" }}
+                        >
+                          <div className="AppLoader22Div">
+                            <div className="AppLoader22"></div>
+                          </div>
+                        </button>
+                      </FlexBoxBtn>
+                    ) : (
+                      <FlexBoxBtn>
+                        <button
+                          type="submit"
+                          className="appBtnGreen2"
+                          style={{ marginTop: "15px" }}
+                        >
+                          Войти
+                        </button>
+                      </FlexBoxBtn>
+                    )}
+                  </>
                 )}
               </form>
             </FormUpperDiv>

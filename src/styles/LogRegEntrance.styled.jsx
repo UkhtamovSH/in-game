@@ -11,15 +11,19 @@ export const LogRegEntranceStyle = styled.div`
 `;
 
 export const FlexBottom = styled.div`
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  transform: translate(-50.09%, 0);
+  position: fixed;
+  left: 50%;
+  bottom: 15px;
   width: 100%;
-  height: 100%;
-  & div {
-    width: 100%;
+  z-index: 99 !important;
+
+  @media (max-width: 8000px) and (min-width: 576px) {
+    max-width: 451px;
+  }
+
+  @media only screen and (max-width: 576px) and (min-width: 320px) {
+    max-width: 94%;
   }
 `;
 

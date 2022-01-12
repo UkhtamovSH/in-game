@@ -148,16 +148,14 @@ export const GlobalStyle = createGlobalStyle`
   padding: 18px 5px;
   display: block;
   border: none;
-  width: -webkit-fill-available;
   cursor: pointer;
+  width: 100%;
+  /* margin: auto 15px; */
 }
 .appBtnGreen2,
 .appBtnGreen{
   background: ${({ theme }) => theme.appColors.green};
   color: ${({ theme }) => theme.appColors.white};
-}
-.appBtnGreen2{
-  margin: 16px;
 }
 .appBtnGray{
   background: ${({ theme }) => theme.appColors.gray};
@@ -168,7 +166,6 @@ export const GlobalStyle = createGlobalStyle`
   color: ${({ theme }) => theme.appColors.gray};
 }
 .appBtnTransparent{
-  margin: 16px;
   background: transparent;
   color: ${({ theme }) => theme.appColors.white};
 }
@@ -466,4 +463,10 @@ export const SContainerFooter = styled.div`
     background-color: #484343;
     border-radius: 12px;
   }
+`;
+
+export const FlexBoxBtn = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
 `;

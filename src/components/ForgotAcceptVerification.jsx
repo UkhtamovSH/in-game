@@ -7,6 +7,7 @@ import {
 } from "../styles/ContainerFluid.styled";
 import { LoginSection, LoginSectionSub } from "../styles/LogIn.styled";
 import {
+  FlexBoxBtn,
   FormUpperDiv,
   FormUpperDivSub,
   InputFormFlex,
@@ -38,9 +39,10 @@ const ForgotAcceptVerification = () => {
     login_error: false,
     phone_error: false,
     code_error: false,
+    user_error: false,
   });
 
-  const { phone_error, code_error } = errors;
+  const { phone_error, code_error, user_error } = errors;
 
   const onFocus = (name) => setErrors({ ...errors, [name]: false });
 
@@ -54,26 +56,36 @@ const ForgotAcceptVerification = () => {
       GetNotAuthInstance()
         .post("/api/v1/forgot-password/", formData)
         .then((result) => {
-          sessionStorage.setItem("phone", phone);
-          setLists([...lists, result.formData]);
-          setPhone("");
-          setLoading(false);
-          setCount(true);
+          const status = get(result, "data.status");
+          if (status === 1) {
+            sessionStorage.setItem("phone", phone);
+            setLists([...lists, result.formData]);
+            setPhone("");
+            setLoading(false);
+            setCount(true);
+            setErrors({
+              ...errors,
+              user_error: false,
+            });
+          } else {
+            setErrors({
+              ...errors,
+              user_error: true,
+            });
+            setLoading(false);
+          }
         })
-        .catch((err) => {});
+        .catch((err) => {
+          setErrors({
+            ...errors,
+            user_error: false,
+          });
+        });
     } else if (phone.length !== 12) {
       setErrors({
         ...errors,
         phone_error: true,
       });
-      setLoading(false);
-    } else if (phone.length !== 12) {
-      setErrors({
-        ...errors,
-        phone_error: true,
-      });
-      setLoading(false);
-    } else {
       setLoading(false);
     }
   };
@@ -95,6 +107,7 @@ const ForgotAcceptVerification = () => {
           setListsSendCode([...listsSendCode, result.dataCode]);
           setPhone("");
           setCode("");
+          localStorage.removeItem("token");
           history("/reset-password");
         } else {
           setErrors({
@@ -177,6 +190,7 @@ const ForgotAcceptVerification = () => {
                         length={4}
                         onChange={(e) => setCode(e)}
                         value={code}
+                        validChars="0-9"
                         classNames={{
                           container: "containerValidation",
                           character: "character",
@@ -184,11 +198,21 @@ const ForgotAcceptVerification = () => {
                           characterSelected: "character--selected",
                         }}
                       />
+
+                      {code_error ? (
+                        <div
+                          className="inputError"
+                          style={{ textAlign: "center", marginTop: "20px" }}
+                        >
+                          SMS kod xato
+                        </div>
+                      ) : null}
+
                       {code.length === 4 ? (
                         <button
                           type="submit"
                           className="appBtnGreen"
-                          style={{ marginTop: "40px" }}
+                          style={{ marginTop: "20px" }}
                         >
                           Отправить
                         </button>
@@ -197,11 +221,6 @@ const ForgotAcceptVerification = () => {
                       )}
                     </form>
                   </FormUpperDivSub>
-                  {code_error ? (
-                    <div className="inputError" style={{ textAlign: "center" }}>
-                      Kod xato
-                    </div>
-                  ) : null}
                 </>
               ) : (
                 <form onSubmit={(e) => handleSubmit(e)}>
@@ -233,21 +252,48 @@ const ForgotAcceptVerification = () => {
                       Telefon raqam to'liq kiritilmadi
                     </span>
                   ) : null}
-
-                  {loading ? (
-                    <div className="" style={{ width: "100%" }}>
-                      <button type="button" className="appBtnGreen2">
-                        <div className="AppLoader22Div">
-                          <div className="AppLoader22"></div>
-                        </div>
-                      </button>
+                  {user_error ? (
+                    <div className="inputError" style={{ textAlign: "center" }}>
+                      Foydalanuvchi topilmadi!
                     </div>
-                  ) : (
-                    <div className="" style={{ width: "100%" }}>
-                      <button type="submit" className="appBtnGreen2">
+                  ) : null}
+
+                  {phone.length !== 12 ? (
+                    <FlexBoxBtn>
+                      <button
+                        type="submit"
+                        className="appBtnGreen2"
+                        style={{ marginTop: "15px" }}
+                      >
                         Продолжить
                       </button>
-                    </div>
+                    </FlexBoxBtn>
+                  ) : (
+                    <>
+                      {loading ? (
+                        <FlexBoxBtn>
+                          <button
+                            type="button"
+                            className="appBtnGreen2"
+                            style={{ marginTop: "15px" }}
+                          >
+                            <div className="AppLoader22Div">
+                              <div className="AppLoader22"></div>
+                            </div>
+                          </button>
+                        </FlexBoxBtn>
+                      ) : (
+                        <FlexBoxBtn>
+                          <button
+                            type="submit"
+                            className="appBtnGreen2"
+                            style={{ marginTop: "15px" }}
+                          >
+                            Продолжить
+                          </button>
+                        </FlexBoxBtn>
+                      )}
+                    </>
                   )}
                 </form>
               )}

@@ -12,15 +12,15 @@ import {
 } from "../styles/Home.styled";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import InGameLogo from "../assets/Img/Ball.png";
-import WatchImg from "../assets/Img/Endurance.png";
-import WatchImg2 from "../assets/Img/Vector1.png";
-import More from "../assets/Img/More.png";
+import WatchImg from "../assets/svg/homeLevel1.svg";
+import WatchImg2 from "../assets/svg/homeLevel2.svg";
+import More from "../assets/svg/homeLevel3.svg";
 import DefaultImg from "../assets/Img/default.png";
 import { useEffect, useState } from "react";
 import { GetAuthInstance } from "../helpers/httpClient";
 import _, { get } from "lodash";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { StylesHidden } from "../styles/Global.styled";
+import { FlexBoxBtn, StylesHidden } from "../styles/Global.styled";
 import { HomeSwiperStyle } from "../styles/HomeSwiperStyle";
 import Slider from "react-slick";
 import DefaultClub from "../assets/Img/defaultClub.png";
@@ -73,9 +73,9 @@ const PlayersPage = () => {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 5000,
+    // autoplay: true,
+    // speed: 2000,
+    // autoplaySpeed: 5000,
   };
 
   useEffect(() => {
@@ -257,7 +257,7 @@ const PlayersPage = () => {
                 </div>
                 <HomeTimeStyle>
                   <div className="firstTime">
-                    <div className="watch">
+                    <div className="firstTimeSub">
                       <img src={WatchImg} alt="" />
                     </div>
                     <div className="watchTitle">
@@ -266,7 +266,7 @@ const PlayersPage = () => {
                     </div>
                   </div>
                   <div className="firstTime">
-                    <div className="watch">
+                    <div className="firstTimeSub">
                       <img src={More} alt="" />
                     </div>
                     <div className="watchTitle">
@@ -275,7 +275,7 @@ const PlayersPage = () => {
                     </div>
                   </div>
                   <div className="firstTime">
-                    <div className="watch">
+                    <div className="firstTimeSub">
                       <img src={WatchImg2} alt="" />
                     </div>
 
@@ -534,7 +534,11 @@ const PlayersPage = () => {
         )}
       </AppMAIN>
       <AppFooter>
-        <div className="appBtnGreen">Отправить push-уведомление</div>
+        <FlexBoxBtn style={{ padding: "0" }}>
+          <button type="submit" className="appBtnGreen2">
+            Отправить push-уведомление
+          </button>
+        </FlexBoxBtn>
       </AppFooter>
     </>
   );

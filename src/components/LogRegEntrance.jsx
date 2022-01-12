@@ -28,10 +28,18 @@ const LogRegEntrance = () => {
         </AppLogo>
         <FlexBottom>
           <div className="">
-            <Link to="/login" className="appBtnGreen2">
+            <Link
+              to="/login"
+              className="appBtnGreen"
+              style={{ padding: "16px 0", marginBottom: "15px" }}
+            >
               Войти
             </Link>
-            <Link to="/register" className="appBtnTransparent">
+            <Link
+              to="/register"
+              className="appBtnTransparent"
+              style={{ padding: "16px 0" }}
+            >
               Быстрая регистрация
             </Link>
           </div>

@@ -9,11 +9,17 @@ import {
 import { LoginSection, LoginSectionSub } from "../styles/LogIn.styled";
 import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import TitleSubTitle from "./sections/TitleSubTitle";
-import { FormUpperDiv, InputFormFlex } from "../styles/Global.styled";
+import {
+  FlexBoxBtn,
+  FormUpperDiv,
+  InputFormFlex,
+} from "../styles/Global.styled";
 import Hide from "../assets/svg/Hide.svg";
+import ShowHide from "../assets/svg/Show.svg";
 import Lock from "../assets/svg/Lock.svg";
 import BgS from "../assets/Img/Bg's.png";
 import { GetNotAuthInstance } from "../helpers/httpClient";
+import { get } from "lodash";
 
 const ResetPassword = () => {
   const [lists, setLists] = useState([]);
@@ -27,46 +33,65 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const handlePswShowHide = () => setPswShowHide(!pswShowHide);
 
+  const [errors, setErrors] = useState({
+    password_error: false,
+    confirmPassword_error: false,
+    samePassword_error: false,
+  });
+  const { password_error, confirmPassword_error, samePassword_error } = errors;
+  const onFocus = (name) => setErrors({ ...errors, [name]: false });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-
-    let v_password = false;
-    let s_password = false;
-    if (password.length < 8 && confirmPassword.length < 8) {
-      v_password = true;
-    }
-
-    if (password !== confirmPassword) {
-      s_password = true;
-    }
-
-    if (!s_password && !v_password) {
-      const formData = new FormData();
-      formData.append("phone", sessionStorage.getItem("phone"));
-      formData.append("token", sessionStorage.getItem("token"));
-      formData.append("password", password);
-      formData.append("confirm_password", confirmPassword);
-      GetNotAuthInstance()
-        .post("/api/v1/update-password/", formData)
-        .then((result) => {
-          setLists([...lists, result.formData]);
-          setPassword("");
-          setConfirmPassword("");
-          setLoading(false);
-          localStorage.removeItem("token");
-          sessionStorage.removeItem("token");
-          navigate("/login");
-        })
-        .catch((err) => {});
-    } else if (v_password && s_password) {
-      setError_Password(v_password);
-      setSame_Password(s_password);
+    if (password.length >= 8 && confirmPassword.length >= 8) {
+      if (password !== confirmPassword) {
+        setErrors({
+          ...errors,
+          samePassword_error: true,
+        });
+        setLoading(false);
+      } else {
+        const formData = new FormData();
+        formData.append("phone", sessionStorage.getItem("phone"));
+        formData.append("token", sessionStorage.getItem("token"));
+        formData.append("password", password);
+        formData.append("confirm_password", confirmPassword);
+        GetNotAuthInstance()
+          .post("/api/v1/update-password/", formData)
+          .then((result) => {
+            const status = get(result, "data.status");
+            if (status === 1) {
+              setLists([...lists, result.formData]);
+              setPassword("");
+              setConfirmPassword("");
+              setLoading(false);
+              localStorage.removeItem("token");
+              sessionStorage.removeItem("token");
+              sessionStorage.removeItem("phone");
+              navigate("/login");
+            } else {
+              setErrors({
+                ...errors,
+                samePassword_error: false,
+              });
+              setLoading(false);
+            }
+          })
+          .catch((err) => {});
+      }
+    } else if (password.length < 8) {
+      setErrors({
+        ...errors,
+        password_error: true,
+      });
       setLoading(false);
-    } else {
+    } else if (confirmPassword.length < 8) {
+      setErrors({
+        ...errors,
+        confirmPassword_error: true,
+      });
       setLoading(false);
-      setError_Password(v_password);
-      setSame_Password(s_password);
     }
   };
 
@@ -76,9 +101,7 @@ const ResetPassword = () => {
         <AppHeader>
           <AppHeaderFlex>
             <div className="">
-              <span onClick={() => navigate(-1)} style={{ cursor: "pointer" }}>
-                <img src={ArrowRight} alt="" />
-              </span>
+              <span />
             </div>
           </AppHeaderFlex>
         </AppHeader>
@@ -97,8 +120,8 @@ const ResetPassword = () => {
                   <input
                     onChange={(e) => {
                       setPassword(e.target.value);
-                      setError_Password(false);
                     }}
+                    onFocus={() => onFocus("password_error")}
                     value={password}
                     type={!pswShowHide ? "password" : "text"}
                     name="password"
@@ -106,13 +129,17 @@ const ResetPassword = () => {
                   />
                   <span className="span2" onClick={() => handlePswShowHide()}>
                     <span>
-                      <img src={Hide} alt="" />
+                      <img
+                        src={!pswShowHide ? Hide : ShowHide}
+                        className="cursorApp"
+                        alt=""
+                      />
                     </span>
                   </span>
                 </InputFormFlex>
-                {error_password ? (
+                {password_error ? (
                   <span className="inputError">
-                    Parolni kiriting. Kamida 8 belgi
+                    Parolda kamida 8 ta belgi bo'lishi kerak
                   </span>
                 ) : null}
                 <InputFormFlex>
@@ -124,8 +151,8 @@ const ResetPassword = () => {
                   <input
                     onChange={(e) => {
                       setConfirmPassword(e.target.value);
-                      setError_Password(false);
                     }}
+                    onFocus={() => onFocus("confirmPassword_error")}
                     value={confirmPassword}
                     type={!pswShowHide ? "password" : "text"}
                     name="confirm_password"
@@ -133,47 +160,75 @@ const ResetPassword = () => {
                   />
                   <span className="span2" onClick={() => handlePswShowHide()}>
                     <span>
-                      <img src={Hide} alt="" />
+                      <img
+                        src={!pswShowHide ? Hide : ShowHide}
+                        className="cursorApp"
+                        alt=""
+                      />
                     </span>
                   </span>
                 </InputFormFlex>
-                {error_password ? (
+                {confirmPassword_error ? (
                   <span className="inputError">
-                    Parolni kiriting. Kamida 8 belgi
+                    Parolda kamida 8 ta belgi bo'lishi kerak
                   </span>
                 ) : null}
-                {same_password ? (
+                {samePassword_error ? (
                   <span className="inputError">Parol bir xil emas</span>
-                ) : (
-                  ""
-                )}
+                ) : null}
               </FormUpperDiv>
             </LoginSectionSub>
           </LoginSection>
         </AppMAIN>
         <AppFooter>
           {loading ? (
-            <div className="" style={{ width: "100%" }}>
-              <button
-                type="button"
-                className="appBtnGreen2"
-                style={{ margin: "0" }}
-              >
-                <div className="AppLoader22Div">
-                  <div className="AppLoader22"></div>
-                </div>
-              </button>
-            </div>
+            <button type="button" className="appBtnGreen">
+              <div className="AppLoader22Div">
+                <div className="AppLoader22"></div>
+              </div>
+            </button>
           ) : (
-            <div className="" style={{ width: "100%" }}>
+            <button type="submit" className="appBtnGreen">
+              Сбросить пароль
+            </button>
+          )}
+
+          {password.length < 8 && confirmPassword.length < 8 ? (
+            <FlexBoxBtn>
               <button
                 type="submit"
                 className="appBtnGreen2"
-                style={{ margin: "0" }}
+                style={{ marginTop: "15px" }}
               >
                 Сбросить пароль
               </button>
-            </div>
+            </FlexBoxBtn>
+          ) : (
+            <>
+              {loading ? (
+                <FlexBoxBtn>
+                  <button
+                    type="button"
+                    className="appBtnGreen2"
+                    style={{ marginTop: "15px" }}
+                  >
+                    <div className="AppLoader22Div">
+                      <div className="AppLoader22"></div>
+                    </div>
+                  </button>
+                </FlexBoxBtn>
+              ) : (
+                <FlexBoxBtn>
+                  <button
+                    type="submit"
+                    className="appBtnGreen2"
+                    style={{ marginTop: "15px" }}
+                  >
+                    Сбросить пароль
+                  </button>
+                </FlexBoxBtn>
+              )}
+            </>
           )}
         </AppFooter>
       </form>

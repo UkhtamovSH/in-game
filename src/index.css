@@ -141,3 +141,7 @@
     -webkit-transform: rotate(360deg);
   }
 }
+
+.cursorApp {
+  cursor: pointer;
+}

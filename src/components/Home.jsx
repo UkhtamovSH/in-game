@@ -9,9 +9,9 @@ import {
 import settingImg from "../assets/Img/Setting.png";
 import editImg from "../assets/Img/Edit.png";
 import InGameLogo from "../assets/Img/Ball.png";
-import WatchImg from "../assets/Img/Endurance.png";
-import WatchImg2 from "../assets/Img/Vector1.png";
-import More from "../assets/Img/More.png";
+import WatchImg from "../assets/svg/homeLevel1.svg";
+import WatchImg2 from "../assets/svg/homeLevel2.svg";
+import More from "../assets/svg/homeLevel3.svg";
 import HomeSwiper from "../components/sections/HomeSwiper";
 import CommentSwiper from "../components/sections/CommentSwiper";
 import DefaultImg from "../assets/Img/default.png";
@@ -256,7 +256,7 @@ const Home = () => {
                 </div>
                 <HomeTimeStyle>
                   <div className="firstTime">
-                    <div className="watch">
+                    <div className="firstTimeSub">
                       <img src={WatchImg} alt="" />
                     </div>
                     <div className="watchTitle">
@@ -265,7 +265,7 @@ const Home = () => {
                     </div>
                   </div>
                   <div className="firstTime">
-                    <div className="watch">
+                    <div className="firstTimeSub">
                       <img src={More} alt="" />
                     </div>
                     <div className="watchTitle">
@@ -274,7 +274,7 @@ const Home = () => {
                     </div>
                   </div>
                   <div className="firstTime">
-                    <div className="watch">
+                    <div className="firstTimeSub">
                       <img src={WatchImg2} alt="" />
                     </div>
 
