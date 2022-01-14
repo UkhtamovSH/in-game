@@ -44,9 +44,9 @@ export const Polya = styled.div`
   }
   .address {
     padding: 20px;
-    position: relative;
-    top: 100px;
-    left: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 
   .stadion {
@@ -54,6 +54,7 @@ export const Polya = styled.div`
     display: flex;
     justify-content: space-between;
     position: relative;
+    align-items: center;
     .leftFree {
       background-color: #f6ce42;
       padding: 5px 8px;
@@ -63,11 +64,13 @@ export const Polya = styled.div`
       }
     }
     .rightFree {
+      height: 20px;
       display: flex;
       gap: 10px;
       padding: 5px 8px;
       background: #4f4f4f;
       border-radius: 8px;
+      align-items: center;
       img {
         height: 15px;
       }

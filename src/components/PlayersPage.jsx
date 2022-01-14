@@ -24,14 +24,26 @@ import { FlexBoxBtn, StylesHidden } from "../styles/Global.styled";
 import { HomeSwiperStyle } from "../styles/HomeSwiperStyle";
 import Slider from "react-slick";
 import DefaultClub from "../assets/Img/defaultClub.png";
+import { getLanguage } from "../helpers/language";
+import { PossibleModal } from "../styles/NewGame.styled";
 
 const PlayersPage = () => {
   const [data, setData] = useState([]);
   const [gameEnd, setGameEnd] = useState([]);
+  const [notification, setNotification] = useState([]);
   const [commentSwiper, setCommentSwiper] = useState([]);
   const [preLoading, setPreLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [possibleModal, setPossibleModal] = useState(false);
+  const [possibleModal2, setPossibleModal2] = useState(false);
+
+  const togglePossibleModal = () => setPossibleModal(!possibleModal);
+
+  const togglePossibleModal2 = () => setPossibleModal2(!possibleModal2);
   const params = useParams();
   const navigate = useNavigate();
+
+  const lan = getLanguage();
 
   const getData = () => {
     setPreLoading(true);
@@ -64,6 +76,27 @@ const PlayersPage = () => {
       })
       .catch((err) => {})
       .finally(() => setPreLoading(false));
+  };
+
+  const handleSubmitNotif = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("user_id", params.id);
+    formData.append("lan", lan);
+    GetAuthInstance()
+      .post(`/api/v1/notification/`, formData)
+      .then((res) => {
+        const status = get(res, "data.status");
+        if (status === 1) {
+          setNotification([...notification, res.formData]);
+          togglePossibleModal(true);
+        } else {
+          togglePossibleModal2(true);
+        }
+      })
+      .catch((err) => {})
+      .finally(() => setLoading(false));
   };
 
   const settings = {
@@ -551,11 +584,47 @@ const PlayersPage = () => {
       </AppMAIN>
       <AppFooter>
         <FlexBoxBtn style={{ padding: "0" }}>
-          <button type="submit" className="appBtnGreen2">
+          <button
+            type="submit"
+            onClick={(e) => handleSubmitNotif(e)}
+            className="appBtnGreen2"
+          >
             Отправить push-уведомление
           </button>
         </FlexBoxBtn>
       </AppFooter>
+      {possibleModal ? (
+        <PossibleModal>
+          <div className="">
+            <div className="possibleModalSub">
+              <div className="sub1">
+                <p>Успех</p>
+                <p>Сообщение отправлено!</p>
+              </div>
+              <div className="sub2" onClick={togglePossibleModal}>
+                OK
+              </div>
+            </div>
+          </div>
+          <StylesHidden />
+        </PossibleModal>
+      ) : null}
+      {possibleModal2 ? (
+        <PossibleModal>
+          <div className="">
+            <div className="possibleModalSub">
+              <div className="sub1">
+                {/* <p>Ошибка</p> */}
+                <p>Пользователь отключил функцию обмена сообщениями!</p>
+              </div>
+              <div className="sub2" onClick={togglePossibleModal2}>
+                OK
+              </div>
+            </div>
+          </div>
+          <StylesHidden />
+        </PossibleModal>
+      ) : null}
     </>
   );
 };

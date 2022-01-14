@@ -18,7 +18,11 @@ import {
   StarDiv,
 } from "../../styles/Rate.style";
 
-const Rate = () => {
+const Rate = (props) => {
+  const params = useParams();
+
+  const [updatedLists, setUpdatedLists] = useState([]);
+  const navigate = useNavigate();
   const [rate, setRate] = useState(0);
   const [drib, setDrib] = useState(0);
   const [pass, setPass] = useState(0);
@@ -27,10 +31,6 @@ const Rate = () => {
   const [headButt, setHeadbutt] = useState(0);
   const [select, setSelect] = useState(0);
   const [content, setContent] = useState("");
-  const [updatedLists, setUpdatedLists] = useState([]);
-  const params = useParams();
-  const navigate = useNavigate();
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -39,7 +39,7 @@ const Rate = () => {
     formData.append("speed", rate);
     formData.append("dribbling", drib);
     formData.append("pass", pass);
-    formData.append("blow-procision", hit);
+    formData.append("blow-precision", hit);
     formData.append("blow-force", force);
     formData.append("headbutt", headButt);
     formData.append("selection", select);
@@ -56,15 +56,30 @@ const Rate = () => {
       .catch((err) => {});
   };
 
-  const getData = () => {
+  const getDataRate = () => {
     GetAuthInstance()
-      .get("/api/v1/game/review/")
-      .then((res) => {});
+      .get(`/api/v1/game-user/?game=${params.id}`)
+      .then((res) => {
+        let findIDForRate = {};
+        res.data.results.forEach((item) => {
+          if (item.user.id == params.user_id) {
+            findIDForRate = { ...item.review };
+          }
+        });
+        setRate(findIDForRate.speed);
+        setDrib(findIDForRate.dribbling);
+        setPass(findIDForRate.pas);
+        setHit(findIDForRate.blow_precision);
+        setForce(findIDForRate.blow_force);
+        setHeadbutt(findIDForRate.headbutt);
+        setSelect(findIDForRate.selection);
+        setContent(findIDForRate.content);
+      });
   };
 
   useEffect(() => {
-    getData();
-  }, []);
+    getDataRate();
+  }, [params.id]);
 
   return (
     <>

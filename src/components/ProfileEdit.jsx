@@ -30,6 +30,9 @@ import SelectProfileClubs from "../components/sections/editprofile/SelectProfile
 import SelectProfilePositions from "../components/sections/editprofile/SelectProfilePositions";
 import SelectProfileCities from "../components/sections/editprofile/SelectProfileCities";
 import SelectProfileRegions from "../components/sections/editprofile/SelectProfileRegions";
+import { useRef } from "react";
+import { get, find } from "lodash";
+import { PossibleModal } from "../styles/NewGame.styled";
 
 const SContainerMainProfEdit = styled.div`
   margin-top: 93px;
@@ -104,6 +107,11 @@ const ProfileEdit = () => {
   const [updateLists, setUpdateLists] = useState([]);
   const [preLoading, setPreLoading] = useState(false);
   const [modal, setModal] = useState(false);
+
+  const [possibleModal, setPossibleModal] = useState(false);
+
+  const togglePossibleModal = () => setPossibleModal(!possibleModal);
+
   const [userProfile, setUserProfile] = useState({
     full_name: "",
     birth_date: "",
@@ -132,7 +140,7 @@ const ProfileEdit = () => {
   });
   const { fullNameError } = errors;
   const onFocus = (name) => setErrors({ ...errors, [name]: false });
-
+  const district = find(regions, (item) => item.id === region.id)?.name;
   // ******modal functions start******
   const toggleModal = () => {
     if (modal) {
@@ -202,6 +210,102 @@ const ProfileEdit = () => {
   useEffect(() => {
     getUser();
   }, []);
+
+  //Select Profile Cities Start
+
+  const getCities = (
+    page = 1,
+    next_url = `/api/v1/region/parent/?page=${page}&per_page=20`,
+    search = ""
+  ) => {
+    let s = "";
+    if (search) {
+      s = "&search=" + search;
+    }
+    GetAuthInstance()
+      .get(next_url + s)
+      .then((response) => {
+        if (response.status === 200) {
+          const result =
+            page === 1
+              ? response.data.results
+              : [...cities, ...response.data.results];
+          setCities(result);
+          setNextUrlCities(response.data.next);
+        }
+      })
+      .catch((err) => {
+        setCities([]);
+      });
+  };
+
+  const handleSearchCities = (e) => {
+    setSearchCities(e.target.value);
+    let page = 1;
+    let next_url = `/api/v1/region/parent/?page=${page}&per_page=20`;
+    setTypingTimeOut(
+      setTimeout(() => {
+        getCities(page, next_url, e.target.value);
+      }, 1000)
+    );
+
+    if (typingTimeOut) {
+      clearTimeout(typingTimeOut);
+    }
+  };
+
+  useEffect(() => {
+    getCities();
+  }, []);
+  //Select Profile Cities End
+
+  //Select Profile Regions Start
+
+  const getRegions = (
+    page = 1,
+    next_url = `/api/v1/region?page=${page}&per_page=20&city=${city?.id}`,
+    search = ""
+  ) => {
+    let s = "";
+    if (search) {
+      s = "&search=" + search;
+    }
+    GetAuthInstance()
+      .get(next_url + s)
+      .then((response) => {
+        if (response.status === 200) {
+          const result =
+            page === 1
+              ? response.data.results
+              : [...regions, ...response.data.results];
+          setRegions(result);
+          setNextUrlRegions(response.data.next);
+        }
+      })
+      .catch((err) => {
+        setRegions([]);
+      });
+  };
+
+  const handleSearchRegions = (e) => {
+    setSearchRegions(e.target.value);
+    let page = 1;
+    let next_url = `api/v1/region?page=${page}&per_page=20&city=${city?.id}`;
+    setTypingTimeOut(
+      setTimeout(() => {
+        getRegions(page, next_url, e.target.value);
+      }, 1000)
+    );
+
+    if (typingTimeOut) {
+      clearTimeout(typingTimeOut);
+    }
+  };
+
+  useEffect(() => {
+    getRegions();
+  }, [city, district]);
+  //Select Profile Regions End
 
   return (
     <>
@@ -274,6 +378,7 @@ const ProfileEdit = () => {
                       type="text"
                       name="full_name"
                       placeholder="Полное имя"
+                      maxLength="30"
                     />
                     <span className="span2"></span>
                   </InputFormFlex>
@@ -409,16 +514,42 @@ const ProfileEdit = () => {
                       }}
                       className="spanInput"
                     >
-                      {region ? region?.name : "Выберите город"}
+                      {district ? district : "Tumanni tanlang"}
                     </span>
                     <span className="span2"></span>
                   </InputFormFlex>
                 </AppMAIN>
                 <AppFooter>
-                  <button type="submit" className="appBtnGreen">
-                    Сохранить изменения
-                  </button>
+                  {district === undefined ? (
+                    <button
+                      type="button"
+                      className="appBtnGray"
+                      onClick={togglePossibleModal}
+                    >
+                      Сохранить изменения
+                    </button>
+                  ) : (
+                    <button type="submit" className="appBtnGreen">
+                      Сохранить изменения
+                    </button>
+                  )}
                 </AppFooter>
+                {possibleModal ? (
+                  <PossibleModal>
+                    <div className="">
+                      <div className="possibleModalSub">
+                        <div className="sub1">
+                          <p>Ошибка</p>
+                          <p>Cначала выберите регион</p>
+                        </div>
+                        <div className="sub2" onClick={togglePossibleModal}>
+                          OK
+                        </div>
+                      </div>
+                    </div>
+                    <StylesHidden />
+                  </PossibleModal>
+                ) : null}
               </form>
             </>
           ) : (
@@ -432,9 +563,9 @@ const ProfileEdit = () => {
                       : modalCount === 2
                       ? "Позиция в игре"
                       : modalCount === 3
-                      ? "Выберите регион"
-                      : modalCount === 4
                       ? "Выберите город"
+                      : modalCount === 4
+                      ? "Выберите регион"
                       : null
                   }
                 >
@@ -468,12 +599,7 @@ const ProfileEdit = () => {
                     />
                   ) : modalCount === 3 ? (
                     <SelectProfileCities
-                      setSearchCities={setSearchCities}
-                      setTypingTimeOut={setTypingTimeOut}
-                      typingTimeOut={typingTimeOut}
                       cities={cities}
-                      setCities={setCities}
-                      setNextUrlCities={setNextUrlCities}
                       nextUrlCities={nextUrlCities}
                       searchCities={searchCities}
                       setUserProfile={setUserProfile}
@@ -482,16 +608,12 @@ const ProfileEdit = () => {
                       city={city}
                       preLoading={preLoading}
                       setPreLoading={setPreLoading}
+                      getCities={getCities}
+                      handleSearchCities={handleSearchCities}
                     />
                   ) : modalCount === 4 ? (
                     <SelectProfileRegions
-                      city={city}
-                      setSearchRegions={setSearchRegions}
-                      setTypingTimeOut={setTypingTimeOut}
                       regions={regions}
-                      setRegions={setRegions}
-                      setNextUrlRegions={setNextUrlRegions}
-                      typingTimeOut={typingTimeOut}
                       searchRegions={searchRegions}
                       nextUrlRegions={nextUrlRegions}
                       setUserProfile={setUserProfile}
@@ -500,6 +622,8 @@ const ProfileEdit = () => {
                       region={region}
                       preLoading={preLoading}
                       setPreLoading={setPreLoading}
+                      handleSearchRegions={handleSearchRegions}
+                      getRegions={getRegions}
                     />
                   ) : null}
                 </Modal>

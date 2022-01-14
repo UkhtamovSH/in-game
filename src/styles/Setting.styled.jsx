@@ -7,6 +7,7 @@ export const AutoSelectPlayerWrapp = styled.div`
 export const AutoSelectPlayer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 20px 0px;
   border-bottom: 0.1px solid #5f5f5f;
   & img {
@@ -15,6 +16,28 @@ export const AutoSelectPlayer = styled.div`
   }
 `;
 
+export const SettingsLanguageFlex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  border-top: 0.1px solid #5f5f5f;
+  border-bottom: 0.1px solid #5f5f5f;
+  div {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 0px;
+    cursor: pointer;
+    p {
+      text-align: center;
+    }
+    &:nth-child(2) {
+      border-left: 0.1px solid #5f5f5f;
+      border-right: 0.1px solid #5f5f5f;
+    }
+  }
+`;
 export const AutoSelectPlayerAccount = styled.div`
   padding-top: 20px;
   & span {

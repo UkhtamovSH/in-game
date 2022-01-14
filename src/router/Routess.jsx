@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "../components/Login";
 import LogRegEntrance from "../components/LogRegEntrance";
 import OnBoarding from "../components/OnBoarding/OnBoarding";
@@ -25,8 +25,16 @@ import PlayersPage from "../components/PlayersPage";
 import Game from "../components/Game";
 import GameOver from "../components/GameOver";
 import ForgotAcceptVerification from "../components/ForgotAcceptVerification";
+import { useEffect } from "react";
+import { issetToken } from "../helpers/tokenStorage";
 
 const Routess = () => {
+  const history = useNavigate();
+  useEffect(() => {
+    if (!issetToken()) {
+      history("/login");
+    }
+  }, []);
   return (
     <Routes>
       <Route path="/" element={<OnBoarding />} />

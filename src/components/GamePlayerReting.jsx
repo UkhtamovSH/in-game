@@ -270,7 +270,10 @@ const GamePlayerReting = () => {
                       <div className="nameDiv">
                         <p className="text1">
                           {_.get(item, "user.full_name") !== null
-                            ? _.get(item, "user.full_name")
+                            ? _.get(item, "user.full_name").length > 21
+                              ? _.get(item, "user.full_name").substr(0, 20) +
+                                "..."
+                              : _.get(item, "user.full_name")
                             : "Анонимный игрок"}
                         </p>
                         <div className="text22Flex">

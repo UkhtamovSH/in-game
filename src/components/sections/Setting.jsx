@@ -12,13 +12,16 @@ import {
   AutoSelectPlayer,
   AutoSelectPlayerAccount,
   AutoSelectPlayerWrapp,
-  AutoSelectSave,
+  SettingsLanguageFlex,
 } from "../../styles/Setting.styled";
 import { SwitchDiv } from "./Switch.styled";
 import { GetAuthInstance } from "../../helpers/httpClient";
 import { get } from "lodash";
 import { PossibleModal } from "../../styles/NewGame.styled";
 import { StylesHidden } from "../../styles/Global.styled";
+import { useTranslation } from "react-i18next";
+import { getLanguage } from "../../helpers/language";
+import { removeToken } from "../../helpers/tokenStorage";
 
 const Setting = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -32,8 +35,16 @@ const Setting = () => {
   //   ? (document.body.style.overflow = "hidden")
   //   : (document.body.style.overflow = "unset");
 
-  const [data, setData] = useState([]);
+  const [setData] = useState([]);
   const history = useNavigate();
+
+  const { t, i18n } = useTranslation();
+  const lan = getLanguage();
+
+  const onLanguageHandle = (newLang) => {
+    i18n.changeLanguage(newLang);
+    window.localStorage.setItem("language", newLang);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -74,7 +85,7 @@ const Setting = () => {
 
   const clickModal = () => setIsOpenModal(!isOpenModal);
   const logOut = () => {
-    window.localStorage.clear();
+    removeToken();
     history("/");
   };
 
@@ -101,6 +112,17 @@ const Setting = () => {
         <AppMAIN>
           <AutoSelectPlayerWrapp>
             <SwitchDiv>
+              <SettingsLanguageFlex>
+                <div className="" onClick={() => onLanguageHandle("uz")}>
+                  {t("navbar.uz")}
+                </div>
+                <div className="" onClick={() => onLanguageHandle("ru")}>
+                  {t("navbar.ru")}
+                </div>
+                <div className="" onClick={() => onLanguageHandle("en")}>
+                  {t("navbar.en")}
+                </div>
+              </SettingsLanguageFlex>
               <AutoSelectPlayer>
                 <p>Push-уведомления</p>
                 <label className="switch">
@@ -165,11 +187,9 @@ const Setting = () => {
           </AutoSelectPlayerWrapp>
         </AppMAIN>
         <AppFooter>
-          <AutoSelectSave>
-            <button className="appBtnGreen" type="submit">
-              Сохранить
-            </button>
-          </AutoSelectSave>
+          <button className="appBtnGreen" type="submit">
+            Сохранить
+          </button>
         </AppFooter>
         {isOpenModal ? (
           <PossibleModal>
