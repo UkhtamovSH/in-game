@@ -41,7 +41,7 @@ export const AppHeader = styled.div`
   }
 
   @media only screen and (max-width: 576px) and (min-width: 320px) {
-    max-width: 94%;
+    max-width: 100%;
   }
 `;
 export const AppFooter = styled.div`
@@ -61,7 +61,7 @@ export const AppFooter = styled.div`
   }
 
   @media only screen and (max-width: 576px) and (min-width: 320px) {
-    max-width: 94%;
+    max-width: 100%;
   }
 `;
 export const AppFooter2 = styled.div`

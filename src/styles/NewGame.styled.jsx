@@ -18,11 +18,23 @@ export const NewGameHeaderFlex = styled.div`
   width: 100%;
   height: 100%;
   align-items: center;
-  .div1Main {
-    width: 100%;
-    p {
-      margin-top: 8px;
-      text-align: center;
+  @media (max-width: 8000px) and (min-width: 576px) {
+    .div1 {
+      padding: 15px;
+    }
+    .div2 {
+      padding: 15px;
+      margin: 0 12px;
+    }
+  }
+
+  @media only screen and (max-width: 576px) and (min-width: 320px) {
+    .div1 {
+      padding: 8px;
+    }
+    .div2 {
+      padding: 8px;
+      margin: 0 8px;
     }
   }
   .div1 {
@@ -34,15 +46,20 @@ export const NewGameHeaderFlex = styled.div`
     color: #bdbdbd;
     background: #333333;
     border-radius: 12px;
-    padding: 15px;
     cursor: pointer;
+  }
+
+  .div1Main {
+    width: 100%;
+    p {
+      margin-top: 8px;
+      text-align: center;
+    }
   }
   .div2 {
     text-align: center;
     background: #184e4f;
     border-radius: 80px;
-    padding: 15px;
-    margin: 0 12px;
     cursor: pointer;
     p {
       font-family: "Manrope-Bold", sans-serif;
@@ -99,40 +116,66 @@ export const NewGamePositionCard = styled.div`
       display: flex;
       justify-content: flex-start;
     }
-    .div1{
-      width: 100%;
-      margin-right: 5px;
-      text-align: left;
-      overflow-x: auto;
-      overflow-y: hidden;
-      white-space: nowrap;  
-      width: 200px;
-      div{ 
-        display: inline-block;
-        margin: 0 8px;
-        text-align: center;
-      }
-    }
     .div2Main{
       width: 100%;
       display: flex;
       justify-content: flex-end;
     }
-    .div2{
-      margin-left: 5px;
-      text-align: end;
-      overflow-x: auto;
-      overflow-y: hidden;
-      white-space: nowrap;  
-      width: 200px;
-        /* -webkit-overflow-scrolling: touch;
-        &::-webkit-scrollbar {
-          display: none;
-        } */
-      div{ 
-        display: inline-block;
-        margin: 0 8px;
-        text-align: center;
+    @media (max-width: 8000px) and (min-width: 576px) {
+      .div1{
+        margin-left: 5px;
+        text-align: left;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;  
+        width: 200px;
+        div{ 
+          display: inline-block;
+          margin: 0 8px;
+          text-align: center;
+        }
+      }
+      .div2{
+        margin-left: 5px;
+        text-align: end;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;  
+        width: 200px;
+        div{ 
+          display: inline-block;
+          margin: 0 8px;
+          text-align: center;
+        }
+      }
+    }
+
+    @media only screen and (max-width: 576px) and (min-width: 320px) {
+      .div1{
+        margin-left: 5px;
+        text-align: left;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;  
+        width: 125px;
+        div{ 
+          display: inline-block;
+          margin: 0 8px;
+          text-align: center;
+        }
+      }
+      .div2{
+        margin-left: 5px;
+        text-align: end;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;  
+        width: 125px;
+        div{ 
+          display: inline-block;
+          margin: 0 8px;
+          text-align: center;
+        }
       }
     }
   }

@@ -54,7 +54,13 @@ const ChoosenPlayersTwo = ({
                     ) : null}
                   </div>
                   <div className="nameDiv">
-                    <p className="text1">{name}</p>
+                    <p className="text1">
+                      {name !== null
+                        ? name.length > 21
+                          ? name.substr(0, 20) + "..."
+                          : name
+                        : "Анонимный игрок"}
+                    </p>
                     <div className="text22Flex">
                       <p className="text22">Ball: {ball}</p>
                     </div>
@@ -83,7 +89,13 @@ const ChoosenPlayersTwo = ({
                     ) : null}
                   </div>
                   <div className="nameDiv">
-                    <p className="text1">{name}</p>
+                    <p className="text1">
+                      {name !== null
+                        ? name.length > 21
+                          ? name.substr(0, 20) + "..."
+                          : name
+                        : "Анонимный игрок"}
+                    </p>
                     <div className="text22Flex">
                       <p className="text22">Ball: {ball}</p>
                     </div>

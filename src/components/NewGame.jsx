@@ -106,7 +106,6 @@ const NewGame = () => {
         ]);
     }
   };
-
   const findPossiblePlayerPos = (target = 1, type = 0, user) => {
     setActiveTarget(target);
     setActiveType(type);
@@ -117,7 +116,10 @@ const NewGame = () => {
       }
       if (type === 2) {
         if (user) {
-          console.log(`target1 2chi type tanlandi => id si ${user} `);
+          // const filterFromOneUsers = oneUsers.filter((item) =>
+          //   console.log(item.user === user)
+          // );
+          // console.log(filterFromOneUsers, "find");
         }
       } else if (type === 3) {
         if (user) {
@@ -156,6 +158,15 @@ const NewGame = () => {
   };
   const toggleCountModal = (i) => {
     setModalCount(i);
+    if (modalCount === 4) {
+      const filterFromOneUsers = oneUsers.find((item) => item.user)?.user;
+      console.log(oneUsers, "oneUsers");
+      console.log(filterFromOneUsers, "filterFromOneUsers");
+
+      const filterPlayers = players.find((item) => item)?.id;
+      console.log(filterPlayers);
+      console.log(players);
+    }
   };
 
   const { minutes } = useSelector((state) => state);

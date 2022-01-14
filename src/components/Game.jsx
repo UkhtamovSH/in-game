@@ -24,15 +24,27 @@ import { useNavigate } from "react-router";
 const TimerDiv = styled.div`
   background: #333333;
   border-radius: 24px;
-  padding: 35px 24px;
   .timerDivSub {
     font-family: "Manrope-Bold", sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 64px;
     line-height: 87px;
     text-align: center;
     color: #ffffff;
+  }
+
+  @media (max-width: 8000px) and (min-width: 576px) {
+    padding: 35px 24px;
+    .timerDivSub {
+      font-size: 64px;
+    }
+  }
+
+  @media only screen and (max-width: 576px) and (min-width: 320px) {
+    padding: 18px;
+    .timerDivSub {
+      font-size: 34px;
+    }
   }
 
   .timerDivText {
@@ -310,7 +322,13 @@ const Game = () => {
                             ) : null}
                           </div>
                           <div className="nameDiv">
-                            <p className="text1">{name}</p>
+                            <p className="text1">
+                              {name !== null
+                                ? name.length > 21
+                                  ? name.substr(0, 20) + "..."
+                                  : name
+                                : "Анонимный игрок"}
+                            </p>
                             <div className="text22Flex">
                               <p className="text22">Команда: {club}</p>
                             </div>
