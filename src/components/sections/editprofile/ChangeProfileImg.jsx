@@ -3,6 +3,7 @@ import { ProfileHeaderFlex } from "../../../styles/Profile.styled";
 import DefaultImg from "../../../assets/Img/default.png";
 import { useState } from "react";
 import { get } from "lodash";
+import { useTranslation } from "react-i18next";
 
 const ChangeProfileImg = (props) => {
   const { setUserProfile, userProfile, avatar } = props;
@@ -64,6 +65,8 @@ const ChangeProfileImg = (props) => {
       .finally(() => setImgLoading(false));
   };
 
+  const { t } = useTranslation();
+
   return (
     <>
       <ProfileHeaderFlex>
@@ -85,11 +88,11 @@ const ChangeProfileImg = (props) => {
           className="profileHeaderFlexSub2"
           style={{ transform: "translate(0,10px)" }}
         >
-          <p>Ваше изображение</p>
+          <p>{t("changeProfileImgSection.yourImg")}</p>
           <div className="text12Flex">
             <span className="text1" style={{ width: "100px" }}>
               <label htmlFor="files" style={{ cursor: "pointer" }}>
-                Изменить
+                {t("changeProfileImgSection.changeImg")}
               </label>
               <input
                 id="files"
@@ -100,16 +103,20 @@ const ChangeProfileImg = (props) => {
               />
             </span>
             <span className="text2" onClick={handleImgDelete}>
-              Удалить
+              {t("changeProfileImgSection.deleteImg")}
             </span>
           </div>
         </div>
       </ProfileHeaderFlex>
       {change_errorImg ? (
-        <span className="inputError">Rasim yuklashda xatolik</span>
+        <span className="inputError">
+          {t("changeProfileImgSection.errorUpload")}
+        </span>
       ) : null}
       {del_errorImg ? (
-        <span className="inputError">Rasim o`chirishda xatolik</span>
+        <span className="inputError">
+          {t("changeProfileImgSection.errorDelete")}
+        </span>
       ) : null}
     </>
   );

@@ -18,6 +18,7 @@ import {
 } from "../../../styles/Modal.styled";
 import styled from "styled-components";
 import { get } from "lodash";
+import { useTranslation } from "react-i18next";
 
 const ModalDataContanier = styled.div`
   padding: 0 15px;
@@ -145,6 +146,8 @@ const TeamsNameList = (props) => {
     getClubs();
   }, []);
 
+  const { t } = useTranslation();
+
   return (
     <>
       <AppHeader style={{ padding: "12px 0 0 0" }}>
@@ -173,7 +176,7 @@ const TeamsNameList = (props) => {
               type="text"
               onChange={handleSearch}
               value={searchClubs}
-              placeholder="Введите название команды"
+              placeholder={t("placeholderForm.enterTeamName")}
             />
             <span className="span2"></span>
           </InputFormFlex>

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { InputFormFlex } from "../../../styles/Global.styled";
 
 const FilterBall = (props) => {
@@ -37,13 +38,16 @@ const FilterBall = (props) => {
       clearTimeout(typingTimeOut);
     }
   };
+
+  const { t } = useTranslation();
+
   return (
     <>
       <InputFormFlex>
         <input
           type="text"
           className="spanInput2"
-          placeholder="Рейтинг победы"
+          placeholder={t("placeholderForm.ratingWins")}
           onChange={
             countTab === 1
               ? handleFilterBall

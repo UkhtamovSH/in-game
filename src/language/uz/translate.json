@@ -4,6 +4,38 @@
       "ru": "Rus",
       "uz": "O`zbek",
       "en": "Ingliz"
+    },
+    "btnContinue": {
+      "btn": "Davom etish"
+    },
+    "OnBoardingFirst": {
+      "buildteam": "Jamoangizni tuzing",
+      "selectPlayer": "Yaqin atrofdagi o'yinchilarni tanlang, ularni optimal joylarga joylashtiring"
+    },
+    "loginRegisterSection": {
+      "telError": "Telefon raqam to'liq kiritilmadi",
+      "passwordError": "Parolda kamida 8 ta belgi bo'lishi kerak",
+      "loginError": "Tizimga kirishda xatolik",
+      "phonePasswordError": "Telefon raqam yoki parol da xatolik"
+    },
+    "changeProfileImgSection": {
+      "yourImg": "Sizning rasmingiz",
+      "changeImg": "O`zgartirish",
+      "deleteImg": "O`chirish",
+      "errorUpload": "Rasim yuklashda xatolik",
+      "errorDelete": "Rasim o`chirishda xatolik"
+    },
+    "placeholderForm": {
+      "enterCityName": "Shahar nomini kiriting",
+      "enterTeamName": "Jamoa nomini kiriting",
+      "feedbackPlayer": "O'yinchi haqida fikr",
+      "password": "Parol",
+      "repeatpassword": "Parolni qayta kiriting",
+      "fullname": "To`liq ism",
+      "login": "Kirish",
+      "enterRegionName": "Mintaqalar nomini kiriting",
+      "enterPlayerName": "O`yinchi nomini kiriting",
+      "ratingWins": "Reyting"
     }
   }
 }

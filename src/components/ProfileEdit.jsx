@@ -33,6 +33,7 @@ import SelectProfileRegions from "../components/sections/editprofile/SelectProfi
 import { useRef } from "react";
 import { get, find } from "lodash";
 import { PossibleModal } from "../styles/NewGame.styled";
+import { useTranslation } from "react-i18next";
 
 const SContainerMainProfEdit = styled.div`
   margin-top: 93px;
@@ -307,6 +308,8 @@ const ProfileEdit = () => {
   }, [city, district]);
   //Select Profile Regions End
 
+  const { t } = useTranslation();
+
   return (
     <>
       {preLoading ? (
@@ -377,7 +380,7 @@ const ProfileEdit = () => {
                       value={full_name}
                       type="text"
                       name="full_name"
-                      placeholder="Полное имя"
+                      placeholder={t("placeholderForm.fullname")}
                       maxLength="30"
                     />
                     <span className="span2"></span>

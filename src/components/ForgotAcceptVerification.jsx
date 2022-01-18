@@ -22,6 +22,7 @@ import { issetToken, setToken } from "../helpers/tokenStorage";
 import VerificationInput from "react-verification-input";
 import Timer from "react-compound-timer/build";
 import { get } from "lodash";
+import { useTranslation } from "react-i18next";
 
 const ForgotAcceptVerification = () => {
   const [lists, setLists] = useState([]);
@@ -32,6 +33,7 @@ const ForgotAcceptVerification = () => {
   const [code, setCode] = useState("");
   const [setResetSms] = useState(false);
 
+  const { t } = useTranslation();
   const history = useNavigate();
 
   const [errors, setErrors] = useState({
@@ -249,7 +251,7 @@ const ForgotAcceptVerification = () => {
                   </InputFormFlex>
                   {phone_error ? (
                     <span className="inputError">
-                      Telefon raqam to'liq kiritilmadi
+                      {t("loginRegisterSection.telError")}
                     </span>
                   ) : null}
                   {user_error ? (

@@ -31,6 +31,7 @@ import VerificationInput from "react-verification-input";
 import Timer from "react-compound-timer/build";
 import { get } from "lodash";
 import ShowHide from "../assets/svg/Show.svg";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
   const [lists, setLists] = useState([]);
@@ -213,6 +214,7 @@ const Register = () => {
     </Timer>
   );
 
+  const { t } = useTranslation();
   const phoneNumber = sessionStorage.getItem("phone")
     ? sessionStorage.getItem("phone")
     : "";
@@ -305,7 +307,7 @@ const Register = () => {
                       value={fullName}
                       type="text"
                       name="full_name"
-                      placeholder="Полное имя"
+                      placeholder={t("placeholderForm.fullname")}
                       maxLength="30"
                     />
                     <span className="span2"></span>
@@ -327,7 +329,7 @@ const Register = () => {
                       value={login}
                       type="text"
                       name="login"
-                      placeholder="Логин"
+                      placeholder={t("placeholderForm.login")}
                       maxLength="30"
                     />
                     <span className="span2"></span>
@@ -362,7 +364,7 @@ const Register = () => {
                   </InputFormFlex>
                   {phone_error ? (
                     <span className="inputError">
-                      Telefon raqam to'liq kiritilmadi
+                      {t("loginRegisterSection.telError")}
                     </span>
                   ) : null}
                   <InputFormFlex>
@@ -379,7 +381,7 @@ const Register = () => {
                       value={password}
                       type={pswShowHide ? "text" : "password"}
                       name="password"
-                      placeholder="Пароль"
+                      placeholder={t("placeholderForm.password")}
                     />
                     <span className="span2" onClick={handlePswShowHide}>
                       <span>
@@ -393,7 +395,7 @@ const Register = () => {
                   </InputFormFlex>
                   {password_error ? (
                     <span className="inputError">
-                      Parolda kamida 8 ta belgi bo'lishi kerak
+                      {t("loginRegisterSection.passwordError")}
                     </span>
                   ) : null}
                   <InputFormFlex>
@@ -410,7 +412,7 @@ const Register = () => {
                       value={confirmPassword}
                       type={pswShowHide ? "text" : "password"}
                       name="confirm_password"
-                      placeholder="Повторите пароль"
+                      placeholder={t("placeholderForm.repeatpassword")}
                     />
                     <span className="span2" onClick={handlePswShowHide}>
                       <span>
@@ -424,7 +426,7 @@ const Register = () => {
                   </InputFormFlex>
                   {confirmPassword_error ? (
                     <span className="inputError">
-                      Parolda kamida 8 ta belgi bo'lishi kerak
+                      {t("loginRegisterSection.passwordError")}
                     </span>
                   ) : null}
                   {samePassword_error ? (

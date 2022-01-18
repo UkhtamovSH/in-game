@@ -4,6 +4,38 @@
       "ru": "Русский",
       "uz": "Узбекский",
       "en": "Aнглийский"
+    },
+    "btnContinue": {
+      "btn": "Продолжить"
+    },
+    "OnBoardingFirst": {
+      "buildteam": "Сформируйте свою команду",
+      "selectPlayer": "Выберите игроков поблизости, расставьте их по оптимальным позициям"
+    },
+    "loginRegisterSection": {
+      "telError": "Телефон указан не полностью",
+      "passwordError": "Пароль должен быть не менее 8 символов",
+      "loginError": "Ошибка входа",
+      "phonePasswordError": "Ошибка в номере телефона или пароле"
+    },
+    "changeProfileImgSection": {
+      "yourImg": "Ваше изображение",
+      "changeImg": "Изменить",
+      "deleteImg": "Удалить",
+      "errorUpload": "Ошибка загрузки изображения",
+      "errorDelete": "Ошибка удаления изображения"
+    },
+    "placeholderForm": {
+      "enterCityName": "Введите название городы",
+      "enterTeamName": "Введите название команды",
+      "feedbackPlayer": "Отзыв об игроке",
+      "password": "Пароль",
+      "repeatpassword": "Повторите пароль",
+      "fullname": "Полное имя",
+      "login": "Логин",
+      "enterRegionName": "Введите название регионы",
+      "enterPlayerName": "Введите имя игрока",
+      "ratingWins": "Рейтинг победы"
     }
   }
 }

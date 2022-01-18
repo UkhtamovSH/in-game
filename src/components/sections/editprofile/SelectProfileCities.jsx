@@ -6,6 +6,7 @@ import {
 } from "../../../styles/Modal.styled";
 import SearchLine from "../../../assets/svg/SearchLine.svg";
 import { map } from "lodash";
+import { useTranslation } from "react-i18next";
 
 const SelectProfileCities = (props) => {
   const {
@@ -20,6 +21,8 @@ const SelectProfileCities = (props) => {
     getCities,
   } = props;
 
+  const { t } = useTranslation();
+
   return (
     <>
       <InputFormFlex>
@@ -32,7 +35,7 @@ const SelectProfileCities = (props) => {
           type="text"
           onChange={handleSearchCities}
           value={searchCities}
-          placeholder="Введите название городы"
+          placeholder={t("placeholderForm.enterCityName")}
         />
         <span className="span2"></span>
       </InputFormFlex>

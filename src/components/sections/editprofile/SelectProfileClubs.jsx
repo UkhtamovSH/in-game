@@ -10,6 +10,7 @@ import DefaultClub from "../../../assets/Img/defaultClub.png";
 import { useRef } from "react";
 import { useEffect } from "react";
 import { map } from "lodash";
+import { useTranslation } from "react-i18next";
 
 const SelectProfileClubs = (props) => {
   const {
@@ -72,6 +73,8 @@ const SelectProfileClubs = (props) => {
     getClubs();
   }, []);
 
+  const { t } = useTranslation();
+
   return (
     <>
       <InputFormFlex>
@@ -85,7 +88,7 @@ const SelectProfileClubs = (props) => {
           type="text"
           onChange={handleSearch}
           value={searchClubs}
-          placeholder="Введите название команды"
+          placeholder={t("placeholderForm.enterTeamName")}
         />
         <span className="span2"></span>
       </InputFormFlex>

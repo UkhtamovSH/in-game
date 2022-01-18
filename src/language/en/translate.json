@@ -4,6 +4,38 @@
       "ru": "Russian",
       "uz": "Uzbek",
       "en": "English"
+    },
+    "btnContinue": {
+      "btn": "Continue"
+    },
+    "OnBoardingFirst": {
+      "buildteam": "Build your team",
+      "selectPlayer": "Select players nearby, place them in optimal positions"
+    },
+    "loginRegisterSection": {
+      "telError": "Phone number is incomplete",
+      "passwordError": "The password must be at least 8 characters long",
+      "loginError": "Login error",
+      "phonePasswordError": "Error at phone number or password"
+    },
+    "changeProfileImgSection": {
+      "yourImg": "Your image",
+      "changeImg": "Change",
+      "deleteImg": "Delete",
+      "errorUpload": "Error image upload",
+      "errorDelete": "Error delete image"
+    },
+    "placeholderForm": {
+      "enterCityName": "Enter city name",
+      "enterTeamName": "Enter team name",
+      "feedbackPlayer": "Feedback about the player",
+      "password": "Password",
+      "repeatpassword": "Repeat password",
+      "fullname": "Full name",
+      "login": "Login",
+      "enterRegionName": "Enter the name of the regions",
+      "enterPlayerName": "Enter player name",
+      "ratingWins": "Win Rating"
     }
   }
 }

@@ -20,6 +20,7 @@ import Lock from "../assets/svg/Lock.svg";
 import BgS from "../assets/Img/Bg's.png";
 import { GetNotAuthInstance } from "../helpers/httpClient";
 import { get } from "lodash";
+import { useTranslation } from "react-i18next";
 
 const ResetPassword = () => {
   const [lists, setLists] = useState([]);
@@ -95,6 +96,8 @@ const ResetPassword = () => {
     }
   };
 
+  const { t } = useTranslation();
+
   return (
     <>
       <form onSubmit={(e) => handleSubmit(e)}>
@@ -125,7 +128,7 @@ const ResetPassword = () => {
                     value={password}
                     type={!pswShowHide ? "password" : "text"}
                     name="password"
-                    placeholder="Пароль"
+                    placeholder={t("placeholderForm.password")}
                   />
                   <span className="span2" onClick={() => handlePswShowHide()}>
                     <span>
@@ -139,7 +142,7 @@ const ResetPassword = () => {
                 </InputFormFlex>
                 {password_error ? (
                   <span className="inputError">
-                    Parolda kamida 8 ta belgi bo'lishi kerak
+                    {t("loginRegisterSection.passwordError")}
                   </span>
                 ) : null}
                 <InputFormFlex>
@@ -156,7 +159,7 @@ const ResetPassword = () => {
                     value={confirmPassword}
                     type={!pswShowHide ? "password" : "text"}
                     name="confirm_password"
-                    placeholder="Повторите пароль"
+                    placeholder={t("placeholderForm.repeatpassword")}
                   />
                   <span className="span2" onClick={() => handlePswShowHide()}>
                     <span>
@@ -170,7 +173,7 @@ const ResetPassword = () => {
                 </InputFormFlex>
                 {confirmPassword_error ? (
                   <span className="inputError">
-                    Parolda kamida 8 ta belgi bo'lishi kerak
+                    {t("loginRegisterSection.passwordError")}
                   </span>
                 ) : null}
                 {samePassword_error ? (

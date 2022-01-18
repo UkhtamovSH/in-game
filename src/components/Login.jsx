@@ -28,6 +28,7 @@ import {
 } from "../styles/ContainerFluid.styled";
 import { GetNotAuthInstance } from "../helpers/httpClient";
 import { issetToken, setToken } from "../helpers/tokenStorage";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const [lists, setLists] = useState([]);
@@ -54,6 +55,8 @@ const Login = () => {
   const handlePswShowHide = () => setPswShowHide(!pswShowHide);
 
   let history = useNavigate();
+
+  const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -170,7 +173,7 @@ const Login = () => {
                 </InputFormFlex>
                 {phone_error ? (
                   <span className="inputError">
-                    Telefon raqam to'liq kiritilmadi
+                    {t("loginRegisterSection.telError")}
                   </span>
                 ) : null}
                 <InputFormFlex>
@@ -185,7 +188,7 @@ const Login = () => {
                     onFocus={() => onFocus("password_error")}
                     value={password}
                     name="password"
-                    placeholder="Пароль"
+                    placeholder={t("placeholderForm.password")}
                   />
                   <span className="span2" onClick={() => handlePswShowHide()}>
                     <span>
@@ -199,7 +202,7 @@ const Login = () => {
                 </InputFormFlex>
                 {password_error ? (
                   <span className="inputError">
-                    Parolda kamida 8 ta belgi bo'lishi kerak
+                    {t("loginRegisterSection.passwordError")}
                   </span>
                 ) : null}
                 <FlexcheckBox>
@@ -220,12 +223,12 @@ const Login = () => {
                 </FlexcheckBox>
                 {login_error ? (
                   <div className="inputError" style={{ textAlign: "center" }}>
-                    Tizimga kirishda xatolik
+                    {t("loginRegisterSection.loginError")}
                   </div>
                 ) : null}
                 {registerError ? (
                   <div className="inputError" style={{ textAlign: "center" }}>
-                    Telefon raqam yoki parol da xatolik
+                    {t("loginRegisterSection.phonePasswordError")}
                   </div>
                 ) : null}
 

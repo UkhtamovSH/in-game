@@ -4,12 +4,14 @@ import { OnBoardingThirdStyle } from "../../styles/OnBoardingThird.styled";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { issetToken } from "../../helpers/tokenStorage";
+import { useTranslation } from "react-i18next";
 
 const OnBoardingFirstStyle = () => {
   const [count, setCount] = useState(1);
 
   const handleCount = () => setCount(count + 1);
 
+  const { t } = useTranslation();
   const history = useNavigate();
 
   useEffect(() => {
@@ -28,12 +30,10 @@ const OnBoardingFirstStyle = () => {
               <div className="secondDot"></div>
               <div className="thirdDot"></div>
             </div>
-            <h1>Сформируйте свою команду</h1>
-            <p>
-              Выберите игроков поблизости, расставьте их по оптимальным позициям
-            </p>
+            <h1>{t("OnBoardingFirst.buildteam")}</h1>
+            <p>{t("OnBoardingFirst.selectPlayer")}</p>
             <button className="appBtnGreen" onClick={() => handleCount()}>
-              Продолжить
+              {t("btnContinue.btn")}
             </button>
           </div>
         </OnBoardingFirst>
@@ -46,13 +46,10 @@ const OnBoardingFirstStyle = () => {
                 <div className="firstDot"></div>
                 <div className="thirdDot"></div>
               </div>
-              <h1>Сформируйте свою команду</h1>
-              <p>
-                Выберите игроков поблизости, расставьте их по оптимальным
-                позициям
-              </p>
+              <h1>{t("OnBoardingFirst.buildteam")}</h1>
+              <p>{t("OnBoardingFirst.selectPlayer")}</p>
               <button onClick={() => handleCount()}>
-                <span>Продолжить</span>
+                <span>{t("btnContinue.btn")}</span>
               </button>
             </div>
           </OnBoardingSecondStyle>
@@ -66,14 +63,11 @@ const OnBoardingFirstStyle = () => {
                 <div className="thirdDot"></div>
                 <div className="firstDot"></div>
               </div>
-              <h1>Сформируйте свою команду</h1>
-              <p>
-                Выберите игроков поблизости, расставьте их по оптимальным
-                позициям{" "}
-              </p>
+              <h1>{t("OnBoardingFirst.buildteam")}</h1>
+              <p>{t("OnBoardingFirst.selectPlayer")}</p>
               <Link to="/log-in">
                 <button>
-                  <span>Продолжить</span>
+                  <span>{t("btnContinue.btn")}</span>
                 </button>
               </Link>
             </div>

@@ -59,7 +59,7 @@ const GamePlayerRatingMark = () => {
       <AppMAIN>
         <RatingTextArea>
           <textarea
-            placeholder="Отзыв об игроке"
+            placeholder={"placeholderForm.feedbackPlayer"}
             className="gamerTextArea"
             onChange={(e) => setContent(e.target.value)}
             value={content}

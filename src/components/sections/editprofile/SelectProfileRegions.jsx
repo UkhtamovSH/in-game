@@ -6,6 +6,7 @@ import {
 } from "../../../styles/Modal.styled";
 import SearchLine from "../../../assets/svg/SearchLine.svg";
 import { map } from "lodash";
+import { useTranslation } from "react-i18next";
 
 const SelectProfileRegions = (props) => {
   const {
@@ -20,6 +21,8 @@ const SelectProfileRegions = (props) => {
     getRegions,
   } = props;
 
+  const { t } = useTranslation;
+
   return (
     <>
       <InputFormFlex>
@@ -32,7 +35,7 @@ const SelectProfileRegions = (props) => {
           type="text"
           onChange={handleSearchRegions}
           value={searchRegions}
-          placeholder="Введите название регионы"
+          placeholder={t("placeholderForm.enterRegionName")}
         />
         <span className="span2"></span>
       </InputFormFlex>

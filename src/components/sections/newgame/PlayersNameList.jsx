@@ -11,6 +11,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import styled from "styled-components";
 import { get } from "lodash";
 import PlayersNameListSub from "./PlayersNameListSub";
+import { useTranslation } from "react-i18next";
 
 const SRatingPlayerContainer = styled.div`
   padding: 15px 0;
@@ -111,6 +112,8 @@ const PlayersNameList = (props) => {
   //   setPlayers([...players, { name: searchPlayers }]);
   // };
 
+  const { t } = useTranslation();
+
   return (
     <>
       <AppHeader style={{ padding: "12px 0 0 0" }}>
@@ -139,7 +142,7 @@ const PlayersNameList = (props) => {
               type="text"
               onChange={handleSearch}
               value={searchPlayers}
-              placeholder="Введите имя игрока"
+              placeholder={t("placeholderForm.enterPlayerName")}
             />
             <span className="span2"></span>
           </InputFormFlex>

@@ -4,6 +4,8 @@ import { FaStar } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import ArrowRight from "../../assets/svg/Arrow - Right.svg";
 import { GetAuthInstance } from "../../helpers/httpClient";
+import { useTranslation } from "react-i18next";
+
 import {
   AppFooter,
   AppHeader,
@@ -80,6 +82,8 @@ const Rate = (props) => {
   useEffect(() => {
     getDataRate();
   }, [params.id]);
+
+  const { t } = useTranslation();
 
   return (
     <>
@@ -299,7 +303,7 @@ const Rate = (props) => {
             </StarDiv>
             <RatingTextArea>
               <textarea
-                placeholder="Отзыв об игроке"
+                placeholder={t("placeholderForm.feedbackPlayer")}
                 className="gamerTextArea"
                 onChange={(e) => setContent(e.target.value)}
                 value={content}
