@@ -16,6 +16,7 @@ import Navigation from "./sections/Navigation";
 import ListRatingPlayer from "./sections/ratingplayer/ListRatingPlayer";
 import FilterOneRPlayer from "./sections/ratingplayer/FilterOneRPlayer";
 import FilterTwoRPlayer from "./sections/ratingplayer/FilterTwoRPlayer";
+import { useTranslation } from "react-i18next";
 // import { useParams } from "react-router";
 
 const SRatingPlayerContainer = styled.div`
@@ -212,6 +213,8 @@ const RatingPlayers = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const { t } = useTranslation();
+
   return (
     <>
       {!modal ? (
@@ -220,7 +223,7 @@ const RatingPlayers = () => {
             <AppHeaderFlex>
               <div />
               <div className="">
-                <span>Рейтинг игроков</span>
+                <span>{t("rateSection.ratePlayer")}</span>
               </div>
               <div className="">
                 {countTab === 1 ? (
@@ -320,7 +323,7 @@ const RatingPlayers = () => {
                           transform: "translate(0,16px)",
                         }}
                       >
-                        Loading...
+                        {t("searchText.search")}
                       </p>
                     }
                   >
@@ -360,7 +363,7 @@ const RatingPlayers = () => {
                           transform: "translate(0,16px)",
                         }}
                       >
-                        Loading...
+                        {t("searchText.search")}
                       </p>
                     }
                   >

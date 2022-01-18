@@ -1,10 +1,12 @@
 import { PlayersRatingMain } from "../../../styles/PlayersRatingStyle";
 import { Link } from "react-router-dom";
 import DefaultImg from "../../../assets/Img/default.png";
+import { useTranslation } from "react-i18next";
 
 const ListRatingPlayer = (props) => {
   const { id, user_id, age, avatar, ball, city, victory, position, full_name } =
     props;
+  const { t } = useTranslation();
   return (
     <>
       <Link
@@ -110,11 +112,11 @@ const ListRatingPlayer = (props) => {
             <div className="countFlex">
               <div className="">
                 <p className="text1">{victory}%</p>
-                <p className="text2">Побед</p>
+                <p className="text2">{t("playerInfo.win")}</p>
               </div>
               <div className="">
                 <p className="text1">{ball}</p>
-                <p className="text2">Очков</p>
+                <p className="text2">{t("playerInfo.points")}</p>
               </div>
             </div>
           </div>

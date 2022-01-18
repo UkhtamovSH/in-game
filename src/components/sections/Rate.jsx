@@ -95,7 +95,7 @@ const Rate = (props) => {
             </span>
           </div>
           <div className="">
-            <span>Рейтинг игроков</span>
+            <span>{t("rateSection.ratePlayer")}</span>
           </div>
           <div />
         </AppHeaderFlex>
@@ -105,7 +105,7 @@ const Rate = (props) => {
           <div style={{ padding: "0 15px" }}>
             <StarDiv style={{ margin: "10px 0" }}>
               <div className="StarDivBorder">
-                <p>Скорость</p>
+                <p>{t("rateSection.speed")}</p>
                 <Container>
                   {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
@@ -133,7 +133,7 @@ const Rate = (props) => {
                 </Container>
               </div>
               <div className="StarDivBorder">
-                <p>Дриблинг</p>
+                <p>{t("rateSection.drib")}</p>
                 <Container>
                   {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
@@ -161,7 +161,7 @@ const Rate = (props) => {
                 </Container>
               </div>
               <div className="StarDivBorder">
-                <p>Пас</p>
+                <p>{t("rateSection.pass")}</p>
                 <Container>
                   {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
@@ -189,7 +189,7 @@ const Rate = (props) => {
                 </Container>
               </div>
               <div className="StarDivBorder">
-                <p>Точность удара</p>
+                <p>{t("rateSection.hit")}</p>
                 <Container>
                   {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
@@ -217,7 +217,7 @@ const Rate = (props) => {
                 </Container>
               </div>
               <div className="StarDivBorder">
-                <p>Сила удара</p>
+                <p>{t("rateSection.hitimpact")}</p>
                 <Container>
                   {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
@@ -245,7 +245,7 @@ const Rate = (props) => {
                 </Container>
               </div>
               <div className="StarDivBorder">
-                <p>Удар головой</p>
+                <p>{t("rateSection.headbutt")}</p>
                 <Container>
                   {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
@@ -273,7 +273,7 @@ const Rate = (props) => {
                 </Container>
               </div>
               <div className="StarDivBorder">
-                <p>Отбор</p>
+                <p>{t("rateSection.selection")}</p>
                 <Container>
                   {[...Array(5)].map((_, index) => {
                     const givenRating = index + 1;
@@ -314,7 +314,7 @@ const Rate = (props) => {
         </AppMAIN>
         <AppFooter>
           <button className="appBtnGreen" type="submit">
-            Сохранить
+            {t("rateSection.save")}
           </button>
         </AppFooter>
       </form>

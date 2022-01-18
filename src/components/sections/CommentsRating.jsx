@@ -13,6 +13,7 @@ import {
 import ArrowRight from "../../assets/svg/Arrow - Right.svg";
 import { HomeSwiperStyle } from "../../styles/HomeSwiperStyle";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const SPitchesContainer = styled.div`
 .SPitchesDiv{
@@ -47,6 +48,8 @@ const CommentsRating = () => {
     getData();
   }, []);
 
+  const { t } = useTranslation();
+
   return (
     <>
       <AppHeader>
@@ -57,7 +60,7 @@ const CommentsRating = () => {
             </span>
           </div>
           <div className="">
-            <span>Все отзывы</span>
+            <span>{t("allReviewsMain.allReviews")}</span>
           </div>
           <div className=""></div>
         </AppHeaderFlex>

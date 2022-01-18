@@ -125,7 +125,7 @@ const PlayersNameList = (props) => {
             <img src={ArrowRight} alt="" />
           </div>
           <div className="">
-            <span>Введите название команды</span>
+            <span>{t("placeholderForm.enterTeamName")}</span>
           </div>
           <div />
         </AppHeaderFlex>
@@ -203,7 +203,7 @@ const PlayersNameList = (props) => {
                     transform: "translate(0,16px)",
                   }}
                 >
-                  Loading...
+                  {t("searchText.search")}
                 </p>
               }
             >

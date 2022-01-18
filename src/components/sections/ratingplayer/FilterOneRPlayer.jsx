@@ -9,6 +9,7 @@ import FilterBall from "./FilterBall";
 import { useState } from "react";
 import FilterDivision from "./FilterDivision";
 import FilterPosition from "./FilterPosition";
+import { useTranslation } from "react-i18next";
 // import FilterCity from "./FilterCity";
 
 const FilterOneRPlayer = (props) => {
@@ -49,6 +50,8 @@ const FilterOneRPlayer = (props) => {
   //   setCities([...cities, ...tL]);
   // };
 
+  const { t } = useTranslation();
+
   return (
     <>
       {!modal ? (
@@ -82,15 +85,17 @@ const FilterOneRPlayer = (props) => {
                 }}
                 className="spanInput2"
               >
-                {filter.divisionn === 1
-                  ? "Elementery"
-                  : filter.divisionn === 2
-                  ? "Middle"
-                  : filter.divisionn === 3
-                  ? "Higher"
-                  : filter.divisionn === 4
-                  ? "Pro"
-                  : "Дивизион"}
+                {filter.divisionn === 1 ? (
+                  <>{t("divisionnSection.elementery")}</>
+                ) : filter.divisionn === 2 ? (
+                  <>{t("divisionnSection.middle")}</>
+                ) : filter.divisionn === 3 ? (
+                  <>{t("divisionnSection.higher")}</>
+                ) : filter.divisionn === 4 ? (
+                  <>{t("divisionnSection.pro")}</>
+                ) : (
+                  <>{t("divisionnSection.division")}</>
+                )}
               </span>
             </InputFormFlex>
             <FilterBall
@@ -110,21 +115,23 @@ const FilterOneRPlayer = (props) => {
                 }}
                 className="spanInput2"
               >
-                {filter.pos === 1
-                  ? "Goalkeeper"
-                  : filter.pos === 2
-                  ? "Defender"
-                  : filter.pos === 4
-                  ? "Forward"
-                  : filter.pos === 3
-                  ? "Midfielder"
-                  : "Позиция"}
+                {filter.pos === 1 ? (
+                  <>{t("divisionnPosSection.goalkeeper")}</>
+                ) : filter.pos === 2 ? (
+                  <>{t("divisionnPosSection.defender")}</>
+                ) : filter.pos === 4 ? (
+                  <>{t("divisionnPosSection.forward")}</>
+                ) : filter.pos === 3 ? (
+                  <>{t("divisionnPosSection.midfielder")}</>
+                ) : (
+                  <>{t("divisionnPosSection.position")}</>
+                )}
               </span>
             </InputFormFlex>
           </AppMAIN>
           <AppFooter>
             <button onClick={toggleModal} className="appBtnGreen">
-              Показать результаты
+              {t("showResultBtn.showResult")}
             </button>
           </AppFooter>
         </>

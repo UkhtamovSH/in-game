@@ -19,6 +19,7 @@ import { StylesHidden } from "../styles/Global.styled";
 import PlayerMap from "./PlayerMap";
 import { useEffect } from "react";
 import FilterOneRPlayer from "./sections/ratingplayer/FilterOneRPlayer";
+import { useTranslation } from "react-i18next";
 
 const SRatingPlayerContainer = styled.div`
   padding: 15px 0;
@@ -162,6 +163,9 @@ const Players = () => {
     getWorldPlayers();
     window.scrollTo(0, 0);
   }, []);
+
+  const { t } = useTranslation();
+
   return (
     <>
       {!modal ? (
@@ -267,7 +271,7 @@ const Players = () => {
                             transform: "translate(0,10px)",
                           }}
                         >
-                          Loading...
+                          {t("searchText.search")}
                         </p>
                       }
                     >

@@ -36,6 +36,62 @@
       "enterRegionName": "Mintaqalar nomini kiriting",
       "enterPlayerName": "O`yinchi nomini kiriting",
       "ratingWins": "Reyting"
+    },
+    "playerInfo": {
+      "goalScored": "Gol kiritildi!",
+      "score": "Ball",
+      "win": "G`alaba",
+      "points": "Ballar",
+      "bestPlayer": "Eng yaxshi o`yinchi",
+      "continueNewName": "Yangi nom bilan qo`shish",
+      "select": "Tanlang"
+    },
+    "minutesListSection": {
+      "gameDuration": "O'yin davomiyligi",
+      "min": "min"
+    },
+    "searchText": {
+      "search": "Yuklanmoqda..."
+    },
+    "showResultBtn": {
+      "showResult": "Natijalarni ko'rsatish"
+    },
+    "divisionnSection": {
+      "elementery": "Boshlang'ich",
+      "middle": "O'rta",
+      "higher": "Yuqori",
+      "pro": "Pro",
+      "division": "Dvizion"
+    },
+    "divisionnPosSection": {
+      "goalkeeper": "Darvozabon",
+      "defender": "Himoyachi",
+      "forward": "Hujumchi",
+      "midfielder": "Yarim himoyachi",
+      "position": "Pozitsiya"
+    },
+    "allReviewsMain": {
+      "allReviews": "Barcha sharhlar"
+    },
+    "reviewsAboutYou": {
+      "reviewsAbout": "Siz haqingizda sharhlar"
+    },
+    "commentSwiper": {
+      "pastGames": "O'tgan o'yinlar",
+      "allGames": "Barcha o`yinlar",
+      "ratePlayers": "O'yinchilarni baholash"
+    },
+    "rateSection": {
+      "ratePlayer": "O`yinchi reytingi",
+      "speed": "Tezlik",
+      "drib": "Dribling",
+      "pass": "To`p uzatish",
+      "hit": "Zarba aniqligi",
+      "hitimpact": "Zarba kuchi",
+      "headbutt": "Bosh bilan zarba",
+      "selection": "Tanlash",
+      "save": "Saqlash",
+      "savechanges": "O`zgarishni saqlash"
     }
   }
 }

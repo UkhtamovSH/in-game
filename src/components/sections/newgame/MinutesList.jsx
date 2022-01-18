@@ -6,6 +6,7 @@ import {
 } from "../../../styles/ContainerFluid.styled";
 import ArrowRight from "../../../assets/svg/Arrow - Right.svg";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 // import { InputFormFlex } from "../../../styles/Global.styled";
 // import SearchLine from "../../../assets/svg/SearchLine.svg";
 
@@ -36,6 +37,8 @@ const MinutesList = (props) => {
   //   ? munitesList
   //   : munitesList.filter((minute) => minute.includes(filterMinutes));
 
+  const { t } = useTranslation();
+
   return (
     <>
       <AppHeader style={{ padding: "12px 0 0 0" }}>
@@ -47,7 +50,7 @@ const MinutesList = (props) => {
             <img src={ArrowRight} alt="" />
           </div>
           <div className="">
-            <span>Длительность игры</span>
+            <span>{t("minutesListSection.gameDuration")}</span>
           </div>
           <div className="" />
         </AppHeaderFlex>
@@ -85,7 +88,7 @@ const MinutesList = (props) => {
                   toggleModal();
                 }}
               >
-                {name} мин
+                {name} {t("minutesListSection.min")}
               </MList>
             </div>
           );

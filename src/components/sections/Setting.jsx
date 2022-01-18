@@ -103,7 +103,7 @@ const Setting = () => {
             </Link>
           </div>
           <div className="">
-            <span>Рейтинг игроков</span>
+            <span>{t("rateSection.ratePlayer")}</span>
           </div>
           <div />
         </AppHeaderFlex>
@@ -188,7 +188,7 @@ const Setting = () => {
         </AppMAIN>
         <AppFooter>
           <button className="appBtnGreen" type="submit">
-            Сохранить
+            {t("rateSection.save")}
           </button>
         </AppFooter>
         {isOpenModal ? (

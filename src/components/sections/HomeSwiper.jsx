@@ -8,17 +8,20 @@ import _ from "lodash";
 import { Link } from "react-router-dom";
 // import ImageLoading from "../../assets/Img/default.png";
 import DefaultClub from "../../assets/Img/defaultClub.png";
+import { useTranslation } from "react-i18next";
 
 const HomeSwiper = ({ gameEnd, settings }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       {gameEnd.length ? (
         <HomeSwiperStyle>
           <div className="lastPlays">
-            <label>Прошедшие игры</label>
+            <label>{t("commentSwiper.pastGames")}</label>
             <label>
               <Link to="/all-games">
-                Все игры <img src={strokeIcon} alt="" />
+                {t("commentSwiper.allGames")} <img src={strokeIcon} alt="" />
               </Link>
             </label>
           </div>
@@ -110,7 +113,9 @@ const HomeSwiper = ({ gameEnd, settings }) => {
                   ) : null}
                 </div>
                 <Link to={`/game-player-reting/${item.id}`}>
-                  <p className="ratePlayerText">Оценить игроков</p>
+                  <p className="ratePlayerText">
+                    {t("commentSwiper.ratePlayers")}
+                  </p>
                 </Link>
               </div>
             ))}

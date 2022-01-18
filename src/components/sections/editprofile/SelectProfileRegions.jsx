@@ -52,7 +52,7 @@ const SelectProfileRegions = (props) => {
               transform: "translate(0,16px)",
             }}
           >
-            Loading...
+            {t("searchText.search")}
           </p>
         }
       >

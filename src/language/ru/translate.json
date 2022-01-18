@@ -36,6 +36,62 @@
       "enterRegionName": "Введите название регионы",
       "enterPlayerName": "Введите имя игрока",
       "ratingWins": "Рейтинг победы"
+    },
+    "playerInfo": {
+      "goalScored": "Забит гол!",
+      "score": "Балл",
+      "win": "Побед",
+      "points": "Очков",
+      "bestPlayer": "Лучший игрок",
+      "continueNewName": "Продолжить с новым названием",
+      "select": "Выбрать"
+    },
+    "minutesListSection": {
+      "gameDuration": "Длительность игры",
+      "min": "мин"
+    },
+    "searchText": {
+      "search": "Загрузка..."
+    },
+    "showResultBtn": {
+      "showResult": "Показать результаты"
+    },
+    "divisionnSection": {
+      "elementery": "Элементари",
+      "middle": "Середни",
+      "higher": "Выше",
+      "pro": "Про",
+      "division": "Дивизион"
+    },
+    "divisionnPosSection": {
+      "goalkeeper": "Вратарь",
+      "defender": "Defender",
+      "forward": "Нападащие",
+      "midfielder": "Полузащитник",
+      "position": "Позиция"
+    },
+    "allReviewsMain": {
+      "allReviews": "Все отзывы"
+    },
+    "reviewsAboutYou": {
+      "reviewsAbout": "Отзывы о вас"
+    },
+    "commentSwiper": {
+      "pastGames": "Прошедшие игры",
+      "allGames": "Все игры",
+      "ratePlayers": "Оценить игроков"
+    },
+    "rateSection": {
+      "ratePlayer": "Рейтинг игроков",
+      "speed": "Скорость",
+      "drib": "Дриблинг",
+      "pass": "Пас",
+      "hit": "Точность удара",
+      "hitimpact": "Сила удара",
+      "headbutt": "Удар головой",
+      "selection": "Отбор",
+      "save": "Сохранить",
+      "savechanges": "Сохранить изменения"
     }
   }
 }

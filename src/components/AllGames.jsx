@@ -9,6 +9,7 @@ import { GetAuthInstance } from "../helpers/httpClient";
 import { useEffect } from "react";
 import DefaultClub from "../assets/Img/defaultClub.png";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const SPitchesContainer = styled.div`
 .SPitchesDiv{
@@ -43,6 +44,8 @@ const AllGames = () => {
     getData();
   }, []);
 
+  const { t } = useTranslation();
+
   return (
     <AllGamesContainer>
       <AppHeaderFlex>
@@ -52,7 +55,7 @@ const AllGames = () => {
           </Link>
         </div>
         <div className="">
-          <span>Прошедшие игры</span>
+          <span>{t("commentSwiper.pastGames")}</span>
         </div>
         <div className=""></div>
       </AppHeaderFlex>
@@ -153,7 +156,9 @@ const AllGames = () => {
                   ) : null}
                 </div>
                 <Link to={`/game-player-reting/${item.id}`}>
-                  <p className="ratePlayerText">Оценить игроков</p>
+                  <p className="ratePlayerText">
+                    {t("commentSwiper.ratePlayers")}
+                  </p>
                 </Link>
               </div>
             ))}

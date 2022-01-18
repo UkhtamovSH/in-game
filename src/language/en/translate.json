@@ -36,6 +36,62 @@
       "enterRegionName": "Enter the name of the regions",
       "enterPlayerName": "Enter player name",
       "ratingWins": "Win Rating"
+    },
+    "playerInfo": {
+      "goalScored": "Goal scored!",
+      "score": "Score",
+      "win": "Win",
+      "points": "Points",
+      "bestPlayer": "Best player",
+      "continueNewName": "Continue with new name",
+      "select": "Select"
+    },
+    "minutesListSection": {
+      "gameDuration": "Game duration",
+      "min": "min"
+    },
+    "searchText": {
+      "search": "Loading..."
+    },
+    "showResultBtn": {
+      "showResult": "Show results"
+    },
+    "divisionnSection": {
+      "elementery": "Elementery",
+      "middle": "Middle",
+      "higher": "Higher",
+      "pro": "Pro",
+      "division": "Division"
+    },
+    "divisionnPosSection": {
+      "goalkeeper": "Goalkeeper",
+      "defender": "Defender",
+      "forward": "Forward",
+      "midfielder": "Midfielder",
+      "position": "Position"
+    },
+    "allReviewsMain": {
+      "allReviews": "All reviews"
+    },
+    "reviewsAboutYou": {
+      "reviewsAbout": "Reviews about you"
+    },
+    "commentSwiper": {
+      "pastGames": "Past games",
+      "allGames": "All games",
+      "ratePlayers": "Rate players"
+    },
+    "rateSection": {
+      "ratePlayer": "Player rating",
+      "speed": "Speed",
+      "drib": "Dribbling",
+      "pass": "Pass",
+      "hit": "Hit accuracy",
+      "hitimpact": "Impact force",
+      "headbutt": "Headbutt",
+      "selection": "Selection",
+      "save": "Save",
+      "savechanges": "Save changes"
     }
   }
 }

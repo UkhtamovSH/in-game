@@ -20,6 +20,7 @@ import { NewGamePositionCard } from "../styles/NewGame.styled";
 import TeamOnePlayers from "./sections/newgame/TeamOnePlayers";
 import TeamTwoPlayers from "./sections/newgame/TeamTwoPlayers";
 import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
 const GameHeader = styled.div`
   display: flex;
@@ -326,6 +327,8 @@ const GameOver = () => {
     getClubs();
   }, []);
 
+  const { t } = useTranslation();
+
   return (
     <>
       {!modal ? (
@@ -608,7 +611,7 @@ const GameOver = () => {
             </AppMAIN>
             <AppFooter>
               <button className="appBtnGreen" type="submit">
-                Сохранить
+                {t("rateSection.save")}
               </button>
             </AppFooter>
           </form>

@@ -26,6 +26,7 @@ import Slider from "react-slick";
 import DefaultClub from "../assets/Img/defaultClub.png";
 import { getLanguage } from "../helpers/language";
 import { PossibleModal } from "../styles/NewGame.styled";
+import { useTranslation } from "react-i18next";
 
 const PlayersPage = () => {
   const [data, setData] = useState([]);
@@ -116,6 +117,8 @@ const PlayersPage = () => {
     getCommentSwiper();
     document.body.style.overflow = "visible";
   }, [params.id]);
+
+  const { t } = useTranslation();
 
   return (
     <>
@@ -321,7 +324,7 @@ const PlayersPage = () => {
                   {gameEnd.length ? (
                     <HomeSwiperStyle>
                       <div className="lastPlays">
-                        <label>Прошедшие игры</label>
+                        <label>{t("commentSwiper.pastGames")}</label>
                       </div>
                       <Slider {...settings}>
                         {gameEnd.map((item, index) => (
@@ -451,7 +454,7 @@ const PlayersPage = () => {
                   {commentSwiper.length ? (
                     <HomeSwiperStyle>
                       <div className="lastPlays">
-                        <label>Отзывы о вас</label>
+                        <label>{t("reviewsAboutYou.reviewsAbout")}</label>
                       </div>
                       <Slider {...settings}>
                         {commentSwiper.map((item, index) => (

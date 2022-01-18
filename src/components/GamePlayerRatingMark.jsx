@@ -11,6 +11,7 @@ import ArrowRight from "../assets/svg/Arrow - Right.svg";
 import commentIcon from "../assets/Img/Profile.png";
 import { GetAuthInstance } from "../helpers/httpClient";
 import { get } from "lodash";
+import { useTranslation } from "react-i18next";
 // import { setToken } from "../helpers/tokenStorage";
 const GamePlayerRatingMark = () => {
   const [updatedLists, setUpdatedLists] = useState([]);
@@ -41,6 +42,8 @@ const GamePlayerRatingMark = () => {
       .catch((err) => {});
   };
 
+  const { t } = useTranslation();
+
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
       <AppHeader>
@@ -69,7 +72,7 @@ const GamePlayerRatingMark = () => {
       </AppMAIN>
       <AppFooter>
         <button className="appBtnGreen" type="submit">
-          Сохранить
+          {t("rateSection.save")}
         </button>
       </AppFooter>
     </form>

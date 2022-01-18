@@ -7,18 +7,22 @@ import { HomeSwiperStyle } from "../../styles/HomeSwiperStyle";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 import DefaultImg from "../../assets/Img/default.png";
+import { useTranslation } from "react-i18next";
 
 const CommentSwiper = ({ settings, commentSwiper }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       {commentSwiper.length ? (
         <HomeSwiperStyle>
           <div className="lastPlays">
-            <label>Отзывы о вас</label>
+            <label>{t("reviewsAboutYou.reviewsAbout")}</label>
             <label>
               {
                 <Link to="/comments-rating">
-                  Все отзывы <img src={strokeIcon} alt="" />{" "}
+                  {t("allReviewsMain.allReviews")}{" "}
+                  <img src={strokeIcon} alt="" />
                 </Link>
               }
             </label>

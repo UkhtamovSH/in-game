@@ -140,7 +140,7 @@ const FilterCity = (props) => {
                 transform: "translate(0,16px)",
               }}
             >
-              Loading...
+              {t("searchText.search")}
             </p>
           }
         >
@@ -183,7 +183,7 @@ const FilterCity = (props) => {
           }}
           className="appBtnGreen"
         >
-          Показать результаты
+          {t("showResultBtn.showResult")}
         </button>
       </AppFooter>
     </>

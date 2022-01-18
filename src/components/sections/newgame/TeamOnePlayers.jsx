@@ -6,8 +6,11 @@ import {
 import ArrowRight from "../../../assets/svg/Arrow - Right.svg";
 import { map } from "lodash";
 import { PlayersRatingMain } from "../../../styles/PlayersRatingStyle";
+import { useTranslation } from "react-i18next";
 
 const TeamOnePlayers = ({ toggleModal, players, findBestPlayerClub1 }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <AppHeader style={{ padding: "12px 0 0 0" }}>
@@ -19,7 +22,7 @@ const TeamOnePlayers = ({ toggleModal, players, findBestPlayerClub1 }) => {
             <img src={ArrowRight} alt="" />
           </div>
           <div className="">
-            <span>Лучший игрок</span>
+            <span>{t("playerInfo.bestPlayer")}</span>
           </div>
           <div className="" />
         </AppHeaderFlex>
@@ -61,7 +64,9 @@ const TeamOnePlayers = ({ toggleModal, players, findBestPlayerClub1 }) => {
                             : "Анонимный игрок"}
                         </p>
                         <div className="text22Flex">
-                          <p className="text22">Ball: {ball}</p>
+                          <p className="text22">
+                            {t("playerInfo.score")}: {ball}
+                          </p>
                         </div>
                       </div>
                     </div>

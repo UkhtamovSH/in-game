@@ -159,7 +159,7 @@ const TeamsNameList = (props) => {
             <img src={ArrowRight} alt="" />
           </div>
           <div className="">
-            <span>Введите название команды</span>
+            <span>{t("placeholderForm.enterTeamName")}</span>
           </div>
           <div />
         </AppHeaderFlex>
@@ -209,7 +209,7 @@ const TeamsNameList = (props) => {
                     transform: "translate(0,16px)",
                   }}
                 >
-                  Loading...
+                  {t("searchText.search")}
                 </p>
               }
             >
@@ -261,7 +261,7 @@ const TeamsNameList = (props) => {
                   })
                 ) : (
                   <p className="newNameGamer" onClick={addNewCLUB}>
-                    Продолжить с новым названием
+                    {t("playerInfo.continueNewName")}
                   </p>
                 )}
               </RadioInputFlexTop>
@@ -278,7 +278,7 @@ const TeamsNameList = (props) => {
                 toggleModal();
               }}
             >
-              Выбрать
+              {t("playerInfo.select")}
             </button>
           ) : modalCount === 3 ? (
             <button
@@ -289,7 +289,7 @@ const TeamsNameList = (props) => {
                 toggleModal();
               }}
             >
-              Выбрать
+              {t("playerInfo.select")}
             </button>
           ) : null}
         </AppFooter>

@@ -475,15 +475,17 @@ const ProfileEdit = () => {
                       }}
                       className="spanInput"
                     >
-                      {position === 1
-                        ? "Goalkeeper"
-                        : position === 2
-                        ? "Defender"
-                        : position === 4
-                        ? "Forward"
-                        : position === 3
-                        ? "Midfielder"
-                        : "Позиция в игре"}
+                      {position === 1 ? (
+                        <>{t("divisionnPosSection.goalkeeper")}</>
+                      ) : position === 2 ? (
+                        <>{t("divisionnPosSection.defender")}</>
+                      ) : position === 4 ? (
+                        <>{t("divisionnPosSection.forward")}</>
+                      ) : position === 3 ? (
+                        <>{t("divisionnPosSection.midfielder")}</>
+                      ) : (
+                        <>{t("divisionnPosSection.position")}</>
+                      )}
                     </span>
                     <span className="span2"></span>
                   </InputFormFlex>
@@ -529,11 +531,11 @@ const ProfileEdit = () => {
                       className="appBtnGray"
                       onClick={togglePossibleModal}
                     >
-                      Сохранить изменения
+                      {t("rateSection.savechanges")}
                     </button>
                   ) : (
                     <button type="submit" className="appBtnGreen">
-                      Сохранить изменения
+                      {t("rateSection.savechanges")}
                     </button>
                   )}
                 </AppFooter>

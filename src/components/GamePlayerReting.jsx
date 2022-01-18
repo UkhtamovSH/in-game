@@ -15,6 +15,7 @@ import { PlayersRatingMain } from "../styles/PlayersRatingStyle";
 import DefaultImg from "../assets/Img/default.png";
 import styled from "styled-components";
 import { StylesHidden } from "../styles/Global.styled";
+import { useTranslation } from "react-i18next";
 
 const SRatingPlayerContainer = styled.div`
   padding: 15px 0;
@@ -135,6 +136,8 @@ const GamePlayerReting = () => {
     getGoal();
   }, [params.id]);
 
+  const { t } = useTranslation();
+
   return (
     <>
       <AppHeader>
@@ -229,7 +232,7 @@ const GamePlayerReting = () => {
                   transform: "translate(0,16px)",
                 }}
               >
-                Loading...
+                {t("searchText.search")}
               </p>
             }
           >
